@@ -2,7 +2,7 @@
 
 #include "Defs.h"
 #include "Log.h"
-
+#include "MemLeaks.h"
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
 
@@ -105,6 +105,8 @@ int main(int argc, char* args[])
 			break;
 		}
 	}
+
+	ReportMemoryLeaks();
 
 	LOG("... Bye! :)\n");
 
