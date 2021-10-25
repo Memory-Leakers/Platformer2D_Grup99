@@ -29,6 +29,8 @@ public:
 
 	SDL_Rect bounds;
 
+	SDL_Rect* playerRect;
+
 	bool isFlip = false;
 
 	SDL_Texture* player_tex;

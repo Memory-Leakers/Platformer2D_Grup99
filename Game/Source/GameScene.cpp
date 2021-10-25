@@ -42,10 +42,13 @@ bool GameScene::Update(float dt)
 {
 	bool ret = true;
 
+	froggy->Update(dt);
+
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		debugTiles = !debugTiles;
 	}
+
 
 	return ret;
 }
@@ -53,6 +56,8 @@ bool GameScene::Update(float dt)
 bool GameScene::PostUpdate()
 {
 	bool ret = true;
+
+	froggy->PostUpdate();
 
 	return ret;
 }

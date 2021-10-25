@@ -27,7 +27,7 @@ bool Scene::Start()
 	levelList[0]->camX = 209;
 	levelList[0]->camY = -2401;
 
-
+	gameScene->Start();
 
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
@@ -49,6 +49,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	// Draw map
+	app->map->Draw();
 
 	gameScene->Update(dt);
 
@@ -60,21 +62,20 @@ bool Scene::Update(float dt)
 		app->SaveGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= 1;
+		app->render->camera.y += 2;
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += 1;
+		app->render->camera.y -= 2;
 
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
+		app->render->camera.x += 2;
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += 1;
+		app->render->camera.x -= 2;
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
-	// Draw map
-	app->map->Draw();
+	
 
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -91,6 +92,9 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+	gameScene->PostUpdate();
+
+	
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

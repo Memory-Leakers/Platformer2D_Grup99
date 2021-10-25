@@ -7,7 +7,7 @@
 #include <iostream>
 
 #define VSYNC true
-#define camX 209
+#define camX -118
 #define camY -2401
 
 Render::Render() : Module()
@@ -68,9 +68,10 @@ bool Render::Start()
 bool Render::PreUpdate()
 {
 	int x, y;
+	iPoint worldpos;
 	app->input->GetMousePosition(x, y);
 	std::cout << camera.x << "|" << camera.y <<"\n"<< std::endl;
-	std::cout << x << "|" << y <<std::endl;
+	std::cout << worldpos.x << "|" << worldpos.y <<std::endl;
 
 	SDL_RenderClear(renderer);
 	return true;
