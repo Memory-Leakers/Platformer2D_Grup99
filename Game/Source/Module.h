@@ -2,7 +2,7 @@
 #define __MODULE_H__
 
 #include "SString.h"
-
+#include "Collider.h"
 #include "PugiXml/src/pugixml.hpp"
 
 class App;
@@ -27,34 +27,21 @@ public:
 	}
 
 	// Called before the first frame
-	virtual bool Start()
-	{
-		return true;
-	}
+	virtual bool Start();
 
 	// Called each loop iteration
-	virtual bool PreUpdate()
-	{
-		return true;
-	}
+	virtual bool PreUpdate();
 
 	// Called each loop iteration
-	virtual bool Update(float dt)
-	{
-		return true;
-	}
+	virtual bool Update(float dt);
 
 	// Called each loop iteration
-	virtual bool PostUpdate()
-	{
-		return true;
-	}
+	virtual bool PostUpdate();
+	
 
 	// Called before quitting
-	virtual bool CleanUp()
-	{
-		return true;
-	}
+	virtual bool CleanUp();
+	
 
     // L02: DONE 2: Create new virtual methods to Load / Save state
 	virtual bool LoadState(pugi::xml_node&)
@@ -66,6 +53,10 @@ public:
 	{
 		return true;
 	}
+
+	void OnCollision(Collider* c1, Collider* c2);
+
+	void WillCollision(Collider* c1, Collider* c2);
 
 public:
 

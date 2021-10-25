@@ -7,16 +7,10 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\App.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Input.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Map.cpp">
@@ -33,6 +27,21 @@
     </ClCompile>
     <ClCompile Include="Source\Window.cpp">
       <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleCollisions.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Module.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>SourceFiles\Utils\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App.cpp">
+      <Filter>SourceFiles\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>SourceFiles\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,9 +68,6 @@
     </ClInclude>
     <ClInclude Include="Source\SString.h">
       <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\App.h">
-      <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\Audio.h">
       <Filter>HeaderFiles\Modules</Filter>
@@ -90,6 +96,15 @@
     <ClInclude Include="Source\MemLeaks.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ModuleCollisions.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>HeaderFiles\Utils\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App.h">
+      <Filter>HeaderFiles\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -115,6 +130,18 @@
     </Filter>
     <Filter Include="SourceFiles\Utils">
       <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Utils\Other">
+      <UniqueIdentifier>{efe6af4e-30a8-489e-afe9-077dedd26d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Utils\Other">
+      <UniqueIdentifier>{e43189db-bb27-449c-9aa0-84764391d60a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Application">
+      <UniqueIdentifier>{de742215-0b6e-4f72-b3e1-683536717cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Application">
+      <UniqueIdentifier>{d001c37a-e123-4a03-b424-9feb77a34e12}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
