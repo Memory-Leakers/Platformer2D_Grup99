@@ -1,18 +1,9 @@
-#include "App.h"
-#include "Input.h"
-#include "Textures.h"
-#include "Audio.h"
-#include "Render.h"
-#include "Window.h"
 #include "Scene.h"
-#include "Map.h"
-
-#include "Defs.h"
-#include "Log.h"
 
 Scene::Scene() : Module()
 {
 	name.Create("scene");
+	gameScene = new GameScene();
 }
 
 // Destructor
@@ -31,6 +22,12 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+	levelList.add(new Level(1, "Level1.tmx"));
+	levelList[0]->camX = 209;
+	levelList[0]->camY = -2401;
+
+
+
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
 	app->map->Load("Level1.tmx");
@@ -51,6 +48,9 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
+	gameScene->Update(dt);
+
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();

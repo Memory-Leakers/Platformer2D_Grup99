@@ -1,8 +1,20 @@
 #ifndef __APP_H__
 #define __APP_H__
 
-#include "Module.h"
+#include "Defs.h"
+#include "Log.h"
 #include "List.h"
+
+#include "Module.h"
+#include "Window.h"
+#include "Input.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Audio.h"
+#include "Scene.h"
+#include "Map.h"
+//#include "GameScene.h"
+#include "ModuleCollisions.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -16,6 +28,7 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
+//class GameScene;
 class Map;
 class ModuleCollisions;
 
@@ -88,6 +101,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	//GameScene* gameScene;
 	Map* map;
 	ModuleCollisions* col;
 

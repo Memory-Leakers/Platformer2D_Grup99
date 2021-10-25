@@ -58,8 +58,8 @@ void Map::Draw()
 	// L06: TODO 4: Make sure we draw all the layers and not just the first one
 	while (mapLayerItem != NULL) {
 
-		if (mapLayerItem->data->properties.GetProperty("Draw") == 1) {
-
+		if (mapLayerItem->data->properties.GetProperty("Draw") == 1) 
+		{
 			for (int x = 0; x < mapLayerItem->data->width; x++)
 			{
 				for (int y = 0; y < mapLayerItem->data->height; y++)
@@ -83,6 +83,31 @@ void Map::Draw()
 							&r);
 					}
 
+				}
+			}
+		}
+
+		if (mapLayerItem->data->properties.GetProperty("Navigation") == 1 && app->scene->gameScene->debugTiles)
+		{
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
+						
+						
+					}
 				}
 			}
 		}

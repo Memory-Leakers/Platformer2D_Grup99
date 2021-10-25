@@ -52,6 +52,8 @@ ModuleCollisions::ModuleCollisions()
 	matrix[uint(Type::PICKER)][uint(Type::ENEMY)] = false;
 	matrix[uint(Type::PICKER)][uint(Type::PICKER)] = false;
 	matrix[uint(Type::PICKER)][uint(Type::AREA)] = false;
+
+	
 }
 
 // Destructor

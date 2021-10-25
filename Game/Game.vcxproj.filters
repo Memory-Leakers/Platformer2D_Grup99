@@ -19,9 +19,6 @@
     <ClCompile Include="Source\Render.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Textures.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
@@ -42,6 +39,12 @@
     </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>SourceFiles\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>SourceFiles\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameScene.cpp">
+      <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,9 +87,6 @@
     <ClInclude Include="Source\Render.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Textures.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
@@ -104,6 +104,12 @@
     </ClInclude>
     <ClInclude Include="Source\App.h">
       <Filter>HeaderFiles\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>HeaderFiles\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameScene.h">
+      <Filter>HeaderFiles\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +148,12 @@
     </Filter>
     <Filter Include="HeaderFiles\Application">
       <UniqueIdentifier>{d001c37a-e123-4a03-b424-9feb77a34e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Scenes">
+      <UniqueIdentifier>{2a374932-0bb6-491b-934f-b67f262afb8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Scenes">
+      <UniqueIdentifier>{52bd0035-f418-4b2b-ace5-7ab85126f741}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

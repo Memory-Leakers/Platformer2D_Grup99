@@ -1,15 +1,4 @@
 #include "App.h"
-#include "Window.h"
-#include "Input.h"
-#include "Render.h"
-#include "Textures.h"
-#include "Audio.h"
-#include "Scene.h"
-#include "Map.h"
-#include "ModuleCollisions.h"
-
-#include "Defs.h"
-#include "Log.h"
 
 #include <iostream>
 #include <sstream>
@@ -24,6 +13,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	scene = new Scene();
+	//gameScene = new GameScene();
 	map = new Map();
 	col = new ModuleCollisions();
 
@@ -36,7 +26,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
+	//AddModule(gameScene);
 	AddModule(map);
+	AddModule(col);
 
 	// Render last to swap buffer
 	AddModule(render);
