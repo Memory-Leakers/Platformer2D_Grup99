@@ -87,7 +87,7 @@
     <ClInclude Include="Source\Window.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="MemLeaks.h">
+    <ClInclude Include="Source\MemLeaks.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
   </ItemGroup>

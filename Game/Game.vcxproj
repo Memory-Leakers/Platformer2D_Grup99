@@ -98,8 +98,8 @@
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
-    <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\MemLeaks.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Input.h" />
