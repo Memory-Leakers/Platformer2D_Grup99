@@ -1,4 +1,7 @@
 #include "App.h"
+#include "Defs.h"
+#include "Log.h"
+
 
 #include <iostream>
 #include <sstream>
@@ -17,6 +20,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	col = new ModuleCollisions();
 
+
 	render = new Render();
 
 	// Ordered for awake / Start / Update
@@ -29,6 +33,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	//AddModule(gameScene);
 	AddModule(map);
 	AddModule(col);
+
 
 	// Render last to swap buffer
 	AddModule(render);

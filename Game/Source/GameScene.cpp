@@ -23,6 +23,10 @@ bool GameScene::Start()
 {
 	bool ret = true;
 
+	froggy = new Player();
+	froggy->Start();
+
+
 
 	return ret;
 }

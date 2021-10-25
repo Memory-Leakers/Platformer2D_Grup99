@@ -67,7 +67,10 @@ bool Render::Start()
 // Called each loop iteration
 bool Render::PreUpdate()
 {
-	std::cout << camera.x << "|" << camera.y << std::endl;
+	int x, y;
+	app->input->GetMousePosition(x, y);
+	std::cout << camera.x << "|" << camera.y <<"\n"<< std::endl;
+	std::cout << x << "|" << y <<std::endl;
 
 	SDL_RenderClear(renderer);
 	return true;

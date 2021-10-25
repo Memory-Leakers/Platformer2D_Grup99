@@ -1,6 +1,7 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
+
 #include "App.h"
 #include "GameScene.h"
 
@@ -56,9 +57,8 @@ public:
 
 private:
 	SDL_Texture* img;
+
 	List<Level*> levelList;
-	
-	
 
 };
 

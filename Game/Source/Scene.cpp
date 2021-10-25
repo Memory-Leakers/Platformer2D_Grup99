@@ -1,5 +1,6 @@
 #include "Scene.h"
 
+
 Scene::Scene() : Module()
 {
 	name.Create("scene");

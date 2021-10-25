@@ -45,6 +45,8 @@
     </ClCompile>
     <ClCompile Include="Source\GameScene.cpp">
       <Filter>SourceFiles\Scenes</Filter>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>SourceFiles\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +112,11 @@
     </ClInclude>
     <ClInclude Include="Source\GameScene.h">
       <Filter>HeaderFiles\Scenes</Filter>
+    <ClInclude Include="Source\Player.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

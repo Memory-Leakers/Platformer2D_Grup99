@@ -3,6 +3,7 @@
 
 
 #include "Log.h"
+#include "Player.h"
 
 class GameScene
 {
@@ -33,6 +34,8 @@ public:
 	
 public:
 	bool debugTiles = false;
+
+	Player* froggy = nullptr;
 };
 
 #endif // __GAMESCENE_H__
