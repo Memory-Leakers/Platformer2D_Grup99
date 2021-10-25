@@ -26,7 +26,7 @@ Player::Player()
 	idleAnim.PushBack({ 288,14,23,26 });
 	idleAnim.PushBack({ 320,14,23,26 });
 	idleAnim.PushBack({ 0,14,23,26 });
-	idleAnim.speed = 0.15;
+	idleAnim.speed = 0.25;
 	idleAnim.hasIdle = false;
 	//Right Anim
 	rightAnim.PushBack({0,45,25,28});
@@ -42,7 +42,7 @@ Player::Player()
 	rightAnim.PushBack({319,45,25,28});
 	rightAnim.PushBack({351,45,25,28});
 	rightAnim.PushBack({ 0,45,25,28 });
-	rightAnim.speed = 0.20;
+	rightAnim.speed = 0.30;
 	rightAnim.hasIdle = false;
 	//Left Anim
 	leftAnim.PushBack({ 0,45,25,28 });
@@ -58,7 +58,7 @@ Player::Player()
 	leftAnim.PushBack({ 319,45,25,28 });
 	leftAnim.PushBack({ 351,45,25,28 });
 	leftAnim.PushBack({ 0,45,25,28 });
-	leftAnim.speed = 0.20;
+	leftAnim.speed = 0.30;
 	leftAnim.hasIdle = false;
 	currentAnimation = &idleAnim;
 
@@ -99,7 +99,7 @@ bool Player::Update(float dt)
 		currentAnimation = &idleAnim;
 	}
 
-	printf("\n%d , %d\n", position.x, position.y);
+	//printf("\n%d , %d\n", position.x, position.y);
 	return true;
 }
 
