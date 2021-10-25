@@ -4,16 +4,19 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include <iostream>
 
 #define VSYNC true
+#define camX 209
+#define camY -2401
 
 Render::Render() : Module()
 {
 	name.Create("renderer");
-	background.r = 0;
-	background.g = 0;
-	background.b = 0;
-	background.a = 0;
+	background.r = 33;
+	background.g = 31;
+	background.b = 48;
+	background.a = 255;
 }
 
 // Destructor
@@ -45,8 +48,8 @@ bool Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = app->win->screenSurface->w;
 		camera.h = app->win->screenSurface->h;
-		camera.x = 0;
-		camera.y = 0;
+		camera.x = camX;
+		camera.y = camY;
 	}
 
 	return ret;
@@ -64,6 +67,8 @@ bool Render::Start()
 // Called each loop iteration
 bool Render::PreUpdate()
 {
+	std::cout << camera.x << "|" << camera.y << std::endl;
+
 	SDL_RenderClear(renderer);
 	return true;
 }
