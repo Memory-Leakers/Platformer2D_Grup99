@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Log.cpp">
-      <Filter>SourceFiles\Utils</Filter>
+    <ClCompile Include="Source\App.cpp">
+      <Filter>SourceFiles\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
-      <Filter>External\PugiXml</Filter>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>SourceFiles\Application</Filter>
     </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
       <Filter>SourceFiles\Modules</Filter>
@@ -16,45 +16,52 @@
     <ClCompile Include="Source\Map.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Render.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Textures.cpp">
+    <ClCompile Include="Source\Module.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Window.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleCollisions.cpp">
+    <ClCompile Include="Source\Textures.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Module.cpp">
+    <ClCompile Include="Source\Render.cpp">
       <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Collider.cpp">
-      <Filter>SourceFiles\Utils\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\App.cpp">
-      <Filter>SourceFiles\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>SourceFiles\Application</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameScene.cpp">
       <Filter>SourceFiles\Scenes</Filter>
-    <ClCompile Include="Source\Player.cpp">
+    </ClCompile>
+    <ClCompile Include="Source\Log.cpp">
       <Filter>SourceFiles\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleCollisions.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>SourceFiles\Utils\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
+      <Filter>Others</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
-      <Filter>External\PugiXml</Filter>
+    <ClInclude Include="Source\App.h">
+      <Filter>HeaderFiles\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
-      <Filter>External\PugiXml</Filter>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>HeaderFiles\Utils\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>HeaderFiles\Utils\Other</Filter>
     </ClInclude>
     <ClInclude Include="Source\Defs.h">
       <Filter>HeaderFiles\Utils</Filter>
@@ -62,105 +69,103 @@
     <ClInclude Include="Source\DynArray.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GameScene.h">
+      <Filter>HeaderFiles\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Source\List.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Log.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Point.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SString.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Map.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Module.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Render.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Textures.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Window.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\MemLeaks.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Module.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Source\ModuleCollisions.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Collider.h">
-      <Filter>HeaderFiles\Utils\Other</Filter>
+    <ClInclude Include="Source\Player.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\App.h">
-      <Filter>HeaderFiles\Application</Filter>
+    <ClInclude Include="Source\Point.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Textures.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SString.h">
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene.h">
       <Filter>HeaderFiles\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameScene.h">
-      <Filter>HeaderFiles\Scenes</Filter>
-    <ClInclude Include="Source\Player.h">
-      <Filter>HeaderFiles\Utils</Filter>
+    <ClInclude Include="Source\Render.h">
+      <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>HeaderFiles\Utils</Filter>
+    <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
+      <Filter>Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
+      <Filter>Others</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="External">
-      <UniqueIdentifier>{83a966c7-b4bb-4eff-9c2c-3ff3c7b55a60}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\PugiXml">
-      <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="HeaderFiles">
-      <UniqueIdentifier>{6cdb43da-f771-4b73-83b1-aa30df75da2a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles">
-      <UniqueIdentifier>{cf741d4f-f7d6-470f-afbe-278770b4d348}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Modules">
-      <UniqueIdentifier>{af44ca8e-ae3d-449d-b74a-a0b10330630d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Modules">
-      <UniqueIdentifier>{cb4c721c-eb53-448e-ae18-629e9764c0f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Utils">
-      <UniqueIdentifier>{48b05dd0-5c61-44a5-93af-6ca26aa75d82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Utils">
-      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Utils\Other">
-      <UniqueIdentifier>{efe6af4e-30a8-489e-afe9-077dedd26d94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Utils\Other">
-      <UniqueIdentifier>{e43189db-bb27-449c-9aa0-84764391d60a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Application">
-      <UniqueIdentifier>{de742215-0b6e-4f72-b3e1-683536717cf6}</UniqueIdentifier>
+      <UniqueIdentifier>{05612b6d-85b4-4d6b-8df0-ff4ec0a53f2f}</UniqueIdentifier>
     </Filter>
     <Filter Include="HeaderFiles\Application">
-      <UniqueIdentifier>{d001c37a-e123-4a03-b424-9feb77a34e12}</UniqueIdentifier>
+      <UniqueIdentifier>{ec0a4884-93ec-46e2-8285-660191c6d330}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SourceFiles\Scenes">
-      <UniqueIdentifier>{2a374932-0bb6-491b-934f-b67f262afb8b}</UniqueIdentifier>
+    <Filter Include="HeaderFiles\Modules">
+      <UniqueIdentifier>{e571b4ee-c1dc-4a2f-90bf-2d49d1a06e1b}</UniqueIdentifier>
     </Filter>
     <Filter Include="HeaderFiles\Scenes">
-      <UniqueIdentifier>{52bd0035-f418-4b2b-ace5-7ab85126f741}</UniqueIdentifier>
+      <UniqueIdentifier>{2ed8c75a-60b2-41dc-84fc-cb6d3f3b41b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Utils">
+      <UniqueIdentifier>{1c48b1bd-0f55-4ff2-b294-61684c6e1d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Utils\Other">
+      <UniqueIdentifier>{dade2493-bdb9-4b3b-b8ff-90587d8a73ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects">
+      <UniqueIdentifier>{ed6aafce-511c-47a0-a0f4-2fd3b5e305fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles">
+      <UniqueIdentifier>{64283a40-d80b-4bfe-9923-7dcb18d489f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Others">
+      <UniqueIdentifier>{6ce8f6ac-6ccc-4bfe-b254-f05e55401b84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Application">
+      <UniqueIdentifier>{13d3b19b-b341-42b6-be05-b42572b0b814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Modules">
+      <UniqueIdentifier>{4f99466f-53dd-4fc7-8d56-dc1fab463072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Scenes">
+      <UniqueIdentifier>{0524a3e1-abd9-44a7-a11f-61c2f071aaff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Utils">
+      <UniqueIdentifier>{78f4ed85-f0b5-4afa-8fdf-f5a1bd945909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameObjects">
+      <UniqueIdentifier>{13244044-8468-4835-a89e-1188457ba49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Utils\Other">
+      <UniqueIdentifier>{de134f8c-057a-420c-a4f3-7f124b82fa7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
