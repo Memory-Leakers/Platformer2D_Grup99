@@ -242,15 +242,15 @@ bool App::CleanUp()
 		item = item->prev;
 	}
 
-	RELEASE(win);
-	//RELEASE(input);
-	RELEASE(render);
-	RELEASE(tex);
-	RELEASE(audio);
-	RELEASE(scene);
-	RELEASE(map);
-	RELEASE(col);
 
+	//RELEASE(win);
+	//RELEASE(input);
+	//RELEASE(tex);
+	//RELEASE(audio);
+	//RELEASE(scene);
+	//RELEASE(map);
+	//RELEASE(col);
+	//RELEASE(render);
 
 	return ret;
 }

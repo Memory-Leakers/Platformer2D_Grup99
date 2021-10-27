@@ -73,8 +73,11 @@ public:
 	// Destructor
 	virtual ~SString()
 	{
-		if(str != NULL)
+		if (str != nullptr)
+		{
 			delete[] str;
+		}
+			
 	}
 
 	const SString& Create(const char *format, ...)
