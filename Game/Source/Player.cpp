@@ -231,7 +231,7 @@ void Player::WillCollision()
 					case 243:
 
 						//DOWN
-						if (py + bounds.h >= by&&/* py <= by && */px + bounds.w > bx/* && px < bx + 16*/)
+						if (py + bounds.h >= by&& py <= by && px + bounds.w > bx && px < bx + 16)
 						{
 							canMoveDir[DOWN] = false;
 						}
