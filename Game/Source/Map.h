@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "Collider.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -108,6 +109,8 @@ struct MapData
 
 	// L04: DONE 2: Add a list/array of layers to the map
 	List<MapLayer*> layers;
+
+	List<Collider*> col;
 };
 
 class Map : public Module
@@ -148,6 +151,8 @@ private:
 	// L04
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadAllLayers(pugi::xml_node mapNode);
+
+	bool LoadCollisions();
 
 	// L06: TODO 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);

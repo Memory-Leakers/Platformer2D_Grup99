@@ -52,6 +52,10 @@ public:
 	// Called before quitting
 	bool CleanUp() ;
 
+	void OnCollision(Collider* c1, Collider* c2) override;
+
+	void WillCollision(Collider* c1, Collider* c2) override;
+
 public:
 	GameScene* gameScene = nullptr;
 

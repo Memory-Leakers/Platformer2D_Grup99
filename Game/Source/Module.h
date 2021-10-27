@@ -54,9 +54,9 @@ public:
 		return true;
 	}
 
-	void OnCollision(Collider* c1, Collider* c2);
+	virtual void OnCollision(Collider* c1, Collider* c2);
 
-	void WillCollision(Collider* c1, Collider* c2);
+	virtual void WillCollision(Collider* c1, Collider* c2);
 
 public:
 

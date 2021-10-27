@@ -44,3 +44,24 @@ bool Collider::Intersects(const SDL_Rect& r) const
 		rect.y < r.y + r.h &&
 		rect.h + rect.y > r.y);
 }
+
+SString Collider::getTypeAsString()
+{
+	switch (type)
+	{
+	case Type::NONE:
+		return "None";
+	case Type::WALL:
+		return "Wall";
+	case Type::PLAYER:
+		return "Player";
+	case Type::ENEMY:
+		return "Enemy";
+	case Type::PICKER:
+		return "Picker";
+	case Type::AREA:
+		return "Area";
+	case Type::MAX:
+		return "Max";
+	}
+}

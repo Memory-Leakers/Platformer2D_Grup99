@@ -88,6 +88,17 @@ bool Scene::Update(float dt)
 	return true;
 }
 
+void Scene::OnCollision(Collider* c1, Collider* c2)
+{
+	gameScene->OnCollision(c1, c2);
+}
+
+void Scene::WillCollision(Collider* c1, Collider* c2)
+{
+	gameScene->WillCollision(c1, c2);
+}
+
+
 // Called each loop iteration
 bool Scene::PostUpdate()
 {

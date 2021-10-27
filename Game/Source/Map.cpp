@@ -4,9 +4,9 @@
 #include "Textures.h"
 #include "Map.h"
 
+
 #include "Defs.h"
 #include "Log.h"
-
 #include <math.h>
 
 Map::Map() : Module(), mapLoaded(false)
@@ -55,6 +55,9 @@ void Map::Draw()
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
 
+	ListItem<Collider*>* colItem;
+	colItem = mapData.col.start;
+
 	// L06: TODO 4: Make sure we draw all the layers and not just the first one
 	while (mapLayerItem != NULL) {
 
@@ -77,12 +80,13 @@ void Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
 
+						//TEXTURE
 						app->render->DrawTexture(tileset->texture,
 							pos.x,
 							pos.y,
 							&r);
 					}
-
+					
 				}
 			}
 		}
@@ -114,6 +118,9 @@ void Map::Draw()
 
 		mapLayerItem = mapLayerItem->next;
 	}
+
+	//COLLISION
+
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -271,6 +278,12 @@ bool Map::Load(const char* filename)
 	{
 		ret = LoadAllLayers(mapFile.child("map"));
 	}
+
+	if (ret == true)
+	{
+		//ret = LoadCollisions();
+	}
+
     
     if(ret == true)
     {
@@ -397,6 +410,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	for (tile = node.child("data").child("tile"); tile && ret; tile = tile.next_sibling("tile"))
 	{
 		layer->data[i] = tile.attribute("gid").as_int();
+
 		i++;
 	}
 
@@ -434,4 +448,44 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	}
 	
 	return ret;
+}
+
+bool Map::LoadCollisions()
+{
+
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = mapData.layers.start;
+
+
+	while (mapLayerItem != NULL)
+	{
+		if (mapLayerItem->data->properties.GetProperty("Navigation"))
+		{
+			
+
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid == 243)
+					{
+
+						if (x == NULL && y == NULL)
+						{
+							cout << "yup" << endl;
+						}
+
+						mapData.col.add(app->col->AddCollider({ x * 16, y * 16, 16 , 16 }, Type::WALL, app->scene));
+					}
+				}
+			}
+		}
+
+		mapLayerItem = mapLayerItem->next;
+	}
+
+
+	return true;
 }

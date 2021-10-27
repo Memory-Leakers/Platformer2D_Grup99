@@ -70,8 +70,8 @@ bool Render::PreUpdate()
 	int x, y;
 	iPoint worldpos;
 	app->input->GetMousePosition(x, y);
-	std::cout << camera.x << "|" << camera.y <<"\n"<< std::endl;
-	std::cout << worldpos.x << "|" << worldpos.y <<std::endl;
+	//std::cout << camera.x << "|" << camera.y <<"\n"<< std::endl;
+	//std::cout << worldpos.x << "|" << worldpos.y <<std::endl;
 
 	SDL_RenderClear(renderer);
 	return true;
