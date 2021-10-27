@@ -73,3 +73,58 @@ bool GameScene::CleanUp()
 
 	return true;
 }
+
+void GameScene::OnCollision(Collider* c1, Collider* c2)
+{
+	
+	if (froggy != nullptr && froggy->col == c1)
+	{
+		froggy->OnCollision(c2);
+		SString temp = c1->getTypeAsString();
+		//cout << "Scene Collide " << temp.GetString() << endl;
+	}
+	/*
+	for (int i = 0; i < MAX_POWERUPS; ++i)
+	{
+		if (powerUps[i] != nullptr && powerUps[i]->getCollider() == c1)
+		{
+			powerUps[i]->OnCollision(c2);
+		}
+	}
+	*/
+
+	ListItem<Collider*>* colItem;
+	colItem = app->map->mapData.col.start;
+
+
+	while (colItem != NULL)
+	{
+		// Whenever it collides with something
+		if (colItem->data == c1)
+		{
+
+			
+			//sceneObstacles[i]->OnCollision(c2);
+			
+		}
+		colItem = colItem->next;
+	}
+	/*
+	for (int i = 0; i < MAX_ENEMY; ++i)
+	{
+		if (enemy[i] != nullptr && enemy[i]->getCollider() == c1)
+		{
+			enemy[i]->OnCollision(c2);
+		}
+	}
+	*/
+}
+
+void GameScene::WillCollision(Collider* c1, Collider* c2)
+{
+	
+	if (froggy != nullptr && froggy->col == c1)
+	{
+		//froggy->WillCollision();
+	}
+}

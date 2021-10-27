@@ -140,18 +140,18 @@ bool ModuleCollisions::Update()
 
 bool ModuleCollisions::PostUpdate()
 {
-	/*
-	if (App->debug->debugColBox)
-	{
-		DebugDraw();
-	}
-	*/
+	DebugDraw();
+	//if (App->debug->debugColBox)
+	//{
+		//DebugDraw();
+	//}
+	
 	return true;
 }
 
 void ModuleCollisions::DebugDraw()
 {
-	/*
+	
 	Uint8 alpha = 80;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -160,43 +160,12 @@ void ModuleCollisions::DebugDraw()
 
 		switch (colliders[i]->type)
 		{
-		case Type::NONE: // white
-		//App->render->DrawRectangle(colliders[i]->rect, SDL_Color{ 255, 255, 255, alpha });
-			App->render->AddRectRenderQueue(colliders[i]->rect, SDL_Color{ 255, 255, 255, alpha });
-			break;
-		case Type::WALL: // blue
-		//App->render->DrawRectangle(colliders[i]->rect, SDL_Color{ 0, 0, 255, alpha });
-			App->render->AddRectRenderQueue(colliders[i]->rect, SDL_Color{ 0, 0, 255, alpha });
-			break;
-		case Type::PLAYER: // green
-		//App->render->DrawRectangle(colliders[i]->rect, SDL_Color{ 0, 255, 0, alpha });
-			App->render->AddRectRenderQueue(colliders[i]->rect, SDL_Color{ 0, 255, 0, alpha });
-			break;
-		case Type::ENEMY: // red
-		//App->render->DrawRectangle(colliders[i]->rect, SDL_Color{ 255, 0, 0, alpha });
-			App->render->AddRectRenderQueue(colliders[i]->rect, SDL_Color{ 255, 0, 0, alpha });
-			break;
-		case Type::BOMB: // yellow
-		//App->render->DrawRectangle(colliders[i]->rect, SDL_Color{ 255, 255, 0, alpha });
-			App->render->AddRectRenderQueue(colliders[i]->rect, SDL_Color{ 255, 255, 0, alpha });
-			break;
-		case Type::EXPLOSION: // cyan
-		//App->render->DrawRectangle(colliders[i]->rect, SDL_Color{ 0, 255, 255, alpha });
-			App->render->AddRectRenderQueue(colliders[i]->rect, SDL_Color{ 0, 255, 255, alpha });
-			break;
-		case Type::DESTRUCTABLE_WALL: // magenta
-		//App->render->DrawRectangle(colliders[i]->rect, SDL_Color{ 255, 0, 255, alpha });
-			App->render->AddRectRenderQueue(colliders[i]->rect, SDL_Color{ 255, 0, 255, alpha });
-			break;
-		case Type::FIREPOWER: // black
-		case Type::BOMBPOWER:
-		case Type::INVINCIBLEPOWER:
-			//App->render->DrawRectangle(colliders[i]->rect, SDL_Color{ 0, 0, 0, alpha });
-			App->render->AddRectRenderQueue(colliders[i]->rect, SDL_Color{ 0, 0, 0, alpha });
-			break;
-		}
+			case Type::WALL: // WHITE
+				//app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, 80);
+				break;
+			}
 	}
-	*/
+	
 }
 
 // Called before quitting

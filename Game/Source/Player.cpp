@@ -1,11 +1,14 @@
 #include "Player.h"
 #include "App.h"
-//#include "Textures.h"
 
 Player::Player()
 {
+	/*
+	#define camX -118
+	#define camY -2401
+	*/
 	position.x = 207;
-	position.y = 1430;
+	position.y = 1429;
 
 	//Rect for col
 	bounds.x = position.x;
@@ -62,44 +65,73 @@ Player::Player()
 	leftAnim.hasIdle = false;
 	currentAnimation = &idleAnim;
 
+	// Init move direccion
+	for (int i = 0; i < 4; i++)
+	{
+		canMoveDir[i] = true;
+	}
 }
 
 bool Player::Start()
 {
-	
+
+	//Texture
 	player_tex = app->tex->Load("Assets/MainCharacters/Ninja_Frog_Sprites.png");
+
+	//Collider
+	this->col = app->col->AddCollider(bounds, Type::PLAYER, app->scene);
+
+	return true;
+}
+
+bool Player::PreUpdate()
+{
+	isFlip = false;
 
 	return true;
 }
 
 bool Player::Update(float dt)
 {
-
+	///COLL
+	WillCollision();
+	///
 	currentAnimation->Update();
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && canMoveDir[UP])
 		position.y -= 1;
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && canMoveDir[DOWN])
 		position.y += 1;
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 	{
 		position.x -= 1;
 		currentAnimation = &leftAnim;
+		isFlip = true;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && canMoveDir[RIGHT])
 	{
 		position.x += 1;
 		currentAnimation = &rightAnim;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
-		
+
 		currentAnimation = &idleAnim;
 	}
 
 	//printf("\n%d , %d\n", position.x, position.y);
+
+	// Reset Movemenet
+	for (int i = 0; i < 4; i++)
+	{
+		canMoveDir[i] = true;
+	}
+
+	//bounds.x = position.x;
+	//bounds.y = position.y;
+
 	return true;
 }
 
@@ -109,7 +141,33 @@ bool Player::PostUpdate()
 
 	iPoint tempPos = position;
 
-	app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect);
+	if (isFlip)
+	{
+		app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect, 1.0f, SDL_FLIP_HORIZONTAL);
+		isFlip = false;
+	}
+	else
+	{
+		app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect);
+	}
+
+	//Debug
+	if (app->scene->gameScene->debugTiles)
+	{
+		bounds.x = position.x;
+		bounds.y = position.y;
+		app->render->DrawRectangle(bounds, 255, 255, 255, 80);
+	}
+
+	return true;
+}
+
+bool Player::CleanUp() {
+
+	playerRect = nullptr;
+	player_tex = nullptr;
+	currentAnimation = nullptr;
+
 
 	return true;
 }
@@ -119,12 +177,91 @@ Player::~Player()
 
 }
 
-bool Player::CleanUp() {
-	
-	playerRect = nullptr;
-	player_tex = nullptr;
-	currentAnimation = nullptr;
+
+void Player::OnCollision(Collider* col)
+{
+	//if (!godMode)
+	//{
+		switch (col->type)
+		{
+
+		//case Type::WALL:
 
 
-	return true;
+		/*case Type::EXPLOSION:
+		case Type::ENEMY:
+			if (invensibleTime <= 0 && InGrid(col)) Die(); break;
+
+		case Type::FIREPOWER:
+			App->scene->playerSettings->powerUpFlame++; break;
+
+		case Type::BOMBPOWER:
+			App->scene->playerSettings->maxBomb++;
+			App->scene->playerSettings->RemainBomb(true); break;
+
+		case Type::INVINCIBLEPOWER:
+			invensibleTime = 10;
+			playerInvensible.invensibleCount = SDL_GetTicks() - (App->debug->pauseTimeOffset * 1000);
+			break;*/
+
+		}
+
+	//}
+}
+
+void Player::WillCollision()
+{
+	int px = position.x;
+	int py = position.y;
+
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = app->map->mapData.layers.start;
+
+	while (mapLayerItem != NULL) {
+		if (mapLayerItem->data->properties.GetProperty("Navigation") == 1)
+		{
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					int bx = x * 16;
+					int by = y * 16;
+
+					switch (gid)
+					{
+					case 243:
+
+						//DOWN
+						if (py + bounds.h >= by&& py <= by && px + bounds.w > bx && px < bx + 16)
+						{
+							canMoveDir[DOWN] = false;
+						}
+
+						//UP
+						if (py >= by + 16 && py <= by + 16 && px + bounds.w > bx && px < bx + 16)
+						{
+							canMoveDir[UP] = false;
+						}
+
+						//RIGHT
+						if (px + bounds.w >= bx && px <= bx && py + bounds.h > by && py < by + 16)
+						{
+							canMoveDir[RIGHT] = false;
+						}
+
+						//LEFT
+						if (px >= bx + 16 && px <= bx + 16 && py + bounds.h > by && py < by + 16)
+						{
+							canMoveDir[LEFT] = false;
+						}
+
+						break;
+					}
+				}
+			}
+		}
+		mapLayerItem = mapLayerItem->next;
+	}
 }

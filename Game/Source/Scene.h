@@ -52,6 +52,14 @@ public:
 	// Called before quitting
 	bool CleanUp() ;
 
+	void OnCollision(Collider* c1, Collider* c2) override;
+
+	void WillCollision(Collider* c1, Collider* c2) override;
+
+	bool LoadState(pugi::xml_node&) override;
+
+	bool SaveState(pugi::xml_node&) const override;
+
 public:
 	GameScene* gameScene = nullptr;
 

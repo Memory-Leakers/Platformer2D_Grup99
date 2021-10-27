@@ -31,7 +31,11 @@ public:
 
 	// Called before quitting
 	bool CleanUp() ;
-	
+
+	void OnCollision(Collider* c1, Collider* c2);
+
+	void WillCollision(Collider* c1, Collider* c2);
+
 public:
 	bool debugTiles = false;
 

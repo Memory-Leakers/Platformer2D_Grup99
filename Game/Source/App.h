@@ -16,8 +16,8 @@
 
 #include "PugiXml/src/pugixml.hpp"
 
-#define CONFIG_FILENAME		"config.xml"
-#define SAVE_STATE_FILENAME "save_game.xml"
+#define CONFIG_FILENAME		"SaveFiles/config.xml"
+#define SAVE_STATE_FILENAME "SaveFiles/save_game.xml"
 
 // Modules
 class Window;

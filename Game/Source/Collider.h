@@ -4,6 +4,7 @@
 #include "External/SDL/include/SDL_Rect.h"
 
 #include "Point.h"
+#include "SString.h"
 
 class Module;
 
@@ -42,6 +43,9 @@ struct Collider
 	bool pendingToDelete = false;
 	Type type;
 	Module* listener = nullptr;
+
+	SString getTypeAsString();
+
 };
 
 #endif // !__COLLIDER_H__
