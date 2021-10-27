@@ -66,5 +66,10 @@ bool GameScene::CleanUp()
 {
 	LOG("Freeing Game Scene");
 
+	froggy->CleanUp();
+	delete froggy;
+	froggy = nullptr;
+	
+
 	return true;
 }

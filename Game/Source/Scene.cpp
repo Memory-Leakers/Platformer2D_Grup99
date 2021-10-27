@@ -106,6 +106,12 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	levelList.clear();
+
+
+	gameScene->CleanUp();
+	delete gameScene;
+	gameScene = nullptr;
 
 	return true;
 }

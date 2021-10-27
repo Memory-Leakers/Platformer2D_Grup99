@@ -23,6 +23,8 @@ public:
 	// Performs the render call of the player sprite
 	bool PostUpdate();
 
+	bool CleanUp();
+
 public:
 
 	iPoint position;

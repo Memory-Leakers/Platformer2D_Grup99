@@ -77,6 +77,8 @@ bool Window::CleanUp()
 		SDL_DestroyWindow(window);
 	}
 
+	screenSurface = nullptr;
+
 	// Quit SDL subsystems
 	SDL_Quit();
 	return true;

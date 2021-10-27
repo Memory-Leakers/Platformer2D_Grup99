@@ -61,6 +61,7 @@ bool Audio::Awake(pugi::xml_node& config)
 // Called before quitting
 bool Audio::CleanUp()
 {
+
 	if(!active)
 		return true;
 

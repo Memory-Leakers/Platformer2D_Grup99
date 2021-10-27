@@ -118,3 +118,13 @@ Player::~Player()
 {
 
 }
+
+bool Player::CleanUp() {
+	
+	playerRect = nullptr;
+	player_tex = nullptr;
+	currentAnimation = nullptr;
+
+
+	return true;
+}

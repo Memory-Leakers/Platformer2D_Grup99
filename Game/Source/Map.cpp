@@ -219,7 +219,6 @@ bool Map::CleanUp()
 		RELEASE(item->data);
 		item = item->next;
 	}
-	mapData.tilesets.clear();
 
 	// L04: DONE 2: clean up all layer data
 	// Remove all layers
@@ -232,6 +231,7 @@ bool Map::CleanUp()
 		item2 = item2->next;
 	}
 	mapData.layers.clear();
+	mapData.tilesets.clear();
 
     return true;
 }
