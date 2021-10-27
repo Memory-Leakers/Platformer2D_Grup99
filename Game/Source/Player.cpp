@@ -84,6 +84,13 @@ bool Player::Start()
 	return true;
 }
 
+bool Player::PreUpdate()
+{
+	isFlip = false;
+
+	return true;
+}
+
 bool Player::Update(float dt)
 {
 	///COLL
@@ -101,6 +108,7 @@ bool Player::Update(float dt)
 	{
 		position.x -= 1;
 		currentAnimation = &leftAnim;
+		isFlip = true;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && canMoveDir[RIGHT])
 	{
@@ -133,7 +141,15 @@ bool Player::PostUpdate()
 
 	iPoint tempPos = position;
 
-	app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect);
+	if (isFlip)
+	{
+		app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect, 1.0f, SDL_FLIP_HORIZONTAL);
+		isFlip = false;
+	}
+	else
+	{
+		app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect);
+	}
 
 	//Debug
 	if (app->scene->gameScene->debugTiles)
@@ -165,8 +181,11 @@ void Player::OnCollision(Collider* col)
 	//{
 		switch (col->type)
 		{
-			/*
-		case Type::EXPLOSION:
+
+		//case Type::WALL:
+
+			
+		/*case Type::EXPLOSION:
 		case Type::ENEMY:
 			if (invensibleTime <= 0 && InGrid(col)) Die(); break;
 
@@ -180,8 +199,8 @@ void Player::OnCollision(Collider* col)
 		case Type::INVINCIBLEPOWER:
 			invensibleTime = 10;
 			playerInvensible.invensibleCount = SDL_GetTicks() - (App->debug->pauseTimeOffset * 1000);
-			break;
-		*/
+			break;*/
+		
 		}
 		
 	//}
@@ -212,7 +231,7 @@ void Player::WillCollision()
 					case 243:
 
 						//DOWN
-						if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
+						if (py + bounds.h >= by&&/* py <= by && */px + bounds.w > bx/* && px < bx + 16*/)
 						{
 							canMoveDir[DOWN] = false;
 						}
