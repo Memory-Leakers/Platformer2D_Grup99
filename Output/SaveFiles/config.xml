@@ -1,0 +1,28 @@
+<!-- Config file for the game -->
+<!-- L01: DONE 1: Create configuration file-->
+<config>
+    <app>
+        <title>The Super Adventure of Ninja Froggy</title>
+        <organization>MemoryLeakers-Grup99</organization>
+        <version>0.1</version>
+    </app>
+
+    <renderer>
+        <vsync value="true"/>
+    </renderer>
+
+    <window>
+        <resolution width="1080" height="540" scale="2"/>
+        <fullscreen value="false"/>
+        <borderless value="false"/>
+        <resizable value="false"/>
+        <fullscreen_window value="false"/>
+    </window>
+
+    <scene>
+		<startScene value="Level1.tmx"/>
+    </scene>
+    <map>
+        <folder>Assets/maps/</folder>
+    </map>
+</config>

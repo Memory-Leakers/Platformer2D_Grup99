@@ -30,9 +30,7 @@ bool Scene::Start()
 	gameScene->Start();
 
 	// L03: DONE: Load map
-	//app->map->Load("hello.tmx");
-	app->map->Load("Level1.tmx");
-	//app->map->Load("iso_nav.tmx");
+	app->map->Load(levelList[0]->file.GetString());
 
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -54,12 +52,15 @@ bool Scene::Update(float dt)
 
 	gameScene->Update(dt);
 
-    // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+    // LOAD AND SAVE
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
 		app->LoadGameRequest();
-
-	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
 		app->SaveGameRequest();
+	}
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y += 2;
@@ -71,11 +72,7 @@ bool Scene::Update(float dt)
 		app->render->camera.x += 2;
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= 2;
-
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
-
-	
+		app->render->camera.x -= 2;	
 
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -112,6 +109,20 @@ bool Scene::PostUpdate()
 
 	return ret;
 }
+
+
+bool Scene::LoadState(pugi::xml_node&)
+{
+	return true;
+}
+
+bool Scene::SaveState(pugi::xml_node&) const
+{
+
+	return true;
+}
+
+
 
 // Called before quitting
 bool Scene::CleanUp()
