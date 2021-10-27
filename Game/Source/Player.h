@@ -24,6 +24,7 @@ public:
 	// Loads the necessary textures for the player
 	bool Start();
 
+	bool PreUpdate();
 	// Called at the middle of the application loop
 	// Processes new input and handles player movement
 	bool Update(float dt);
@@ -40,7 +41,25 @@ public:
 	// Callback if will be collision, called when the player intersects with another
 	void WillCollision();
 
+private:
+
+	// A set of animations
+
+	Animation idleAnim;
+
+	Animation upAnim;
+
+	Animation downAnim;
+
+	Animation leftAnim;
+
+	Animation rightAnim;
+
+	Animation* currentAnimation = nullptr;
+
 public:
+
+	float speed = 1.0f;
 
 	iPoint position;
 
@@ -53,19 +72,6 @@ public:
 	bool isFlip = false;
 
 	SDL_Texture* player_tex;
-
-	// A set of animations
-	Animation idleAnim;
-
-	Animation upAnim;
-
-	Animation downAnim;
-
-	Animation leftAnim;
-
-	Animation rightAnim;
-
-	Animation* currentAnimation = nullptr;
 
 	// Collider
 	Collider* col = nullptr;
