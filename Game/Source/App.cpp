@@ -299,10 +299,34 @@ void App::SaveGameRequest() const
 /*LOAD GAME*/
 bool App::LoadGame()
 {
-	bool ret = false;
+	bool ret = true;
 
 	//app->scene->LoadState();
+	pugi::xml_document* doc = new pugi::xml_document();
+	doc->load_file(SAVE_STATE_FILENAME);
 
+	pugi::xml_parse_result result = doc->load_file(SAVE_STATE_FILENAME);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description());
+	else ret = doc->child("game_state");
+
+	ListItem<Module*>* item;
+	item = modules.start;
+
+	cout << "First->" << doc->child("game_state").child("scene").child("player").attribute("posX").as_int() << endl;
+
+	while (item != NULL && ret == true)
+	{
+		if(item->data->LoadState(doc->child("game_state").child(item->data->name.GetString())))
+		{
+			LOG("%s load correctly", item->data->name.GetString());
+		}
+		else
+		{
+			LOG("%s wasn't able to be loaded", item->data->name.GetString());
+		}
+		item = item->next;
+	}
 	loadGameRequested = false;
 
 	return ret;
@@ -313,7 +337,31 @@ bool App::SaveGame() const
 {
 	bool ret = true;
 
-	//...
+	pugi::xml_document* doc = new pugi::xml_document();
+	doc->load_file(SAVE_STATE_FILENAME);
+
+	pugi::xml_parse_result result = doc->load_file(SAVE_STATE_FILENAME);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description());
+	else ret = doc->child("game_state");
+
+	ListItem<Module*>* item;
+	item = modules.start;
+	cout << "First->" << doc->child("game_state").child("scene").child("player").attribute("posX").as_int() << endl;
+	while (item != NULL && ret == true)
+	{
+		if (item->data->SaveState(doc->child("game_state").child(item->data->name.GetString())))
+		{
+			LOG("%s saved correctly", item->data->name.GetString());
+		}
+		else
+		{
+			LOG("%s wasn't able to be saved", item->data->name.GetString());
+		}
+		item = item->next;
+	}
+	doc->save_file(SAVE_STATE_FILENAME);
+	cout << "Second->" << doc->child("game_state").child("scene").child("player").attribute("posX").as_int() << endl;
 
 	saveGameRequested = false;
 

@@ -111,13 +111,18 @@ bool Scene::PostUpdate()
 }
 
 
-bool Scene::LoadState(pugi::xml_node&)
+bool Scene::LoadState(pugi::xml_node& data)
 {
+	gameScene->froggy->position.x = data.child("player").attribute("posX").as_int();
+	gameScene->froggy->position.y = data.child("player").attribute("posY").as_int();
+
 	return true;
 }
 
-bool Scene::SaveState(pugi::xml_node&) const
+bool Scene::SaveState(pugi::xml_node& data) const
 {
+	data.child("player").attribute("posX") = gameScene->froggy->position.x;
+	data.child("player").attribute("posY") = gameScene->froggy->position.y;
 
 	return true;
 }

@@ -31,8 +31,8 @@ public:
 	bool CleanUp();
 
 	// Load / Save
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
+	bool LoadState(pugi::xml_node&) override;
+	bool SaveState(pugi::xml_node&) const override;
 
 	void SetViewPort(const SDL_Rect& rect);
 	void ResetViewPort();

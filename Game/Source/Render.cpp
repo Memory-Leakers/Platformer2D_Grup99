@@ -84,7 +84,7 @@ bool Render::Update(float dt)
 
 bool Render::PostUpdate()
 {
-	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
+	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
 }
@@ -94,28 +94,6 @@ bool Render::CleanUp()
 {
 	LOG("Destroying SDL render");
 	SDL_DestroyRenderer(renderer);
-	return true;
-}
-
-// L02: DONE 6: Implement a method to load the state, for now load camera's x and y
-// Load Game State
-bool Render::LoadState(pugi::xml_node& data)
-{
-	camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
-
-	return true;
-}
-
-// L02: DONE 8: Create a method to save the state of the renderer
-// Save Game State
-bool Render::SaveState(pugi::xml_node& data) const
-{
-	pugi::xml_node cam = data.append_child("camera");
-
-	cam.append_attribute("x") = camera.x;
-	cam.append_attribute("y") = camera.y;
-
 	return true;
 }
 
@@ -256,4 +234,21 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 	}
 
 	return ret;
+}
+
+bool Render::LoadState(pugi::xml_node& data)
+{
+	camera.x = data.child("camera").attribute("x").as_int();
+	camera.y = data.child("camera").attribute("y").as_int();
+
+	return true;
+}
+
+bool Render::SaveState(pugi::xml_node& data) const
+{
+
+	data.child("camera").attribute("x") = camera.x;
+	data.child("camera").attribute("y") = camera.y;
+
+	return true;
 }
