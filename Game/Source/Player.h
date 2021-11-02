@@ -76,4 +76,6 @@ public:
 	// Collider
 	Collider* col = nullptr;
 
+	int playerScore = 0;
+
 };

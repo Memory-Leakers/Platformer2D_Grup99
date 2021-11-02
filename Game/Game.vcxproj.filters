@@ -49,6 +49,12 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>Others</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Pickable.cpp">
+      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Coin.cpp">
+      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -120,6 +126,12 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
       <Filter>Others</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Pickable.h">
+      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Coin.h">
+      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="HeaderFiles">
@@ -166,6 +178,12 @@
     </Filter>
     <Filter Include="SourceFiles\Utils\Other">
       <UniqueIdentifier>{de134f8c-057a-420c-a4f3-7f124b82fa7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameObjects\Pickable">
+      <UniqueIdentifier>{80cab0ee-6e07-44aa-b2fb-a1e22df68a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects\Pickable">
+      <UniqueIdentifier>{0886099d-b249-4c1b-b2b8-7ea2123cc2d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -129,8 +129,9 @@ bool Player::Update(float dt)
 		canMoveDir[i] = true;
 	}
 
-	//bounds.x = position.x;
-	//bounds.y = position.y;
+	col->SetPos(position);
+
+	cout << playerScore << endl;
 
 	return true;
 }
@@ -154,8 +155,6 @@ bool Player::PostUpdate()
 	//Debug
 	if (app->scene->gameScene->debugTiles)
 	{
-		bounds.x = position.x;
-		bounds.y = position.y;
 		app->render->DrawRectangle(bounds, 255, 255, 255, 80);
 	}
 

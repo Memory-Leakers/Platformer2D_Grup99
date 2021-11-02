@@ -26,6 +26,9 @@ bool GameScene::Start()
 	froggy = new Player();
 	froggy->Start();
 
+	coin = new Coin(227, 1429);
+	coin->Start();
+
 
 
 	return ret;
@@ -35,6 +38,12 @@ bool GameScene::PreUpdate()
 {
 	bool ret = true;
 
+	if (coin != nullptr && coin->pendingToDelete)
+	{
+		delete coin;
+		coin = nullptr;
+	}
+
 	return ret;
 }
 
@@ -43,7 +52,14 @@ bool GameScene::Update(float dt)
 	bool ret = true;
 
 	froggy->Update(dt);
+	
+	if (coin != nullptr)
+	{
+		coin->Update(dt);
+	}
+	
 
+	//DEBUG
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		debugTiles = !debugTiles;
@@ -59,6 +75,12 @@ bool GameScene::PostUpdate()
 
 	froggy->PostUpdate();
 
+	if (coin != nullptr)
+	{
+		coin->PostUpdate();
+	}
+	
+
 	return ret;
 }
 
@@ -69,6 +91,12 @@ bool GameScene::CleanUp()
 	froggy->CleanUp();
 	delete froggy;
 	froggy = nullptr;
+
+	if (coin != nullptr)
+	{
+		delete coin;
+		coin = nullptr;
+	}
 	
 
 	return true;
@@ -80,8 +108,11 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 	if (froggy != nullptr && froggy->col == c1)
 	{
 		froggy->OnCollision(c2);
-		SString temp = c1->getTypeAsString();
-		//cout << "Scene Collide " << temp.GetString() << endl;
+	}
+
+	if (coin != nullptr && coin->col == c1)
+	{
+		coin->OnCollision(c2);
 	}
 	/*
 	for (int i = 0; i < MAX_POWERUPS; ++i)

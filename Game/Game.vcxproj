@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -98,17 +99,20 @@
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\Module.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
+    <ClCompile Include="Source\Pickable.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\GameScene.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\MemLeaks.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
+    <ClInclude Include="Source\Pickable.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Audio.h" />

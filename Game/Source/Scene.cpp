@@ -41,6 +41,8 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+
+	gameScene->PreUpdate();
 	return true;
 }
 

@@ -4,6 +4,7 @@
 
 #include "Log.h"
 #include "Player.h"
+#include "Coin.h"
 
 class GameScene
 {
@@ -40,6 +41,7 @@ public:
 	bool debugTiles = false;
 
 	Player* froggy = nullptr;
+	Coin* coin = nullptr;
 };
 
 #endif // __GAMESCENE_H__
