@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "time.h"
 
 
 Scene::Scene() : Module()
@@ -184,7 +185,7 @@ void Scene::drawBackground()
 void Scene::bgSelector()
 {
 	srand(time(0));
-
+	
 	int num;
 	num = rand() % 7;
 

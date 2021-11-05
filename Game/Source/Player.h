@@ -95,13 +95,12 @@ public:
 
 	iPoint position;
 
-	float jumpHeight;
+	float jumpHeight = 16;
 
-	bool onGround = true;
-
-	bool willcollide = false;
 
 	Timer jumptimer;
+
+	float DelTime;
 
 	//Movement & textures
 
@@ -120,4 +119,5 @@ public:
 
 	int playerScore = 0;
 
+	bool ret;
 };
