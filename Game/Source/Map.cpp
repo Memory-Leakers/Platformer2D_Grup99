@@ -49,7 +49,6 @@ bool Map::Awake(pugi::xml_node& config)
 // Draw the map (all requried layers)
 void Map::Draw()
 {
-	app->render->drawBackground();
 
 	if (mapLoaded == false) return;
 

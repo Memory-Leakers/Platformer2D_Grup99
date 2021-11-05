@@ -7,6 +7,16 @@
 
 struct SDL_Texture;
 
+enum background {
+	Blue = 0,
+	Brown,
+	Gray,
+	Green,
+	Pink,
+	Purple,
+	Yellow
+};
+
 struct Level
 {
 	Level(int levelNum, SString file)
@@ -59,6 +69,11 @@ public:
 	bool LoadState(pugi::xml_node&) override;
 
 	bool SaveState(pugi::xml_node&) const override;
+	
+private:
+	void bgSelector();
+
+	void drawBackground();
 
 public:
 	GameScene* gameScene = nullptr;
@@ -68,7 +83,10 @@ private:
 
 	List<Level*> levelList;
 
-	
+	SDL_Texture* bgTex = nullptr;
+
+	int bgPivX = 0;
+	int bgPivY = -2000;
 
 };
 
