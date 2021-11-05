@@ -1,189 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\App.cpp">
-      <Filter>SourceFiles\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>SourceFiles\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Map.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Module.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Window.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Textures.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Render.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
-      <Filter>SourceFiles\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameScene.cpp">
-      <Filter>SourceFiles\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Log.cpp">
-      <Filter>SourceFiles\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ModuleCollisions.cpp">
-      <Filter>SourceFiles\Modules</Filter>
+    <ClCompile Include="Source\Collider.cpp" />
+    <ClCompile Include="Source\GameScene.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\App.cpp" />
+    <ClCompile Include="Source\Audio.cpp" />
+    <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\Module.cpp" />
+    <ClCompile Include="Source\ModuleCollisions.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
+    <ClCompile Include="Source\Render.cpp" />
+    <ClCompile Include="Source\Textures.cpp" />
+    <ClCompile Include="Source\Window.cpp" />
+    <ClCompile Include="Source\Log.cpp" />
+    <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="Source\Pickable.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Source\Player.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Collider.cpp">
-      <Filter>SourceFiles\Utils\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
-      <Filter>Others</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Pickable.cpp">
-      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+      <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Source\Coin.cpp">
-      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\App.h">
-      <Filter>HeaderFiles\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>HeaderFiles\Utils\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Collider.h">
-      <Filter>HeaderFiles\Utils\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Defs.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\DynArray.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameScene.h">
-      <Filter>HeaderFiles\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\List.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Log.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Map.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MemLeaks.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Module.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleCollisions.h">
-      <Filter>HeaderFiles\Modules</Filter>
+    <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Collider.h" />
+    <ClInclude Include="Source\GameScene.h" />
+    <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\MemLeaks.h" />
+    <ClInclude Include="Source\ModuleCollisions.h" />
+    <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\Audio.h" />
+    <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\App.h" />
+    <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\Render.h" />
+    <ClInclude Include="Source\Textures.h" />
+    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Window.h" />
+    <ClInclude Include="Source\Defs.h" />
+    <ClInclude Include="Source\List.h" />
+    <ClInclude Include="Source\Log.h" />
+    <ClInclude Include="Source\Point.h" />
+    <ClInclude Include="Source\SString.h" />
+    <ClInclude Include="Source\DynArray.h" />
+    <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp" />
+    <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="Source\Pickable.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Point.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Window.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Textures.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SString.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>HeaderFiles\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Render.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
-      <Filter>Others</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
-      <Filter>Others</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Pickable.h">
-      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
+      <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Source\Coin.h">
-      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="HeaderFiles">
-      <UniqueIdentifier>{05612b6d-85b4-4d6b-8df0-ff4ec0a53f2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Application">
-      <UniqueIdentifier>{ec0a4884-93ec-46e2-8285-660191c6d330}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Modules">
-      <UniqueIdentifier>{e571b4ee-c1dc-4a2f-90bf-2d49d1a06e1b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Scenes">
-      <UniqueIdentifier>{2ed8c75a-60b2-41dc-84fc-cb6d3f3b41b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Utils">
-      <UniqueIdentifier>{1c48b1bd-0f55-4ff2-b294-61684c6e1d69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Utils\Other">
-      <UniqueIdentifier>{dade2493-bdb9-4b3b-b8ff-90587d8a73ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\GameObjects">
-      <UniqueIdentifier>{ed6aafce-511c-47a0-a0f4-2fd3b5e305fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles">
-      <UniqueIdentifier>{64283a40-d80b-4bfe-9923-7dcb18d489f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Others">
-      <UniqueIdentifier>{6ce8f6ac-6ccc-4bfe-b254-f05e55401b84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Application">
-      <UniqueIdentifier>{13d3b19b-b341-42b6-be05-b42572b0b814}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Modules">
-      <UniqueIdentifier>{4f99466f-53dd-4fc7-8d56-dc1fab463072}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Scenes">
-      <UniqueIdentifier>{0524a3e1-abd9-44a7-a11f-61c2f071aaff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Utils">
-      <UniqueIdentifier>{78f4ed85-f0b5-4afa-8fdf-f5a1bd945909}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\GameObjects">
-      <UniqueIdentifier>{13244044-8468-4835-a89e-1188457ba49a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\Utils\Other">
-      <UniqueIdentifier>{de134f8c-057a-420c-a4f3-7f124b82fa7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\GameObjects\Pickable">
-      <UniqueIdentifier>{80cab0ee-6e07-44aa-b2fb-a1e22df68a56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\GameObjects\Pickable">
-      <UniqueIdentifier>{0886099d-b249-4c1b-b2b8-7ea2123cc2d2}</UniqueIdentifier>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{a172f68e-b912-4869-80e9-a788a728b64f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

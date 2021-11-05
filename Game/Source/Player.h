@@ -3,6 +3,8 @@
 #include "Animation.h"
 #include "Point.h"
 #include "Collider.h"
+#include "Timer.h"
+#include <math.h>
 
 
 enum Dir
@@ -12,6 +14,7 @@ enum Dir
 	LEFT,
 	RIGHT
 };
+
 
 class Player
 {
@@ -41,6 +44,14 @@ public:
 	// Callback if will be collision, called when the player intersects with another
 	void WillCollision();
 
+	void Jump(float dt);
+
+	void move(const float dir_x, const float dir_y);
+
+	iPoint GetPlayerCenterPosition();
+
+	void Gravity();
+
 private:
 
 	// A set of animations
@@ -59,9 +70,40 @@ private:
 
 public:
 
-	float speed = 1.0f;
+	//Physics
+
+
+	iPoint playercenter;
+	iPoint jumphigh;
+	iPoint resultvec;
+
+	float acceleration;
+
+	float drag;
+
+	iPoint velocity{ 1,1 };
+
+	float velocityMax;
+
+	Dir direction;
+
+	float gravity = 2.0f;
+
+	float maxGravity = 8.0f;
+
+	float speed = 2.0f;
 
 	iPoint position;
+
+	float jumpHeight;
+
+	bool onGround = true;
+
+	bool willcollide = false;
+
+	Timer jumptimer;
+
+	//Movement & textures
 
 	bool canMoveDir[4];
 

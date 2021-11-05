@@ -32,6 +32,8 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	app->map->Load(levelList[0]->file.GetString());
 
+	
+
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
@@ -52,7 +54,7 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	gameScene->Update(dt);
+	gameScene->Update(app->globalTime.getDeltaTime());
 
     // LOAD AND SAVE
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
@@ -81,8 +83,8 @@ bool Scene::Update(float dt)
 				   app->map->mapData.width, app->map->mapData.height,
 				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
 				   app->map->mapData.tilesets.count());
-
 	app->win->SetTitle(title.GetString());
+	
 
 	return true;
 }

@@ -43,6 +43,8 @@ bool GameScene::PreUpdate()
 		delete coin;
 		coin = nullptr;
 	}
+	froggy->PreUpdate();
+
 
 	return ret;
 }
@@ -156,6 +158,6 @@ void GameScene::WillCollision(Collider* c1, Collider* c2)
 	
 	if (froggy != nullptr && froggy->col == c1)
 	{
-		//froggy->WillCollision();
+		froggy->WillCollision();
 	}
 }

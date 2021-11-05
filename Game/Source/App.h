@@ -13,6 +13,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "ModuleCollisions.h"
+#include "Timer.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -103,6 +104,8 @@ public:
 	//GameScene* gameScene;
 	Map* map;
 	ModuleCollisions* col;
+
+	Timer globalTime;
 	
 
 private:

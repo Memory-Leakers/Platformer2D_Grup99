@@ -100,7 +100,7 @@ void Coin::WillCollision()
 
 void Coin::textureSelector()
 {
-	srand(time(0));
+	/*srand(time(0));*/
 
 	int num;
 	num = rand() % 7;
