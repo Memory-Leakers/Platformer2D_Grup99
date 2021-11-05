@@ -73,7 +73,7 @@ public:
 	// Destructor
 	virtual ~SString()
 	{
-		if (str != nullptr)
+		if (str != nullptr || str != NULL)
 		{
 			delete[] str;
 		}

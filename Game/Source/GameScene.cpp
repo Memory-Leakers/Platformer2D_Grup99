@@ -26,10 +26,17 @@ bool GameScene::Start()
 	froggy = new Player();
 	froggy->Start();
 
-	coin = new Coin(227, 1429);
-	coin->Start();
+	ListItem<Coin*>* fruitItem;
+	fruitItem = app->map->mapData.fruits.start;
 
-
+	while (fruitItem != NULL)
+	{
+		if (fruitItem->data != nullptr)
+		{
+			fruitItem->data->Start();
+		}
+		fruitItem = fruitItem->next;
+	}
 
 	return ret;
 }
@@ -37,18 +44,27 @@ bool GameScene::Start()
 bool GameScene::PreUpdate()
 {
 	bool ret = true;
-
-	if (coin != nullptr && coin->pendingToDelete)
+	/*
+	ListItem<Coin*>* fruitItem;
+	//fruitItem = fruitPool->start;
+	fruitItem = app->map->mapData.fruits.start;
+	
+	while (fruitItem != NULL)
 	{
-		delete coin;
-		coin = nullptr;
-	}
+		if (fruitItem->data != nullptr && fruitItem->data->pendingToDelete)
+		{
 
+			delete fruitItem->data;
+			
+		}
+		fruitItem = fruitItem->next;
+	}
+	*/
 	//SET CAM ON FROGGY
 	if (froggy != nullptr)
 	{
 		app->render->camera.x = (froggy->position.x *-2) + 540 - froggy->bounds.w;
-		app->render->camera.y = (froggy->position.y * -2) + 260 - froggy->bounds.h;
+		app->render->camera.y = (froggy->position.y *-2) + 260 - froggy->bounds.h;
 	}
 
 	return ret;
@@ -59,12 +75,22 @@ bool GameScene::Update(float dt)
 	bool ret = true;
 
 	froggy->Update(dt);
-	
-	if (coin != nullptr)
+
+	ListItem<Coin*>* fruitItem;
+	//fruitItem = fruitPool->start;
+	fruitItem = app->map->mapData.fruits.start;
+
+	while (fruitItem != NULL)
 	{
-		coin->Update(dt);
+		if (fruitItem->data != nullptr)
+		{
+			if (!fruitItem->data->pendingToDelete)
+			{
+				fruitItem->data->Update(dt);
+			}
+		}
+		fruitItem = fruitItem->next;
 	}
-	
 
 	//DEBUG
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -82,11 +108,21 @@ bool GameScene::PostUpdate()
 
 	froggy->PostUpdate();
 
-	if (coin != nullptr)
+	ListItem<Coin*>* fruitItem;
+	//fruitItem = fruitPool->start;
+	fruitItem = app->map->mapData.fruits.start;
+
+	while (fruitItem != NULL)
 	{
-		coin->PostUpdate();
+		if (fruitItem->data != nullptr)
+		{
+			if (!fruitItem->data->pendingToDelete)
+			{
+				fruitItem->data->PostUpdate();
+			}
+		}
+		fruitItem = fruitItem->next;
 	}
-	
 
 	return ret;
 }
@@ -99,12 +135,7 @@ bool GameScene::CleanUp()
 	delete froggy;
 	froggy = nullptr;
 
-	if (coin != nullptr)
-	{
-		delete coin;
-		coin = nullptr;
-	}
-	
+	//Coinpool cleanup is done in map.cpp
 
 	return true;
 }
@@ -117,19 +148,18 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 		froggy->OnCollision(c2);
 	}
 
-	if (coin != nullptr && coin->col == c1)
+	ListItem<Coin*>* fruitItem;
+	//fruitItem = fruitPool->start;
+	fruitItem = app->map->mapData.fruits.start;
+
+	while (fruitItem != NULL)
 	{
-		coin->OnCollision(c2);
-	}
-	/*
-	for (int i = 0; i < MAX_POWERUPS; ++i)
-	{
-		if (powerUps[i] != nullptr && powerUps[i]->getCollider() == c1)
+		if (fruitItem->data != nullptr && fruitItem->data->col == c1)
 		{
-			powerUps[i]->OnCollision(c2);
+			fruitItem->data->OnCollision(c2);
 		}
+		fruitItem = fruitItem->next;
 	}
-	*/
 
 	ListItem<Collider*>* colItem;
 	colItem = app->map->mapData.col.start;

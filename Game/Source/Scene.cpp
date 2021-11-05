@@ -27,10 +27,12 @@ bool Scene::Start()
 	levelList[0]->camX = 209;
 	levelList[0]->camY = -2401;
 
-	gameScene->Start();
+	
 
 	// L03: DONE: Load map
 	app->map->Load(levelList[0]->file.GetString());
+
+	gameScene->Start();
 
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -181,8 +183,6 @@ void Scene::drawBackground()
 
 void Scene::bgSelector()
 {
-	srand(time(0));
-
 	int num;
 	num = rand() % 7;
 

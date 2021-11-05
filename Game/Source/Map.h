@@ -5,6 +5,7 @@
 #include "List.h"
 #include "Point.h"
 #include "Collider.h"
+#include "Coin.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -111,6 +112,8 @@ struct MapData
 	List<MapLayer*> layers;
 
 	List<Collider*> col;
+
+	List<Coin*> fruits;
 };
 
 class Map : public Module
@@ -140,6 +143,8 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	void LoadFruits();
+
 private:
 
 	// L03: Methods to load all required map data
@@ -152,7 +157,7 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadAllLayers(pugi::xml_node mapNode);
 
-	bool LoadCollisions();
+	
 
 	// L06: TODO 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);

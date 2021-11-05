@@ -28,6 +28,7 @@ App* app = NULL;
 
 int main(int argc, char* args[])
 {
+	srand((unsigned)time(0));
 	LOG("Engine starting ...");
 
 	MainState state = CREATE;

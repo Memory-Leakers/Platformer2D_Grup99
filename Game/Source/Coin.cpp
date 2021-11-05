@@ -2,7 +2,7 @@
 #include "App.h"
 
 
-Coin::Coin(int posX, int posY)
+Coin::Coin(int posX = 0, int posY = 0)
 {
 	position.x = posX;
 	position.y = posY;
@@ -104,35 +104,31 @@ void Coin::WillCollision()
 
 void Coin::textureSelector()
 {
-	srand(time(0));
-
-	int num;
-	num = rand() % 7;
-
+	int num = rand() % 7;
 	switch (num)
 	{
 		case Apple:
-			tex = app->tex->Load("Assets/Items/Fruits/Apple.png");
+			this->tex = app->tex->Load("Assets/Items/Fruits/Apple.png");
 			break;
 		case Bananas:
-			tex = app->tex->Load("Assets/Items/Fruits/Bananas.png");
+			this->tex = app->tex->Load("Assets/Items/Fruits/Bananas.png");
 			break;
 		case Cherries:
-			tex = app->tex->Load("Assets/Items/Fruits/Cherries.png");
+			this->tex = app->tex->Load("Assets/Items/Fruits/Cherries.png");
 			break;
 		case Kiwi:
-			tex = app->tex->Load("Assets/Items/Fruits/Kiwi.png");
+			this->tex = app->tex->Load("Assets/Items/Fruits/Kiwi.png");
 			break;
 		case Melon:
-			tex = app->tex->Load("Assets/Items/Fruits/Melon.png");
+			this->tex = app->tex->Load("Assets/Items/Fruits/Melon.png");
 			break;
 		case Orange:
-			tex = app->tex->Load("Assets/Items/Fruits/Orange.png");
+			this->tex = app->tex->Load("Assets/Items/Fruits/Orange.png");
 			break;
 		case Pineapple:
-			tex = app->tex->Load("Assets/Items/Fruits/Pineapple.png");
+			this->tex = app->tex->Load("Assets/Items/Fruits/Pineapple.png");
 			break;
 		case Strawberry:
-			tex = app->tex->Load("Assets/Items/Fruits/Strawberry.png");
+			this->tex = app->tex->Load("Assets/Items/Fruits/Strawberry.png");
 	}
 }

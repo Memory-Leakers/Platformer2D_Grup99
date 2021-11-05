@@ -114,8 +114,6 @@ void Map::Draw()
 							pos.x,
 							pos.y,
 							&r);
-						
-						
 					}
 				}
 			}
@@ -245,6 +243,21 @@ bool Map::CleanUp()
 	mapData.layers.clear();
 	mapData.tilesets.clear();
 
+	ListItem<Coin*>* fruitItem;
+	fruitItem = mapData.fruits.start;
+
+	while (fruitItem != NULL)
+	{
+		if (fruitItem->data != nullptr)
+		{
+			delete fruitItem->data;
+			fruitItem->data = nullptr;
+		}
+		fruitItem = fruitItem->next;
+	}
+
+	mapData.fruits.clear();
+
     return true;
 }
 
@@ -286,7 +299,7 @@ bool Map::Load(const char* filename)
 
 	if (ret == true)
 	{
-		//ret = LoadCollisions();
+		LoadFruits();
 	}
 
     
@@ -455,8 +468,10 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-bool Map::LoadCollisions()
+void Map::LoadFruits ()
 {
+	//List<Coin*> toReturn;
+
 
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
@@ -466,23 +481,19 @@ bool Map::LoadCollisions()
 	{
 		if (mapLayerItem->data->properties.GetProperty("Navigation"))
 		{
-			
-
 			for (int x = 0; x < mapLayerItem->data->width; x++)
 			{
 				for (int y = 0; y < mapLayerItem->data->height; y++)
 				{
 					int gid = mapLayerItem->data->Get(x, y);
 
-					if (gid == 243)
+					if (gid == 246)
 					{
+						//Coin c = Coin(x, y);
 
-						if (x == NULL && y == NULL)
-						{
-							cout << "yup" << endl;
-						}
-
-						mapData.col.add(app->col->AddCollider({ x * 16, y * 16, 16 , 16 }, Type::WALL, app->scene));
+						mapData.fruits.add(new Coin(x*16-8, y*16-8));
+						//toReturn->add(&c);
+						//mapData.col.add(app->col->AddCollider({ x * 16, y * 16, 16 , 16 }, Type::WALL, app->scene));
 					}
 				}
 			}
@@ -492,5 +503,5 @@ bool Map::LoadCollisions()
 	}
 
 
-	return true;
+	//return toReturn;
 }
