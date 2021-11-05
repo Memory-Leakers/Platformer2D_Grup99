@@ -82,6 +82,10 @@ bool Coin::CleanUp()
 
 	pendingToDelete = true;
 	col->pendingToDelete = true;
+
+	//delete tex;
+	//tex = nullptr;
+
 	return true;
 }
 
@@ -130,6 +134,5 @@ void Coin::textureSelector()
 			break;
 		case Strawberry:
 			tex = app->tex->Load("Assets/Items/Fruits/Strawberry.png");
-			break;
 	}
 }

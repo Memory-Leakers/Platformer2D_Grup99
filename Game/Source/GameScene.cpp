@@ -46,6 +46,13 @@ bool GameScene::PreUpdate()
 	froggy->PreUpdate();
 
 
+	//SET CAM ON FROGGY
+	if (froggy != nullptr)
+	{
+		app->render->camera.x = (froggy->position.x *-2) + 540 - froggy->bounds.w;
+		app->render->camera.y = (froggy->position.y * -2) + 260 - froggy->bounds.h;
+	}
+
 	return ret;
 }
 

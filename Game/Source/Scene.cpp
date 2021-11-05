@@ -37,6 +37,8 @@ bool Scene::Start()
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
+	bgSelector();
+
 	return true;
 }
 
@@ -51,6 +53,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	drawBackground();
 	// Draw map
 	app->map->Draw();
 
@@ -145,4 +148,67 @@ bool Scene::CleanUp()
 	gameScene = nullptr;
 
 	return true;
+}
+
+
+void Scene::drawBackground()
+{
+	for (int x = 0; x <= 1000; x += 64)
+	{
+		for (int y = bgPivY; y <= 6000; y += 64)
+		{
+			SDL_Rect r = SDL_Rect({ 0,0,64,64 });
+
+			app->render->DrawTexture(bgTex, x, y, &r, 0.01f, SDL_FLIP_NONE, (0,0));
+
+		}
+	}
+	
+	if (bgPivY >= 64)
+	{
+		bgPivY = 0;
+	}
+	else
+	{
+		bgPivX += 1;
+		if (bgPivX != 2)
+		{
+			bgPivY += 1;
+		}
+		else bgPivX = 0;
+	}
+	
+
+}
+
+void Scene::bgSelector()
+{
+	srand(time(0));
+
+	int num;
+	num = rand() % 7;
+
+	switch (num)
+	{
+	case Blue:
+		bgTex = app->tex->Load("Assets/Background/Blue.png");
+		break;
+	case Brown:
+		bgTex = app->tex->Load("Assets/Background/Brown.png");
+		break;
+	case Gray:
+		bgTex = app->tex->Load("Assets/Background/Gray.png");
+		break;
+	case Green:
+		bgTex = app->tex->Load("Assets/Background/Green.png");
+		break;
+	case Pink:
+		bgTex = app->tex->Load("Assets/Background/Pink.png");
+		break;
+	case Purple:
+		bgTex = app->tex->Load("Assets/Background/Purple.png");
+		break;
+	case Yellow:
+		bgTex = app->tex->Load("Assets/Background/Yellow.png");
+	}
 }

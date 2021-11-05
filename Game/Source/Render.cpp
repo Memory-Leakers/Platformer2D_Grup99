@@ -61,6 +61,9 @@ bool Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+
+	
+
 	return true;
 }
 
@@ -74,6 +77,7 @@ bool Render::PreUpdate()
 	//std::cout << worldpos.x << "|" << worldpos.y <<std::endl;
 
 	SDL_RenderClear(renderer);
+	
 	return true;
 }
 
@@ -84,6 +88,7 @@ bool Render::Update(float dt)
 
 bool Render::PostUpdate()
 {
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
@@ -94,6 +99,7 @@ bool Render::CleanUp()
 {
 	LOG("Destroying SDL render");
 	SDL_DestroyRenderer(renderer);
+
 	return true;
 }
 
@@ -252,3 +258,8 @@ bool Render::SaveState(pugi::xml_node& data) const
 
 	return true;
 }
+
+
+
+
+
