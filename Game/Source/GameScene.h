@@ -10,9 +10,9 @@
 class GameScene
 {
 public:
-	
+
 	GameScene();
-	
+
 	// Destructor
 	virtual ~GameScene();
 
@@ -42,6 +42,9 @@ public:
 	bool debugTiles = false;
 
 	Player* froggy = nullptr;
+	
+	Timer jumptimer;
+
 };
 
 #endif // __GAMESCENE_H__

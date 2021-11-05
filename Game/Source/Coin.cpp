@@ -41,7 +41,7 @@ Coin::~Coin()
 bool Coin::Start()
 {
 	textureSelector();
-	
+
 	this->col = app->col->AddCollider(bounds, Type::PICKER, app->scene);
 	return true;
 }

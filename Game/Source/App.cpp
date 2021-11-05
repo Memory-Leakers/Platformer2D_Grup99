@@ -6,6 +6,8 @@
 #include <iostream>
 #include <sstream>
 
+#define FPS 60
+
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -118,22 +120,29 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
+
 	bool ret = true;
-	PrepareUpdate();
+	globalTime.Update();
+	if (globalTime.getDeltaTime() >= 1.0f / FPS)
+	{
+		PrepareUpdate();
 
-	if(input->GetWindowEvent(WE_QUIT) == true)
-		ret = false;
+		if (input->GetWindowEvent(WE_QUIT) == true)
+			ret = false;
 
-	if(ret == true)
-		ret = PreUpdate();
+		if (ret == true)
+			ret = PreUpdate();
 
-	if(ret == true)
-		ret = DoUpdate();
+		if (ret == true)
+			ret = DoUpdate();
 
-	if(ret == true)
-		ret = PostUpdate();
+		if (ret == true)
+			ret = PostUpdate();
 
-	FinishUpdate();
+		FinishUpdate();
+
+		globalTime.Reset();
+	}
 	return ret;
 }
 

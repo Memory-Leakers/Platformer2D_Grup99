@@ -3,7 +3,7 @@
 
 GameScene::GameScene()
 {
-	
+
 }
 
 GameScene::~GameScene()
@@ -48,14 +48,14 @@ bool GameScene::PreUpdate()
 	ListItem<Coin*>* fruitItem;
 	//fruitItem = fruitPool->start;
 	fruitItem = app->map->mapData.fruits.start;
-	
+
 	while (fruitItem != NULL)
 	{
 		if (fruitItem->data != nullptr && fruitItem->data->pendingToDelete)
 		{
 
 			delete fruitItem->data;
-			
+
 		}
 		fruitItem = fruitItem->next;
 	}
@@ -142,7 +142,7 @@ bool GameScene::CleanUp()
 
 void GameScene::OnCollision(Collider* c1, Collider* c2)
 {
-	
+
 	if (froggy != nullptr && froggy->col == c1)
 	{
 		froggy->OnCollision(c2);
@@ -171,9 +171,9 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 		if (colItem->data == c1)
 		{
 
-			
+
 			//sceneObstacles[i]->OnCollision(c2);
-			
+
 		}
 		colItem = colItem->next;
 	}
@@ -190,9 +190,9 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 
 void GameScene::WillCollision(Collider* c1, Collider* c2)
 {
-	
+
 	if (froggy != nullptr && froggy->col == c1)
 	{
-		//froggy->WillCollision();
+		froggy->WillCollision();
 	}
 }

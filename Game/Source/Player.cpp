@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "App.h"
+#include <vector>
 
 Player::Player()
 {
@@ -7,14 +8,14 @@ Player::Player()
 	#define camX -118
 	#define camY -2401
 	*/
-	position.x = 207;
-	position.y = 1429;
+	position.x = 206;
+	position.y = 1430;
 
 	//Rect for col
 	bounds.x = position.x;
 	bounds.y = position.y;
 	bounds.w = 22;
-	bounds.h = 27;
+	bounds.h = 26;
 
 	//IDLE Anim
 	idleAnim.PushBack({0,14,23,26});//IDLE
@@ -70,6 +71,8 @@ Player::Player()
 	{
 		canMoveDir[i] = true;
 	}
+
+	
 }
 
 bool Player::Start()
@@ -77,6 +80,12 @@ bool Player::Start()
 
 	//Texture
 	player_tex = app->tex->Load("Assets/MainCharacters/Ninja_Frog_Sprites.png");
+
+	
+	this->jumpHeight = 16.0f;
+	this->acceleration = 2.f;
+	this->velocityMax = 4.f;
+	this->drag = 0.98f;
 
 	//Collider
 	this->col = app->col->AddCollider(bounds, Type::PLAYER, app->scene);
@@ -98,30 +107,69 @@ bool Player::Update(float dt)
 	///
 	currentAnimation->Update();
 
-	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && canMoveDir[UP])
-		position.y -= 1;
+	jumptimer.Update();
 
+	if(canMoveDir[DOWN] && jumptimer.getDeltaTime() > 0.75f)
+	{
+		position.y += gravity;
+		if(position.y + bounds.h >= 1455)
+		{
+			position.y -= 1;
+		}
+	}
+	
+	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP])
+	{
+		/*if (onGround)
+		{
+			velocity.y = jumpHeight * -1;
+			position.y += velocity.y;
+			onGround = false;
+			
+		}*/
+		if(!canMoveDir[DOWN])
+		{
+			Jump(DelTime);
+		}
+	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && canMoveDir[DOWN])
-		position.y += 1;
-
+	{
+		position.y += speed;
+	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 	{
-		position.x -= 1;
+		
+		velocity.x *= acceleration;
+		if(velocity.x > velocityMax)
+		{
+			velocity.x = velocityMax;
+		}
+		position.x -= velocity.x;
 		currentAnimation = &leftAnim;
 		isFlip = true;
+		direction = LEFT;
+		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && canMoveDir[RIGHT])
 	{
-		position.x += 1;
+		velocity.x *= acceleration;
+		if (velocity.x > velocityMax)
+		{
+			velocity.x = velocityMax;
+		}
+		position.x += velocity.x;
 		currentAnimation = &rightAnim;
+		direction = RIGHT;
+		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
-
 		currentAnimation = &idleAnim;
+		direction = UP;
 	}
+	
 
-	//printf("\n%d , %d\n", position.x, position.y);
+	printf("\n%d , %d\n", position.x, position.y);
 
 	// Reset Movemenet
 	for (int i = 0; i < 4; i++)
@@ -132,6 +180,7 @@ bool Player::Update(float dt)
 	col->SetPos(position);
 
 	cout << playerScore << endl;
+	
 
 	return true;
 }
@@ -145,7 +194,6 @@ bool Player::PostUpdate()
 	if (isFlip)
 	{
 		app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect, 1.0f, SDL_FLIP_HORIZONTAL);
-		isFlip = false;
 	}
 	else
 	{
@@ -179,6 +227,58 @@ Player::~Player()
 
 }
 
+void Player::Jump(float dt)
+{
+	jumptimer.Reset();
+	switch (direction)
+	{
+	case RIGHT:
+
+		if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
+		{
+			playercenter = GetPlayerCenterPosition();
+			jumphigh = { playercenter.x - 8,playercenter.y - 16 };
+			resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
+
+
+			position.y += (resultvec.y * 16);
+		}
+		break;
+
+	case LEFT:
+		if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
+		{
+			playercenter = GetPlayerCenterPosition();
+			jumphigh = { playercenter.x - 8,playercenter.y - 16 };
+			resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
+
+			position.y += (resultvec.y * 16);
+		}
+		break;
+
+	case UP:
+		if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
+		{
+			playercenter = GetPlayerCenterPosition();
+			jumphigh = { playercenter.x - 0,playercenter.y - 16 };
+			//resultvec.x = (jumphigh.x - playercenter.x) / sqrt(pow((jumphigh.x - playercenter.x), 2));
+			resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
+			position.y += (resultvec.y * 16);
+			break;
+		}
+	}
+}
+
+iPoint Player::GetPlayerCenterPosition()
+{
+	//Position player center
+	iPoint pos;
+	pos.x = this->position.x + (bounds.w/2);
+	pos.y = this->position.y + (bounds.h /2);
+
+	return pos;
+}
+
 
 void Player::OnCollision(Collider* col)
 {
@@ -187,9 +287,10 @@ void Player::OnCollision(Collider* col)
 		switch (col->type)
 		{
 
-		//case Type::WALL:
-
-
+		case Type::WALL:
+			
+			break;
+		
 		/*case Type::EXPLOSION:
 		case Type::ENEMY:
 			if (invensibleTime <= 0 && InGrid(col)) Die(); break;
@@ -245,6 +346,7 @@ void Player::WillCollision()
 						if (py >= by + 16 && py <= by + 16 && px + bounds.w > bx && px < bx + 16)
 						{
 							canMoveDir[UP] = false;
+							
 						}
 
 						//RIGHT

@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "time.h"
 
 
 Scene::Scene() : Module()
@@ -27,7 +28,7 @@ bool Scene::Start()
 	levelList[0]->camX = 209;
 	levelList[0]->camY = -2401;
 
-	
+
 
 	// L03: DONE: Load map
 	app->map->Load(levelList[0]->file.GetString());
@@ -57,7 +58,7 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	gameScene->Update(dt);
+	gameScene->Update(app->globalTime.getDeltaTime());
 
     // LOAD AND SAVE
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
@@ -79,15 +80,15 @@ bool Scene::Update(float dt)
 		app->render->camera.x += 2;
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= 2;	
+		app->render->camera.x -= 2;
 
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
 				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
 				   app->map->mapData.tilesets.count());
-
 	app->win->SetTitle(title.GetString());
+
 
 	return true;
 }
@@ -109,7 +110,7 @@ bool Scene::PostUpdate()
 	bool ret = true;
 	gameScene->PostUpdate();
 
-	
+
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -163,7 +164,7 @@ void Scene::drawBackground()
 
 		}
 	}
-	
+
 	if (bgPivY >= 64)
 	{
 		bgPivY = 0;
@@ -177,7 +178,7 @@ void Scene::drawBackground()
 		}
 		else bgPivX = 0;
 	}
-	
+
 
 }
 
