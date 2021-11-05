@@ -7,6 +7,16 @@
 
 #include "SDL/include/SDL.h"
 
+enum background {
+	Blue = 0,
+	Brown,
+	Gray,
+	Green,
+	Pink,
+	Purple,
+	Yellow
+};
+
 class Render : public Module
 {
 public:
@@ -45,6 +55,7 @@ public:
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
+	void drawBackground();
 
 public:
 
@@ -52,6 +63,11 @@ public:
 	SDL_Rect camera;
 	SDL_Rect viewport;
 	SDL_Color background;
+
+	SDL_Texture* bgTex = nullptr;
+
+private:
+	void bgSelector();
 };
 
 #endif // __RENDER_H__

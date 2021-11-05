@@ -7,8 +7,8 @@
 #include <iostream>
 
 #define VSYNC true
-#define camX -118
-#define camY -2401
+#define camX 0//-118
+#define camY 0//-2401
 
 Render::Render() : Module()
 {
@@ -61,6 +61,9 @@ bool Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+
+	bgSelector();
+
 	return true;
 }
 
@@ -74,6 +77,7 @@ bool Render::PreUpdate()
 	//std::cout << worldpos.x << "|" << worldpos.y <<std::endl;
 
 	SDL_RenderClear(renderer);
+	
 	return true;
 }
 
@@ -84,7 +88,6 @@ bool Render::Update(float dt)
 
 bool Render::PostUpdate()
 {
-	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
 }
@@ -94,6 +97,10 @@ bool Render::CleanUp()
 {
 	LOG("Destroying SDL render");
 	SDL_DestroyRenderer(renderer);
+
+	//delete bgTex;
+	bgTex = nullptr;
+
 	return true;
 }
 
@@ -251,4 +258,52 @@ bool Render::SaveState(pugi::xml_node& data) const
 	data.child("camera").attribute("y") = camera.y;
 
 	return true;
+}
+
+void Render::drawBackground()
+{
+	for (int x = 0; x <= camera.w; x += 64)
+	{
+		for (int y = 0; y <= camera.h; y += 64)
+		{
+			//DrawTexture(bgTex, x+camera.x*-2, y+camera.y*-2, new SDL_Rect({ 0,0,64,64 }));
+
+		}
+	}
+	
+	
+}
+
+
+
+void Render::bgSelector() 
+{
+	srand(time(0));
+
+	int num;
+	num = rand() % 7;
+
+	switch (num)
+	{
+		case Blue:
+			bgTex = app->tex->Load("Assets/Background/Blue.png");
+			break;
+		case Brown:
+			bgTex = app->tex->Load("Assets/Background/Brown.png");
+			break;
+		case Gray:
+			bgTex = app->tex->Load("Assets/Background/Gray.png");
+			break;
+		case Green:
+			bgTex = app->tex->Load("Assets/Background/Green.png");
+			break;
+		case Pink:
+			bgTex = app->tex->Load("Assets/Background/Pink.png");
+			break;
+		case Purple:
+			bgTex = app->tex->Load("Assets/Background/Purple.png");
+			break;
+		case Yellow:
+			bgTex = app->tex->Load("Assets/Background/Yellow.png");
+	}
 }

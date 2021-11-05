@@ -49,6 +49,8 @@ bool Map::Awake(pugi::xml_node& config)
 // Draw the map (all requried layers)
 void Map::Draw()
 {
+	app->render->drawBackground();
+
 	if (mapLoaded == false) return;
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
@@ -85,6 +87,10 @@ void Map::Draw()
 							pos.x,
 							pos.y,
 							&r);
+					}
+					else
+					{
+							
 					}
 					
 				}
