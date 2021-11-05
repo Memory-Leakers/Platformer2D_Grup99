@@ -85,7 +85,6 @@ bool Player::Start()
 	this->jumpHeight = 16.0f;
 	this->acceleration = 2.f;
 	this->velocityMax = 4.f;
-	this->drag = 0.98f;
 
 	//Collider
 	this->col = app->col->AddCollider(bounds, Type::PLAYER, app->scene);
@@ -109,6 +108,8 @@ bool Player::Update(float dt)
 
 	jumptimer.Update();
 
+	dt = dt*1000;
+
 	if(canMoveDir[DOWN] && jumptimer.getDeltaTime() > 0.75f)
 	{
 		position.y += gravity;
@@ -117,19 +118,18 @@ bool Player::Update(float dt)
 			position.y -= 1;
 		}
 	}
-	
+	if(previousJumpTime < dt - JumpTime)
+	{
+		position.x += 1;
+		position.y -= 2;
+	}
 	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP])
 	{
-		/*if (onGround)
-		{
-			velocity.y = jumpHeight * -1;
-			position.y += velocity.y;
-			onGround = false;
-			
-		}*/
+    	previousJumpTime = dt;
 		if(!canMoveDir[DOWN])
 		{
-			Jump(DelTime);
+
+			Jump(dt);
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && canMoveDir[DOWN])
@@ -229,44 +229,46 @@ Player::~Player()
 
 void Player::Jump(float dt)
 {
-	jumptimer.Reset();
-	switch (direction)
-	{
-	case RIGHT:
+	//jumptimer.Reset();
+	//switch (direction)
+	//{
+	//case RIGHT:
 
-		if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
-		{
-			playercenter = GetPlayerCenterPosition();
-			jumphigh = { playercenter.x - 8,playercenter.y - 16 };
-			resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
+	//	if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
+	//	{
+	//		playercenter = GetPlayerCenterPosition();
+	//		jumphigh = { playercenter.x - 8,playercenter.y - 16 };
+	//		resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
 
 
-			position.y += (resultvec.y * 16);
-		}
-		break;
+	//		position.y += (resultvec.y * 16);
+	//	}
+	//	break;
 
-	case LEFT:
-		if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
-		{
-			playercenter = GetPlayerCenterPosition();
-			jumphigh = { playercenter.x - 8,playercenter.y - 16 };
-			resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
+	//case LEFT:
+	//	if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
+	//	{
+	//		playercenter = GetPlayerCenterPosition();
+	//		jumphigh = { playercenter.x - 8,playercenter.y - 16 };
+	//		resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
 
-			position.y += (resultvec.y * 16);
-		}
-		break;
+	//		position.y += (resultvec.y * 16);
+	//	}
+	//	break;
 
-	case UP:
-		if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
-		{
-			playercenter = GetPlayerCenterPosition();
-			jumphigh = { playercenter.x - 0,playercenter.y - 16 };
-			//resultvec.x = (jumphigh.x - playercenter.x) / sqrt(pow((jumphigh.x - playercenter.x), 2));
-			resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
-			position.y += (resultvec.y * 16);
-			break;
-		}
-	}
+	//case UP:
+	//	if (jumptimer.getDeltaTime() <= 0.75f && !canMoveDir[DOWN])
+	//	{
+	//		playercenter = GetPlayerCenterPosition();
+	//		jumphigh = { playercenter.x - 0,playercenter.y - 16 };
+	//		//resultvec.x = (jumphigh.x - playercenter.x) / sqrt(pow((jumphigh.x - playercenter.x), 2));
+	//		resultvec.y = (jumphigh.y - playercenter.y) / sqrt(pow((jumphigh.y - playercenter.y), 2));
+	//		position.y += (resultvec.y * 16);
+	//		break;
+	//	}
+	//}
+
+
 }
 
 iPoint Player::GetPlayerCenterPosition()

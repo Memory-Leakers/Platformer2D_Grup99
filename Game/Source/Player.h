@@ -6,6 +6,8 @@
 #include "Timer.h"
 #include <math.h>
 
+#define MAX_JUMPS 2
+#define JumpTime 1750
 
 enum Dir
 {
@@ -72,14 +74,13 @@ public:
 
 	//Physics
 
+	int jumpcounter = MAX_JUMPS;
 
 	iPoint playercenter;
 	iPoint jumphigh;
 	iPoint resultvec;
 
 	float acceleration;
-
-	float drag;
 
 	iPoint velocity{ 1,1 };
 
@@ -97,10 +98,9 @@ public:
 
 	float jumpHeight = 16;
 
-
 	Timer jumptimer;
 
-	float DelTime;
+	float previousJumpTime = 0;
 
 	//Movement & textures
 
@@ -118,6 +118,4 @@ public:
 	Collider* col = nullptr;
 
 	int playerScore = 0;
-
-	bool ret;
 };

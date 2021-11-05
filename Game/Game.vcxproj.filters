@@ -132,6 +132,9 @@
     <ClInclude Include="Source\Coin.h">
       <Filter>HeaderFiles\GameObjects\Pickable</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>HeaderFiles\Utils\Other</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="HeaderFiles">

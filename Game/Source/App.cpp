@@ -140,8 +140,6 @@ bool App::Update()
 			ret = PostUpdate();
 
 		FinishUpdate();
-
-		globalTime.Reset();
 	}
 	return ret;
 }

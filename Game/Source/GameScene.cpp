@@ -44,23 +44,13 @@ bool GameScene::Start()
 bool GameScene::PreUpdate()
 {
 	bool ret = true;
-	/*
-	ListItem<Coin*>* fruitItem;
-	//fruitItem = fruitPool->start;
-	fruitItem = app->map->mapData.fruits.start;
+	
+	
 
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr && fruitItem->data->pendingToDelete)
-		{
+	froggy->PreUpdate();
 
-			delete fruitItem->data;
-
-		}
-		fruitItem = fruitItem->next;
-	}
-	*/
 	//SET CAM ON FROGGY
+
 	if (froggy != nullptr)
 	{
 		app->render->camera.x = (froggy->position.x *-2) + 540 - froggy->bounds.w;
