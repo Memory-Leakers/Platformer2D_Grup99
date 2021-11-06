@@ -74,8 +74,23 @@ Player::Player()
 	leftAnim.PushBack({ 0,45,25,28 });
 	leftAnim.speed = 0.30;
 	leftAnim.hasIdle = false;
-	currentAnimation = &idleAnim;
+	
+	//Jump Anim
+	/*jumpAnim.PushBack({ 0,110,23,28 });*/
+	jumpAnim.PushBack({ 0,174,24,28 });
+	jumpAnim.PushBack({ 32,174,24,28 });
+	jumpAnim.PushBack({ 65,174,24,28 });
+	jumpAnim.PushBack({ 97,174,24,28 });
+	jumpAnim.PushBack({ 127,174,24,28 });
+	jumpAnim.PushBack({ 159,174,24,28 });
+	jumpAnim.speed = 0.30;
+	jumpAnim.hasIdle = false;
+	//Fall Anim 
+	fallAnim.PushBack({ 0,143,24,26 });
+	fallAnim.speed = 0.30;
+	fallAnim.hasIdle = true;
 
+	currentAnimation = &idleAnim;
 	// Init move direccion
 	for (int i = 0; i < 4; i++)
 	{
@@ -99,7 +114,14 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-	isFlip = false;
+	if (!leftpressed)
+	{
+		isFlip = false;
+	}
+	else
+	{
+		isFlip = true;
+	}
 
 	return true;
 }
@@ -128,16 +150,24 @@ bool Player::Update(float dt)
 	if(jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
 	{
 		position.y -= JUMPSPEED;
+		currentAnimation = &jumpAnim;
 	}
 	else if (canMoveDir[DOWN])
 	{
 		position.y += gravity;
 		previousJumpTime = -1;
+		currentAnimation = &fallAnim;
+		
 	}
 	else
 	{
 		jumpcounter = 0;
 		//position.y -= JUMPSPEED*2 +2;
+	}
+
+	if(!canMoveDir[DOWN])
+	{
+		currentAnimation = &idleAnim;
 	}
 	
 	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
@@ -151,19 +181,37 @@ bool Player::Update(float dt)
 		position.x -= 2;
 		currentAnimation = &leftAnim;
 		isFlip = true;
+		if(canMoveDir[DOWN])
+		{
+			currentAnimation = &jumpAnim;
+			leftpressed = true;
+		}
 		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && canMoveDir[RIGHT])
 	{
+		leftpressed = false;
 		position.x += 2;
 		currentAnimation = &rightAnim;
+		if (canMoveDir[DOWN])
+		{
+			currentAnimation = &jumpAnim;
+		}
 		
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP && !canMoveDir[DOWN])
 	{
 		currentAnimation = &idleAnim;
+		leftpressed = false;
+		
 	}
-	
+	if(app->input->GetKey(SDL_SCANCODE_A) == KEY_UP && !canMoveDir[DOWN])
+	{
+		currentAnimation = &idleAnim;
+		isFlip = true;
+		leftpressed = true;
+		
+	}
 
 	printf("\n%d , %d\n", position.x, position.y);
 
@@ -172,6 +220,7 @@ bool Player::Update(float dt)
 	{
 		canMoveDir[i] = true;
 	}
+	
 
 	col->SetPos(position);
 
@@ -354,7 +403,7 @@ void Player::WillCollision()
 
 							if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 							{
-								position.y += GRAVITY+1;
+								position.y += gravity+1;
 							}
 
 						}

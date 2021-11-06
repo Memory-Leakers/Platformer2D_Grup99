@@ -71,6 +71,10 @@ private:
 
 	Animation rightAnim;
 
+	Animation jumpAnim;
+
+	Animation fallAnim;
+
 	Animation* currentAnimation = nullptr;
 
 public:
@@ -110,4 +114,6 @@ public:
 
 private:
 	bool halfUpDown = false; //false down
+
+	bool leftpressed = false;
 };
