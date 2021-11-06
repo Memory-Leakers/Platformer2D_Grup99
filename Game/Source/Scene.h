@@ -86,7 +86,7 @@ private:
 	SDL_Texture* bgTex = nullptr;
 
 	int bgPivX = 0;
-	int bgPivY = -2000;
+	int bgPivY = -128;
 
 };
 

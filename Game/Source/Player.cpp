@@ -145,7 +145,6 @@ bool Player::Update(float dt)
 		previousJumpTime = jumpTimer.getDeltaTime() + JumpTime;
 		jumpcounter += 1;
 	}
-	std::cout << canMoveDir[UP] << std::endl;
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 	{
 		
@@ -289,13 +288,13 @@ void Player::WillCollision()
 
 					int bx = x * 16;
 					int by = y * 16;
-
+					int aux = py - JUMPSPEED;
 					switch (gid)
 					{
 					case 243:
 
 						//DOWN
-						int aux = py - JUMPSPEED;
+						
 						if (py + bounds.h >= by&& py <= by && px + bounds.w > bx && px < bx + 16)
 						{
 							canMoveDir[DOWN] = false;
@@ -309,11 +308,7 @@ void Player::WillCollision()
 							else if (py + bounds.h/2 <= by)
 							{
 								halfUpDown = true;
-							}
-
-							
-							
-							
+							}	
 						}
 						
 
@@ -342,6 +337,26 @@ void Player::WillCollision()
 						if (px + bounds.w >= bx + 16 && px <= bx + 16 && py + bounds.h > by && py < by + 16)
 						{
 							canMoveDir[LEFT] = false;
+						}
+
+						break;
+
+					case 244: //DETH AREA
+
+						break;
+
+					case 247: //Platform move up
+
+						//DOWN
+						if (py + bounds.h >= by && py <= by - (bounds.h - 4) && px + bounds.w > bx && px < bx + 16)
+						{
+							canMoveDir[DOWN] = false;
+
+							if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+							{
+								position.y += GRAVITY+1;
+							}
+
 						}
 
 						break;

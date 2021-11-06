@@ -165,9 +165,9 @@ void Scene::drawBackground()
 		}
 	}
 
-	if (bgPivY >= 64)
+	if (bgPivY >= -64)
 	{
-		bgPivY = 0;
+		bgPivY = -128;
 	}
 	else
 	{

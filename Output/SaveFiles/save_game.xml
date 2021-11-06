@@ -5,10 +5,10 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="207" posY="1429" doorKey="false" score="0" />
+		<player posX="1010" posY="1254" doorKey="false" score="0" />
 		<startScene value="Level1" />
 	</scene>
 	<renderer>
-		<camera x="-118" y="-2401" />
+		<camera x="-1502" y="-2274" />
 	</renderer>
 </game_state>
