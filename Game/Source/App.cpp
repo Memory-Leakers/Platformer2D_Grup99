@@ -17,9 +17,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	input = new Input();	
 	tex = new Textures();
 	audio = new Audio();
+	col = new ModuleCollisions();
 	scene = new Scene();
 	map = new Map();
-	col = new ModuleCollisions();
+	
 
 
 	render = new Render();
@@ -30,9 +31,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(col);
 	AddModule(scene);
 	AddModule(map);
-	AddModule(col);
+	
 
 
 	// Render last to swap buffer

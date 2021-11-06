@@ -7,7 +7,9 @@
 #include <math.h>
 
 #define MAX_JUMPS 2
-#define JumpTime 1750
+#define JumpTime 0.25f
+#define GRAVITY 2
+#define JUMPSPEED 2
 
 enum Dir
 {
@@ -74,7 +76,7 @@ public:
 
 	//Physics
 
-	int jumpcounter = MAX_JUMPS;
+	int jumpcounter = 0;
 
 	iPoint playercenter;
 	iPoint jumphigh;
@@ -82,25 +84,13 @@ public:
 
 	float acceleration;
 
-	iPoint velocity{ 1,1 };
-
-	float velocityMax;
-
 	Dir direction;
-
-	float gravity = 2.0f;
-
-	float maxGravity = 8.0f;
-
-	float speed = 2.0f;
 
 	iPoint position;
 
-	float jumpHeight = 16;
+	Timer jumpTimer;
 
-	Timer jumptimer;
-
-	float previousJumpTime = 0;
+	float previousJumpTime = -1;
 
 	//Movement & textures
 
@@ -118,4 +108,7 @@ public:
 	Collider* col = nullptr;
 
 	int playerScore = 0;
+
+private:
+	bool halfUpDown = false; //false down
 };

@@ -133,7 +133,7 @@
       <Filter>HeaderFiles\GameObjects\Pickable</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
-      <Filter>HeaderFiles\Utils\Other</Filter>
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
