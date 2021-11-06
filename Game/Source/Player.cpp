@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "App.h"
-#include <vector>
 
 Player::Player()
 {
@@ -8,8 +7,19 @@ Player::Player()
 	#define camX -118
 	#define camY -2401
 	*/
-	position.x = 206;
-	position.y = 1430;
+	pugi::xml_document playerfile;
+	pugi::xml_node player_state_node;
+
+	player_state_node = app->LoadPlayer(playerfile);
+
+	player_state_node = playerfile.child("player_state");
+
+	position.x = player_state_node.child("position").attribute("posX").as_int();
+	position.y = player_state_node.child("position").attribute("posY").as_int();
+
+	playerScore = player_state_node.child("score").attribute("score").as_int();
+
+	gravity = player_state_node.child("gravity").attribute("value").as_int();
 
 	//Rect for col
 	bounds.x = position.x;
@@ -18,7 +28,7 @@ Player::Player()
 	bounds.h = 26;
 
 	//IDLE Anim
-	idleAnim.PushBack({0,14,23,26});//IDLE
+	idleAnim.PushBack({ 0,14,23,26 });
 	idleAnim.PushBack({32,14,23,26});
 	idleAnim.PushBack({64,14,23,26});//IDLE
 	idleAnim.PushBack({96,14,23,26});
@@ -64,15 +74,30 @@ Player::Player()
 	leftAnim.PushBack({ 0,45,25,28 });
 	leftAnim.speed = 0.30;
 	leftAnim.hasIdle = false;
-	currentAnimation = &idleAnim;
 
+	//Jump Anim
+	/*jumpAnim.PushBack({ 0,110,23,28 });*/
+	jumpAnim.PushBack({ 0,174,24,28 });
+	jumpAnim.PushBack({ 32,174,24,28 });
+	jumpAnim.PushBack({ 65,174,24,28 });
+	jumpAnim.PushBack({ 97,174,24,28 });
+	jumpAnim.PushBack({ 127,174,24,28 });
+	jumpAnim.PushBack({ 159,174,24,28 });
+	jumpAnim.speed = 0.30;
+	jumpAnim.hasIdle = false;
+	//Fall Anim
+	fallAnim.PushBack({ 0,143,24,26 });
+	fallAnim.speed = 0.30;
+	fallAnim.hasIdle = true;
+
+	currentAnimation = &idleAnim;
 	// Init move direccion
 	for (int i = 0; i < 4; i++)
 	{
 		canMoveDir[i] = true;
 	}
 	canMoveDir[UP] = false;
-	
+
 }
 
 bool Player::Start()
@@ -89,7 +114,14 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-	isFlip = false;
+	if (!leftpressed)
+	{
+		isFlip = false;
+	}
+	else
+	{
+		isFlip = true;
+	}
 
 	return true;
 }
@@ -120,17 +152,24 @@ bool Player::Update(float dt)
 		if (jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
 		{
 			position.y -= JUMPSPEED;
+			currentAnimation = &jumpAnim;
 		}
 		else if (canMoveDir[DOWN])
 		{
-			position.y += GRAVITY;
+			position.y += gravity;
 			previousJumpTime = -1;
+			currentAnimation = &fallAnim;
 		}
 		else
 		{
 			jumpcounter = 0;
 			//position.y -= JUMPSPEED*2 +2;
 		}
+
+if(!canMoveDir[DOWN])
+{
+	currentAnimation = &idleAnim;
+}
 
 		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
 		{
@@ -139,23 +178,39 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 		{
-
 			position.x -= 2;
 			currentAnimation = &leftAnim;
 			isFlip = true;
+			if(canMoveDir[DOWN])
+			{
+				currentAnimation = &jumpAnim;
+				leftpressed = true;
+			}
 
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && canMoveDir[RIGHT])
 		{
+			leftpressed = false;
 			position.x += 2;
 			currentAnimation = &rightAnim;
-
+			if (canMoveDir[DOWN])
+			{
+				currentAnimation = &jumpAnim;
+			}
 		}
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP && !canMoveDir[DOWN])
 		{
 			currentAnimation = &idleAnim;
-		}
+			leftpressed = false;
 
+		}
+		if(app->input->GetKey(SDL_SCANCODE_A) == KEY_UP && !canMoveDir[DOWN])
+		{
+			currentAnimation = &idleAnim;
+			isFlip = true;
+			leftpressed = true;
+
+		}
 
 		//printf("\n%d , %d\n", position.x, position.y);
 
@@ -192,8 +247,12 @@ bool Player::Update(float dt)
 			currentAnimation = &rightAnim;
 		}
 	}
-	
-	
+
+
+	col->SetPos(position);
+
+	//cout << playerScore << endl;
+
 
 	return true;
 }
@@ -241,9 +300,6 @@ Player::~Player()
 
 void Player::Jump(float dt)
 {
-	
-
-
 }
 
 iPoint Player::GetPlayerCenterPosition()
@@ -256,7 +312,6 @@ iPoint Player::GetPlayerCenterPosition()
 	return pos;
 }
 
-
 void Player::OnCollision(Collider* col)
 {
 	//if (!godMode)
@@ -265,9 +320,9 @@ void Player::OnCollision(Collider* col)
 		{
 
 		case Type::WALL:
-			
+
 			break;
-		
+
 		/*case Type::EXPLOSION:
 		case Type::ENEMY:
 			if (invensibleTime <= 0 && InGrid(col)) Die(); break;
@@ -317,7 +372,7 @@ void Player::WillCollision()
 					case 243:
 
 						//DOWN
-						
+
 						if (py + bounds.h >= by&& py <= by && px + bounds.w > bx && px < bx + 16)
 						{
 							canMoveDir[DOWN] = false;
@@ -331,9 +386,9 @@ void Player::WillCollision()
 							else if (py + bounds.h/2 <= by)
 							{
 								halfUpDown = true;
-							}	
+							}
 						}
-						
+
 
 						//UP
 						if (py >= by + 16 && py <= by + 16 && px + bounds.w > bx && px < bx + 16)
@@ -377,7 +432,7 @@ void Player::WillCollision()
 
 							if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 							{
-								position.y += GRAVITY+1;
+								position.y += gravity+1;
 							}
 
 						}

@@ -162,6 +162,19 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 	return ret;
 }
 
+pugi::xml_node App::LoadPlayer(pugi::xml_document& playerfile) const
+{
+
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = playerfile.load_file(PLAYER_FILENAME);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", PLAYER_FILENAME, result.description());
+	else ret = playerfile.child("player_state");
+
+	return ret;
+}
+
 // ---------------------------------------------
 void App::PrepareUpdate()
 {

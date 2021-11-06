@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<player_state>
+	<position posX="206" posY="1430" />
+	<score score="0" /> 
+	<gravity value="2"/>
+	<renderer>
+		<camera x="-118" y="-2401" />
+	</renderer>
+	<animations>
+			
+	</animations>
+</player_state>
