@@ -4,12 +4,15 @@
 #include "Point.h"
 #include "Collider.h"
 #include "Timer.h"
+#include "PugiXml/src/pugixml.hpp"
 #include <math.h>
+
 
 #define MAX_JUMPS 2
 #define JumpTime 0.25f
-#define GRAVITY 2
 #define JUMPSPEED 2
+
+
 
 enum Dir
 {
@@ -52,9 +55,7 @@ public:
 
 	void move(const float dir_x, const float dir_y);
 
-	iPoint GetPlayerCenterPosition();
-
-	void Gravity();
+	iPoint GetPlayerCenterPosition();	
 
 private:
 
@@ -76,15 +77,13 @@ public:
 
 	//Physics
 
+	int gravity;
+
 	int jumpcounter = 0;
 
 	iPoint playercenter;
 	iPoint jumphigh;
 	iPoint resultvec;
-
-	float acceleration;
-
-	Dir direction;
 
 	iPoint position;
 

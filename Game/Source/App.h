@@ -19,6 +19,7 @@
 
 #define CONFIG_FILENAME		"SaveFiles/config.xml"
 #define SAVE_STATE_FILENAME "SaveFiles/save_game.xml"
+#define PLAYER_FILENAME "SaveFiles/player.xml"
 
 // Modules
 class Window;
@@ -66,6 +67,8 @@ public:
     // L02: DONE 1: Create methods to request Load / Save
 	void LoadGameRequest();
 	void SaveGameRequest() const;
+
+	pugi::xml_node LoadPlayer(pugi::xml_document&) const;
 
 private:
 

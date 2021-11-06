@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "App.h"
-#include <vector>
 
 Player::Player()
 {
@@ -8,8 +7,19 @@ Player::Player()
 	#define camX -118
 	#define camY -2401
 	*/
-	position.x = 206;
-	position.y = 1430;
+	pugi::xml_document playerfile;
+	pugi::xml_node player_state_node;
+
+	player_state_node = app->LoadPlayer(playerfile);
+
+	player_state_node = playerfile.child("player_state");
+
+	position.x = player_state_node.child("position").attribute("posX").as_int();
+	position.y = player_state_node.child("position").attribute("posY").as_int();
+
+	playerScore = player_state_node.child("score").attribute("score").as_int();
+
+	gravity = player_state_node.child("gravity").attribute("value").as_int();
 
 	//Rect for col
 	bounds.x = position.x;
@@ -18,7 +28,7 @@ Player::Player()
 	bounds.h = 26;
 
 	//IDLE Anim
-	idleAnim.PushBack({0,14,23,26});//IDLE
+	idleAnim.PushBack({ 0,14,23,26 });
 	idleAnim.PushBack({32,14,23,26});
 	idleAnim.PushBack({64,14,23,26});//IDLE
 	idleAnim.PushBack({96,14,23,26});
@@ -121,7 +131,7 @@ bool Player::Update(float dt)
 	}
 	else if (canMoveDir[DOWN])
 	{
-		position.y += GRAVITY;
+		position.y += gravity;
 		previousJumpTime = -1;
 	}
 	else
@@ -153,11 +163,10 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
 		currentAnimation = &idleAnim;
-		direction = UP;
 	}
 	
 
-	//printf("\n%d , %d\n", position.x, position.y);
+	printf("\n%d , %d\n", position.x, position.y);
 
 	// Reset Movemenet
 	for (int i = 0; i < 4; i++)
@@ -217,9 +226,6 @@ Player::~Player()
 
 void Player::Jump(float dt)
 {
-	
-
-
 }
 
 iPoint Player::GetPlayerCenterPosition()
@@ -231,7 +237,6 @@ iPoint Player::GetPlayerCenterPosition()
 
 	return pos;
 }
-
 
 void Player::OnCollision(Collider* col)
 {
