@@ -145,6 +145,8 @@ public:
 
 	void LoadFruits();
 
+	void UnloadFruits();
+
 private:
 
 	// L03: Methods to load all required map data

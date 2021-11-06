@@ -61,13 +61,22 @@ bool Scene::Update(float dt)
 	gameScene->Update(app->globalTime.getDeltaTime());
 
     // LOAD AND SAVE
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
 		app->LoadGameRequest();
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
 		app->SaveGameRequest();
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		gameScene->ReloadLevel();
+		bgSelector();
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		gameScene->froggy->godMode = !gameScene->froggy->godMode;
 	}
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -184,6 +193,12 @@ void Scene::drawBackground()
 
 void Scene::bgSelector()
 {
+
+	if (bgTex != NULL)
+	{
+		SDL_DestroyTexture(bgTex);
+	}
+
 	int num;
 	num = rand() % 7;
 

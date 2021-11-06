@@ -83,7 +83,7 @@ bool GameScene::Update(float dt)
 	}
 
 	//DEBUG
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		debugTiles = !debugTiles;
 	}
@@ -126,6 +126,31 @@ bool GameScene::CleanUp()
 	froggy = nullptr;
 
 	//Coinpool cleanup is done in map.cpp
+
+	return true;
+}
+
+bool GameScene::ReloadLevel()
+{
+
+	app->map->UnloadFruits();
+	app->map->LoadFruits();
+	ListItem<Coin*>* fruitItem;
+	fruitItem = app->map->mapData.fruits.start;
+
+	while (fruitItem != NULL)
+	{
+		if (fruitItem->data != nullptr)
+		{
+			fruitItem->data->Start();
+		}
+		fruitItem = fruitItem->next;
+	}
+
+	//froggy
+	froggy->CleanUp();
+	froggy = new Player();
+	froggy->Start();
 
 	return true;
 }

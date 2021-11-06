@@ -102,70 +102,97 @@ bool Player::Update(float dt)
 	currentAnimation->Update();
 
 	//RELOCATOR
-	if(!canMoveDir[RIGHT] && !canMoveDir[LEFT])
+	if (!godMode)
 	{
-		if (halfUpDown)
+		if (!canMoveDir[RIGHT] && !canMoveDir[LEFT])
 		{
-			position.y -= 2;
+			if (halfUpDown)
+			{
+				position.y -= 2;
+			}
+			else {
+				position.y += 2;
+			}
 		}
-		else {
-			position.y += 2;
-		}
-	}
 
-	float tempTime = previousJumpTime + JumpTime;
-	jumpTimer.Update();
-	if(jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
-	{
-		position.y -= JUMPSPEED;
-	}
-	else if (canMoveDir[DOWN])
-	{
-		position.y += GRAVITY;
-		previousJumpTime = -1;
+		float tempTime = previousJumpTime + JumpTime;
+		jumpTimer.Update();
+		if (jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
+		{
+			position.y -= JUMPSPEED;
+		}
+		else if (canMoveDir[DOWN])
+		{
+			position.y += GRAVITY;
+			previousJumpTime = -1;
+		}
+		else
+		{
+			jumpcounter = 0;
+			//position.y -= JUMPSPEED*2 +2;
+		}
+
+		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
+		{
+			previousJumpTime = jumpTimer.getDeltaTime() + JumpTime;
+			jumpcounter += 1;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
+		{
+
+			position.x -= 2;
+			currentAnimation = &leftAnim;
+			isFlip = true;
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && canMoveDir[RIGHT])
+		{
+			position.x += 2;
+			currentAnimation = &rightAnim;
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+		{
+			currentAnimation = &idleAnim;
+		}
+
+
+		//printf("\n%d , %d\n", position.x, position.y);
+
+		// Reset Movemenet
+		for (int i = 0; i < 4; i++)
+		{
+			canMoveDir[i] = true;
+		}
+
+		col->SetPos(position);
+
+		cout << playerScore << endl;
 	}
 	else
 	{
-		jumpcounter = 0;
-		//position.y -= JUMPSPEED*2 +2;
+		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT))
+		{
+			position.y -= 4;
+		}
+		if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT))
+		{
+			position.y += 4;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			position.x -= 4;
+			currentAnimation = &leftAnim;
+			isFlip = true;
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			position.x += 4;
+			currentAnimation = &rightAnim;
+		}
 	}
 	
-	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
-	{
-		previousJumpTime = jumpTimer.getDeltaTime() + JumpTime;
-		jumpcounter += 1;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
-	{
-		
-		position.x -= 2;
-		currentAnimation = &leftAnim;
-		isFlip = true;
-		
-	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && canMoveDir[RIGHT])
-	{
-		position.x += 2;
-		currentAnimation = &rightAnim;
-		
-	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
-	{
-		currentAnimation = &idleAnim;
-	}
-	
-
-	//printf("\n%d , %d\n", position.x, position.y);
-
-	// Reset Movemenet
-	for (int i = 0; i < 4; i++)
-	{
-		canMoveDir[i] = true;
-	}
-
-	col->SetPos(position);
-
-	//cout << playerScore << endl;
 	
 
 	return true;
@@ -199,11 +226,10 @@ bool Player::PostUpdate()
 }
 
 bool Player::CleanUp() {
-
 	playerRect = nullptr;
+	SDL_DestroyTexture(player_tex);
 	player_tex = nullptr;
 	currentAnimation = nullptr;
-
 
 	return true;
 }
@@ -265,6 +291,9 @@ void Player::OnCollision(Collider* col)
 
 void Player::WillCollision()
 {
+	if (godMode) return;
+
+
 	int px = position.x;
 	int py = position.y;
 

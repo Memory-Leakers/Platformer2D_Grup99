@@ -17,9 +17,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	input = new Input();	
 	tex = new Textures();
 	audio = new Audio();
+	map = new Map();
 	col = new ModuleCollisions();
 	scene = new Scene();
-	map = new Map();
+	
 	
 
 
@@ -31,9 +32,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(col);
 	AddModule(scene);
+	AddModule(col);
 	AddModule(map);
+	
 	
 
 

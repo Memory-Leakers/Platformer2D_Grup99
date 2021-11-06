@@ -34,6 +34,8 @@ public:
 	// Called before quitting
 	bool CleanUp() ;
 
+	bool ReloadLevel();
+
 	void OnCollision(Collider* c1, Collider* c2);
 
 	void WillCollision(Collider* c1, Collider* c2);

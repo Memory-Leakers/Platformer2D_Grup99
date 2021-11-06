@@ -72,6 +72,8 @@ private:
 
 	Animation* currentAnimation = nullptr;
 
+	
+
 public:
 
 	//Physics
@@ -108,6 +110,8 @@ public:
 	Collider* col = nullptr;
 
 	int playerScore = 0;
+
+	bool godMode = false;
 
 private:
 	bool halfUpDown = false; //false down

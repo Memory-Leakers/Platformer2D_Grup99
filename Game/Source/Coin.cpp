@@ -78,13 +78,11 @@ bool Coin::PostUpdate()
 
 bool Coin::CleanUp()
 {
-	app->scene->gameScene->froggy->playerScore += fruitPoints;
-
 	pendingToDelete = true;
-	col->pendingToDelete = true;
-
-	//delete tex;
-	//tex = nullptr;
+	this->col->pendingToDelete = true;
+	rect = nullptr;
+	SDL_DestroyTexture(tex);
+	tex = nullptr;
 
 	return true;
 }
@@ -93,6 +91,7 @@ void Coin::OnCollision(Collider* col)
 {
 	if (col->type == Type::PLAYER)
 	{
+		app->scene->gameScene->froggy->playerScore += fruitPoints;
 		CleanUp();
 	}
 }

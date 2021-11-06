@@ -243,20 +243,21 @@ bool Map::CleanUp()
 	mapData.layers.clear();
 	mapData.tilesets.clear();
 
+	//Remove all fruits
 	ListItem<Coin*>* fruitItem;
 	fruitItem = mapData.fruits.start;
 
 	while (fruitItem != NULL)
 	{
-		if (fruitItem->data != nullptr)
-		{
-			delete fruitItem->data;
-			fruitItem->data = nullptr;
-		}
+		fruitItem->data->CleanUp();
+		delete fruitItem->data;
+		fruitItem->data = nullptr;
+		//fruitItem->data->pendingToDelete = true;
 		fruitItem = fruitItem->next;
 	}
 
 	mapData.fruits.clear();
+
 
     return true;
 }
@@ -504,4 +505,23 @@ void Map::LoadFruits ()
 
 
 	//return toReturn;
+}
+
+void Map::UnloadFruits()
+{
+	//Remove all fruits
+	ListItem<Coin*>* fruitItem;
+	fruitItem = mapData.fruits.start;
+
+	while (fruitItem != NULL)
+	{
+			fruitItem->data->CleanUp();
+			delete fruitItem->data;
+			fruitItem->data = nullptr;
+			//fruitItem->data->col->pendingToDelete = true;
+
+		fruitItem = fruitItem->next;
+	}
+
+	mapData.fruits.clear();
 }
