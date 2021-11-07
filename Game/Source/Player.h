@@ -79,10 +79,6 @@ private:
 
 	Animation* currentAnimation = nullptr;
 
-	uint playerjumpSFX;
-
-	uint playerwalkSFX;
-
 public:
 
 	//Physics

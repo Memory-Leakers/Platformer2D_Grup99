@@ -1,5 +1,6 @@
 #include "Coin.h"
 #include "App.h"
+#include "SDL_mixer/include/SDL_mixer.h"
 
 
 Coin::Coin(int posX = 0, int posY = 0)
@@ -44,8 +45,6 @@ bool Coin::Start()
 
 	this->col = app->col->AddCollider(bounds, Type::PICKER, app->scene);
 
-	pickupSFX = app->audio->LoadFx("Assets/audio/fx/item_pickup.wav");
-
 	return true;
 }
 
@@ -84,7 +83,7 @@ bool Coin::CleanUp()
 	pendingToDelete = true;
 	this->col->pendingToDelete = true;
 	rect = nullptr;
-	SDL_DestroyTexture(tex);
+	SDL_DestroyTexture(this->tex);
 	tex = nullptr;
 
 	return true;
@@ -95,8 +94,7 @@ void Coin::OnCollision(Collider* col)
 	if (col->type == Type::PLAYER)
 	{
 		app->scene->gameScene->froggy->playerScore += fruitPoints;
-		app->audio->PlayFx(pickupSFX, 0);
-		
+		app->audio->PlayFx(app->scene->gameScene->pickupSFX, 0);
 		CleanUp();
 	}
 }

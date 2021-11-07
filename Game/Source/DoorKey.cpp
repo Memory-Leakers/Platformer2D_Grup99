@@ -34,8 +34,6 @@ bool DoorKey::Start()
 	this->tex = app->tex->Load("Assets/Items/DoorKey.png");
 
 	this->col = app->col->AddCollider(bounds, Type::PICKER, app->scene);
-
-	keypickupSFX = app->audio->LoadFx("Assets/audio/fx/key_pickup.wav");
 	
 	return true;
 }
@@ -83,7 +81,7 @@ void DoorKey::OnCollision(Collider* col) {
 	if (col->type == Type::PLAYER)
 	{
 		app->scene->gameScene->key = true;
-		app->audio->PlayFx(keypickupSFX, 0);
+		app->audio->PlayFx(app->scene->gameScene->keypickupSFX, 0);
 		CleanUp();
 	}
 }

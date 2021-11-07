@@ -30,8 +30,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
-	AddModule(tex);
 	AddModule(audio);
+	AddModule(tex);
 	AddModule(col);
 	AddModule(scene);
 	AddModule(map);
@@ -265,16 +265,6 @@ bool App::CleanUp()
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
-
-
-	//RELEASE(win);
-	//RELEASE(input);
-	//RELEASE(tex);
-	//RELEASE(audio);
-	//RELEASE(scene);
-	//RELEASE(map);
-	//RELEASE(col);
-	//RELEASE(render);
 
 	return ret;
 }

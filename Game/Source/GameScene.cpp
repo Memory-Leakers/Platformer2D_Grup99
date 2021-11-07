@@ -37,8 +37,7 @@ bool GameScene::Start()
 		}
 		fruitItem = fruitItem->next;
 	}
-
-
+	
 	//Trophy
 	trophy = new Trophy(2784, 1792);
 	trophy->Start();
@@ -51,6 +50,13 @@ bool GameScene::Start()
 	//GUI
 	guiKeyRect = new SDL_Rect({ 16, 0, 16, 16 });
 	guiKey = app->tex->Load("Assets/Items/DoorKey.png");
+
+
+	//SOUNDS
+	pickupSFX = app->audio->LoadFx("Assets/audio/fx/item_pickup.wav");
+	keypickupSFX = app->audio->LoadFx("Assets/audio/fx/key_pickup.wav");
+	playerjumpSFX = app->audio->LoadFx("Assets/audio/fx/8bit_jump.wav");
+	playerwalkSFX = app->audio->LoadFx("Assets/audio/fx/walk_barefoot.wav");
 
 	//Clean
 	delete fruitItem;
@@ -220,6 +226,8 @@ bool GameScene::ReloadLevel()
 	}
 	
 	key = false;
+	doorKey->CleanUp();
+	delete doorKey;
 	doorKey = new DoorKey(1664, 2096);
 	doorKey->Start();
 

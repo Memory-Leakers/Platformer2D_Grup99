@@ -100,10 +100,6 @@ Player::Player()
 		canMoveDir[i] = true;
 	}
 	canMoveDir[UP] = false;
-
-	playerjumpSFX = app->audio->LoadFx("Assets/audio/fx/8bit_jump.wav");
-
-	playerwalkSFX = app->audio->LoadFx("Assets/audio/fx/walk_barefoot.wav");
 }
 
 bool Player::Start()
@@ -184,14 +180,14 @@ bool Player::Update(float dt)
 		{
 			previousJumpTime = jumpTimer.getDeltaTime() + JumpTime;
 			jumpcounter += 1;
-			app->audio->PlayFx(playerjumpSFX, 0);
+			app->audio->PlayFx(app->scene->gameScene->playerjumpSFX, 0);
 			
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 		{
 			if (!canMoveDir[DOWN])
 			{
-				app->audio->PlayFx(playerwalkSFX, 0);
+				app->audio->PlayFx(app->scene->gameScene->playerwalkSFX, 0);
 			}
 			position.x -= 2;
 			currentAnimation = &leftAnim;
@@ -217,7 +213,7 @@ bool Player::Update(float dt)
 		{
 			if (!canMoveDir[DOWN]) 
 			{
-				app->audio->PlayFx(playerwalkSFX, 0);
+				app->audio->PlayFx(app->scene->gameScene->playerwalkSFX, 0);
 			}
 			leftpressed = false;
 			position.x += 2;
