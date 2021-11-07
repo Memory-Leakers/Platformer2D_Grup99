@@ -22,8 +22,8 @@ F9 - View colliders / logic
 F10 - God Mode (fly around, cannot be killed)
 
 ## Developers:
-* MrIllas (Robert Recordà) 
-* Loproxi (Pol Rius)
+* [MrIllas](https://github.com/MrIllas) 
+* [Loproxi](https://github.com/Loproxi) 
 
 ## Assets:
 All assets are from hipixelfrog@gmail.com
