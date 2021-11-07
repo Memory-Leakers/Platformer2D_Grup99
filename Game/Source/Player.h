@@ -75,6 +75,8 @@ private:
 
 	Animation fallAnim;
 
+	Animation doublejumpAnim;
+
 	Animation* currentAnimation = nullptr;
 
 	

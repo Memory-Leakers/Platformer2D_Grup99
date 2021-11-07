@@ -76,15 +76,18 @@ Player::Player()
 	leftAnim.hasIdle = false;
 
 	//Jump Anim
-	/*jumpAnim.PushBack({ 0,110,23,28 });*/
-	jumpAnim.PushBack({ 0,174,24,28 });
-	jumpAnim.PushBack({ 32,174,24,28 });
-	jumpAnim.PushBack({ 65,174,24,28 });
-	jumpAnim.PushBack({ 97,174,24,28 });
-	jumpAnim.PushBack({ 127,174,24,28 });
-	jumpAnim.PushBack({ 159,174,24,28 });
+	jumpAnim.PushBack({ 0,110,23,28 });
 	jumpAnim.speed = 0.30;
-	jumpAnim.hasIdle = false;
+	jumpAnim.hasIdle = true;
+	//doublejump anim
+	doublejumpAnim.PushBack({ 0,174,24,28 });
+	doublejumpAnim.PushBack({ 32,174,24,28 });
+	doublejumpAnim.PushBack({ 65,174,24,28 });
+	doublejumpAnim.PushBack({ 97,174,24,28 });
+	doublejumpAnim.PushBack({ 127,174,24,28 });
+	doublejumpAnim.PushBack({ 159,174,24,28 });
+	doublejumpAnim.speed = 0.30;
+	doublejumpAnim.hasIdle = false;
 	//Fall Anim
 	fallAnim.PushBack({ 0,143,24,26 });
 	fallAnim.speed = 0.30;
@@ -151,7 +154,10 @@ bool Player::Update(float dt)
 		if (jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
 		{
 			position.y -= JUMPSPEED;
-			currentAnimation = &jumpAnim;
+			if (jumpcounter < 1)
+			{
+				currentAnimation = &jumpAnim;
+			}
 		}
 		else if (canMoveDir[DOWN])
 		{
@@ -164,7 +170,6 @@ bool Player::Update(float dt)
 			jumpcounter = 0;
 			//position.y -= JUMPSPEED*2 +2;
 		}
-
 		if(!canMoveDir[DOWN])
 		{
 		currentAnimation = &idleAnim;
@@ -174,6 +179,7 @@ bool Player::Update(float dt)
 		{
 			previousJumpTime = jumpTimer.getDeltaTime() + JumpTime;
 			jumpcounter += 1;
+			
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 		{
@@ -187,6 +193,10 @@ bool Player::Update(float dt)
 				if(jumpTimer.getDeltaTime() > tempTime)
 				{
 					currentAnimation = &fallAnim;
+				}
+				if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
+				{
+					currentAnimation = &doublejumpAnim;
 				}
 			}
 
@@ -203,6 +213,11 @@ bool Player::Update(float dt)
 				{
 					currentAnimation = &fallAnim;
 				}
+				if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
+				{
+					currentAnimation = &doublejumpAnim;
+				}
+				
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP && !canMoveDir[DOWN])
@@ -219,7 +234,7 @@ bool Player::Update(float dt)
 
 		}
 
-		//printf("\n%d , %d\n", position.x, position.y);
+		
 
 		// Reset Movemenet
 		for (int i = 0; i < 4; i++)
@@ -254,7 +269,7 @@ bool Player::Update(float dt)
 	}
 
 	//cout << playerScore << endl;
-
+	printf("\n%d , %d\n", position.x, position.y);
 	// Animation update
 	currentAnimation->Update();
 	if (this->col != nullptr)
