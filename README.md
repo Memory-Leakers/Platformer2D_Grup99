@@ -9,7 +9,9 @@ A 2D platformer game made by students. Using visual studio 2019 and SDL library.
 ## Controls:
 
 A - Move Player to the left
+
 D - Move Player to the right
+
 W/Space - Jump
 
 ## Debug Keys:
