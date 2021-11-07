@@ -5,7 +5,7 @@
 #include "List.h"
 #include "Player.h"
 #include "Coin.h"
-
+#include "Trophy.h"
 
 class GameScene
 {
@@ -44,6 +44,8 @@ public:
 	bool debugTiles = false;
 
 	Player* froggy = nullptr;
+
+	Trophy* trophy = nullptr;
 	
 	Timer jumptimer;
 

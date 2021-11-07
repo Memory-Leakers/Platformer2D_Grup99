@@ -84,6 +84,7 @@ private:
 	List<Level*> levelList;
 
 	SDL_Texture* bgTex = nullptr;
+	SString bg;
 
 	int bgPivX = 0;
 	int bgPivY = -128;

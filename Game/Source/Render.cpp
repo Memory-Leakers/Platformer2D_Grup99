@@ -244,8 +244,6 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 bool Render::LoadState(pugi::xml_node& data)
 {
-	camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
 
 	return true;
 }
@@ -253,8 +251,6 @@ bool Render::LoadState(pugi::xml_node& data)
 bool Render::SaveState(pugi::xml_node& data) const
 {
 
-	data.child("camera").attribute("x") = camera.x;
-	data.child("camera").attribute("y") = camera.y;
 
 	return true;
 }

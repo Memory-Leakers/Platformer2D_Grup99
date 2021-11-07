@@ -297,11 +297,9 @@ bool Player::CleanUp() {
 	SDL_DestroyTexture(player_tex);
 	player_tex = nullptr;
 	currentAnimation = nullptr;
+	playerRect = nullptr;
 
-	if(this->col != nullptr)
-	{
-		this->col->pendingToDelete = true;
-	}
+	this->col->pendingToDelete = true;
 
 	return true;
 }
@@ -454,6 +452,12 @@ void Player::WillCollision()
 
 						}
 
+						break;
+					case 248: //WIN
+						if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
+						{
+							app->scene->gameScene->pendingtoReload = true;
+						}
 						break;
 					}
 				}

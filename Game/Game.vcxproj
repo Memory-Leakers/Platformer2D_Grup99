@@ -104,6 +104,7 @@
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
+    <ClCompile Include="Source\Trophy.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Coin.h" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Source\Render.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Trophy.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\List.h" />

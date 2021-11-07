@@ -258,6 +258,13 @@ bool Map::CleanUp()
 
 	mapData.fruits.clear();
 
+	//Clean
+	delete fruitItem;
+	fruitItem = nullptr;
+	delete item;
+	item = nullptr;
+	delete item2;
+	item2 = nullptr;
 
     return true;
 }
@@ -524,4 +531,65 @@ void Map::UnloadFruits()
 	}
 
 	mapData.fruits.clear();
+
+	//Clean
+	delete fruitItem;
+	fruitItem = nullptr;
+
+}
+
+bool Map::LoadState(pugi::xml_node& data)
+{
+
+	UnloadFruits();
+
+	pugi::xml_node f = data.child("fruits").first_child();
+
+	while (f != NULL)
+	{
+		mapData.fruits.add(new Coin(f.attribute("posX").as_int(), f.attribute("posY").as_int()));
+		f = f.next_sibling();
+	}
+
+	ListItem<Coin*>* fruitItem;
+	fruitItem = mapData.fruits.start;
+
+	while (fruitItem != NULL) {
+		fruitItem->data->Start();
+
+		fruitItem = fruitItem->next;
+	}
+
+	delete fruitItem;
+	fruitItem = nullptr;
+
+	return true;
+}
+
+bool Map::SaveState(pugi::xml_node& data) const
+{
+
+	ListItem<Coin*>* fruitItem;
+	fruitItem = mapData.fruits.start;
+
+	while (data.child("fruits").child("f"))
+	{
+		data.child("fruits").remove_child("f");
+	}
+
+	while (fruitItem != NULL)
+	{
+		if(!fruitItem->data->pendingToDelete)
+		{
+			pugi::xml_node f = data.child("fruits").append_child("f");
+			f.append_attribute("posX") = fruitItem->data->position.x;
+			f.append_attribute("posY") = fruitItem->data->position.y;
+		}
+		fruitItem = fruitItem->next;
+	}
+
+	delete fruitItem;
+	fruitItem = nullptr;
+
+	return true;
 }

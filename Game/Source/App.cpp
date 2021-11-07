@@ -32,8 +32,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(scene);
 	AddModule(col);
+	AddModule(scene);
 	AddModule(map);
 	
 	
@@ -353,6 +353,12 @@ bool App::LoadGame()
 	}
 	loadGameRequested = false;
 
+	//Clean
+	delete doc;
+	doc = nullptr;
+	delete item;
+	item = nullptr;
+
 	return ret;
 }
 
@@ -388,6 +394,12 @@ bool App::SaveGame() const
 	cout << "Second->" << doc->child("game_state").child("scene").child("player").attribute("posX").as_int() << endl;
 
 	saveGameRequested = false;
+
+	//Clean
+	delete doc;
+	doc = nullptr;
+	delete item;
+	item = nullptr;
 
 	return ret;
 }

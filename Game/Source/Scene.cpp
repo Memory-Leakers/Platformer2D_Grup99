@@ -131,8 +131,13 @@ bool Scene::PostUpdate()
 
 bool Scene::LoadState(pugi::xml_node& data)
 {
+	//Player
 	gameScene->froggy->position.x = data.child("player").attribute("posX").as_int();
 	gameScene->froggy->position.y = data.child("player").attribute("posY").as_int();
+	gameScene->froggy->playerScore = data.child("player").attribute("score").as_int();
+
+	//Level/Map related
+	bgTex = app->tex->Load(data.child("background").attribute("value").as_string());
 
 	return true;
 }
@@ -141,6 +146,10 @@ bool Scene::SaveState(pugi::xml_node& data) const
 {
 	data.child("player").attribute("posX") = gameScene->froggy->position.x;
 	data.child("player").attribute("posY") = gameScene->froggy->position.y;
+	data.child("player").attribute("score") = gameScene->froggy->playerScore;
+
+	//Level/Map related
+	data.child("background").attribute("value") = bg.GetString();
 
 	return true;
 }
@@ -206,24 +215,25 @@ void Scene::bgSelector()
 	switch (num)
 	{
 	case Blue:
-		bgTex = app->tex->Load("Assets/Background/Blue.png");
+		bg = "Assets/Background/Blue.png";
 		break;
 	case Brown:
-		bgTex = app->tex->Load("Assets/Background/Brown.png");
+		bg = "Assets/Background/Brown.png";
 		break;
 	case Gray:
-		bgTex = app->tex->Load("Assets/Background/Gray.png");
+		bg = "Assets/Background/Gray.png";
 		break;
 	case Green:
-		bgTex = app->tex->Load("Assets/Background/Green.png");
+		bg = "Assets/Background/Green.png";
 		break;
 	case Pink:
-		bgTex = app->tex->Load("Assets/Background/Pink.png");
+		bg = "Assets/Background/Pink.png";
 		break;
 	case Purple:
-		bgTex = app->tex->Load("Assets/Background/Purple.png");
+		bg = "Assets/Background/Purple.png";
 		break;
 	case Yellow:
-		bgTex = app->tex->Load("Assets/Background/Yellow.png");
+		bg = "Assets/Background/Yellow.png";
 	}
+	bgTex = app->tex->Load(bg.GetString());
 }

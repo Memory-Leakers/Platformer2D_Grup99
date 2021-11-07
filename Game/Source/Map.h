@@ -147,6 +147,9 @@ public:
 
 	void UnloadFruits();
 
+	bool LoadState(pugi::xml_node&) override;
+	bool SaveState(pugi::xml_node&) const override;
+
 private:
 
 	// L03: Methods to load all required map data

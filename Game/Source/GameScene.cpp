@@ -38,6 +38,15 @@ bool GameScene::Start()
 		fruitItem = fruitItem->next;
 	}
 
+
+	//Trophy
+	trophy = new Trophy(2784, 1792);
+	trophy->Start();
+
+	//Clean
+	delete fruitItem;
+	fruitItem = nullptr;
+
 	return ret;
 }
 
@@ -88,6 +97,12 @@ bool GameScene::Update(float dt)
 		debugTiles = !debugTiles;
 	}
 
+	//Trophy
+	trophy->Update(dt);
+
+	//Clean
+	delete fruitItem;
+	fruitItem = nullptr;
 
 	return ret;
 }
@@ -114,6 +129,13 @@ bool GameScene::PostUpdate()
 		fruitItem = fruitItem->next;
 	}
 
+	//Trophy
+	trophy->PostUpdate();
+
+	//Clean
+	delete fruitItem;
+	fruitItem = nullptr;
+
 	return ret;
 }
 
@@ -124,6 +146,10 @@ bool GameScene::CleanUp()
 	froggy->CleanUp();
 	delete froggy;
 	froggy = nullptr;
+
+	trophy->CleanUp();
+	delete trophy;
+	trophy = nullptr;
 
 	//Coinpool cleanup is done in map.cpp
 
@@ -146,9 +172,11 @@ bool GameScene::ReloadLevel()
 		}
 		fruitItem = fruitItem->next;
 	}
+	
 
 	//froggy
 	froggy->CleanUp();
+	delete froggy;
 	froggy = new Player();
 	froggy->Start();
 
@@ -175,23 +203,12 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 		}
 		fruitItem = fruitItem->next;
 	}
-
-	ListItem<Collider*>* colItem;
-	colItem = app->map->mapData.col.start;
-
-
-	while (colItem != NULL)
+	
+	if (trophy != nullptr && trophy->col == c1)
 	{
-		// Whenever it collides with something
-		if (colItem->data == c1)
-		{
-
-
-			//sceneObstacles[i]->OnCollision(c2);
-
-		}
-		colItem = colItem->next;
+		trophy->OnCollision(c2);
 	}
+
 	/*
 	for (int i = 0; i < MAX_ENEMY; ++i)
 	{
@@ -201,6 +218,10 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 		}
 	}
 	*/
+	//Clean
+	delete fruitItem;
+	fruitItem = nullptr;
+
 }
 
 void GameScene::WillCollision(Collider* c1, Collider* c2)
