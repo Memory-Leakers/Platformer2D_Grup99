@@ -34,5 +34,7 @@ private:
 
 private:
 	Animation anim;
+
+	uint keypickupSFX;
 };
 

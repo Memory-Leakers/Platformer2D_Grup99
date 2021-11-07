@@ -50,5 +50,7 @@ public:
 private:
 	Animation anim;
 
+	uint pickupSFX;
+
 };
 

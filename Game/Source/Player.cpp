@@ -101,6 +101,9 @@ Player::Player()
 	}
 	canMoveDir[UP] = false;
 
+	playerjumpSFX = app->audio->LoadFx("Assets/audio/fx/8bit_jump.wav");
+
+	playerwalkSFX = app->audio->LoadFx("Assets/audio/fx/walk_barefoot.wav");
 }
 
 bool Player::Start()
@@ -125,7 +128,6 @@ bool Player::PreUpdate()
 	{
 		isFlip = true;
 	}
-
 	return true;
 }
 
@@ -156,6 +158,7 @@ bool Player::Update(float dt)
 			position.y -= JUMPSPEED;
 			currentAnimation = &jumpAnim;
 			
+			
 		}
 		else if (canMoveDir[DOWN])
 		{
@@ -170,7 +173,7 @@ bool Player::Update(float dt)
 		}
 		if(!canMoveDir[DOWN])
 		{
-		currentAnimation = &idleAnim;
+			currentAnimation = &idleAnim;
 		}
 		if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
 		{
@@ -181,10 +184,15 @@ bool Player::Update(float dt)
 		{
 			previousJumpTime = jumpTimer.getDeltaTime() + JumpTime;
 			jumpcounter += 1;
+			app->audio->PlayFx(playerjumpSFX, 0);
 			
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 		{
+			if (!canMoveDir[DOWN])
+			{
+				app->audio->PlayFx(playerwalkSFX, 0);
+			}
 			position.x -= 2;
 			currentAnimation = &leftAnim;
 			isFlip = true;
@@ -195,16 +203,22 @@ bool Player::Update(float dt)
 				if(jumpTimer.getDeltaTime() > tempTime)
 				{
 					currentAnimation = &fallAnim;
+					
 				}
 				if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
 				{
 					currentAnimation = &doublejumpAnim;
+					
 				}
 			}
 
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && canMoveDir[RIGHT])
 		{
+			if (!canMoveDir[DOWN]) 
+			{
+				app->audio->PlayFx(playerwalkSFX, 0);
+			}
 			leftpressed = false;
 			position.x += 2;
 			currentAnimation = &rightAnim;
@@ -219,21 +233,18 @@ bool Player::Update(float dt)
 				{
 					currentAnimation = &doublejumpAnim;
 				}
-				
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP && !canMoveDir[DOWN])
 		{
 			currentAnimation = &idleAnim;
 			leftpressed = false;
-
 		}
 		if(app->input->GetKey(SDL_SCANCODE_A) == KEY_UP && !canMoveDir[DOWN])
 		{
 			currentAnimation = &idleAnim;
 			isFlip = true;
 			leftpressed = true;
-
 		}
 
 		

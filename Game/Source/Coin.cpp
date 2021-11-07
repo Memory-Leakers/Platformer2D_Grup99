@@ -43,6 +43,9 @@ bool Coin::Start()
 	textureSelector();
 
 	this->col = app->col->AddCollider(bounds, Type::PICKER, app->scene);
+
+	pickupSFX = app->audio->LoadFx("Assets/audio/fx/item_pickup.wav");
+
 	return true;
 }
 
@@ -92,6 +95,8 @@ void Coin::OnCollision(Collider* col)
 	if (col->type == Type::PLAYER)
 	{
 		app->scene->gameScene->froggy->playerScore += fruitPoints;
+		app->audio->PlayFx(pickupSFX, 0);
+		
 		CleanUp();
 	}
 }
