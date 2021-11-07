@@ -454,7 +454,23 @@ void Player::WillCollision()
 							app->scene->gameScene->pendingtoReload = true;
 						}
 						break;
+					case 245:
+						if (app->scene->gameScene->key == true) break;
 
+						//RIGHT
+						if (px + bounds.w >= bx && px <= bx && py + bounds.h > by && py < by + 16)
+						{
+							canMoveDir[RIGHT] = false;
+
+						}
+
+						//LEFT
+						if (px + bounds.w >= bx + 16 && px <= bx + 16 && py + bounds.h > by && py < by + 16)
+						{
+							canMoveDir[LEFT] = false;
+						}
+
+						break;
 					case 247: //Platform move up
 
 						//DOWN

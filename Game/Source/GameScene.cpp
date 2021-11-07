@@ -43,6 +43,15 @@ bool GameScene::Start()
 	trophy = new Trophy(2784, 1792);
 	trophy->Start();
 
+	//Key
+	doorKey = new DoorKey(1664, 2096);
+	doorKey->Start();
+
+
+	//GUI
+	guiKeyRect = new SDL_Rect({ 16, 0, 16, 16 });
+	guiKey = app->tex->Load("Assets/Items/DoorKey.png");
+
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
@@ -53,8 +62,6 @@ bool GameScene::Start()
 bool GameScene::PreUpdate()
 {
 	bool ret = true;
-	
-	
 
 	froggy->PreUpdate();
 
@@ -65,6 +72,8 @@ bool GameScene::PreUpdate()
 		app->render->camera.x = (froggy->position.x *-2) + 540 - froggy->bounds.w;
 		app->render->camera.y = (froggy->position.y *-2) + 260 - froggy->bounds.h;
 	}
+
+	if(key) std::cout << "key->" << "true" << std::endl;
 
 	return ret;
 }
@@ -100,6 +109,18 @@ bool GameScene::Update(float dt)
 	//Trophy
 	trophy->Update(dt);
 
+	//Key
+	if (key && doorKey != nullptr)
+	{
+		doorKey->CleanUp();
+		delete doorKey;
+		doorKey = nullptr;
+	}
+	else if (!key && doorKey != nullptr)
+	{
+		doorKey->Update(dt);
+	}	
+
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
@@ -132,6 +153,20 @@ bool GameScene::PostUpdate()
 	//Trophy
 	trophy->PostUpdate();
 
+	//Key
+	if (!key && doorKey != nullptr)
+	{
+		doorKey->PostUpdate();
+	}
+	
+
+
+	//GUI
+	if (key)
+	{
+		app->render->DrawTexture(guiKey, froggy->position.x + 3 , froggy->position.y - 16, guiKeyRect);
+	}
+
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
@@ -151,7 +186,18 @@ bool GameScene::CleanUp()
 	delete trophy;
 	trophy = nullptr;
 
+	if (doorKey != nullptr)
+	{
+		doorKey->CleanUp();
+		delete doorKey;
+		doorKey = nullptr;
+	}
+
 	//Coinpool cleanup is done in map.cpp
+	
+	//GUI
+	SDL_DestroyTexture(guiKey);
+	guiKey = nullptr;
 
 	return true;
 }
@@ -173,6 +219,10 @@ bool GameScene::ReloadLevel()
 		fruitItem = fruitItem->next;
 	}
 	
+	key = false;
+	doorKey = new DoorKey(1664, 2096);
+	doorKey->Start();
+
 
 	//froggy
 	froggy->CleanUp();
@@ -209,15 +259,11 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 		trophy->OnCollision(c2);
 	}
 
-	/*
-	for (int i = 0; i < MAX_ENEMY; ++i)
+	if (doorKey != nullptr && doorKey->col == c1)
 	{
-		if (enemy[i] != nullptr && enemy[i]->getCollider() == c1)
-		{
-			enemy[i]->OnCollision(c2);
-		}
+		doorKey->OnCollision(c2);
 	}
-	*/
+
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;

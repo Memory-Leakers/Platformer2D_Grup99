@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
+    <ClCompile Include="Source\DoorKey.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="Source\Collider.h" />
+    <ClInclude Include="Source\DoorKey.h" />
     <ClInclude Include="Source\GameScene.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\MemLeaks.h" />

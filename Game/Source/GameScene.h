@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Coin.h"
 #include "Trophy.h"
+#include "DoorKey.h"
 
 class GameScene
 {
@@ -46,10 +47,17 @@ public:
 	Player* froggy = nullptr;
 
 	Trophy* trophy = nullptr;
+
+	DoorKey* doorKey = nullptr;
 	
 	Timer jumptimer;
 
 	bool pendingtoReload = false;
+
+	bool key = false;
+
+	SDL_Rect* guiKeyRect = nullptr;
+	SDL_Texture* guiKey = nullptr;
 };
 
 #endif // __GAMESCENE_H__

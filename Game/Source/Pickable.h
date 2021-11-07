@@ -4,6 +4,13 @@
 #include "Point.h"
 #include "Collider.h"
 
+enum PickType
+{
+	NONE = -1,
+	FRUIT = 0,
+	DOORKEY
+};
+
 class Pickable
 {
 public:
@@ -29,5 +36,7 @@ public:
 	bool pendingToDelete = false;
 
 	Collider* col = nullptr;
+
+	int pickId = NONE;
 };
 
