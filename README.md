@@ -8,17 +8,22 @@ A 2D platformer game made by students. Using visual studio 2019 and SDL library.
 
 ## Controls:
 
-A/D - Player Movement
-
+A - Move Player to the left
+D - Move Player to the right
 W/Space - Jump
 
 ## Debug Keys:
 
 F1 - Start from the level
+
 F3 - Start from the beginning of the current level
+
 F5 - Save the current game state
+
 F6 - Load the previous state (even across levels)
+
 F9 - View colliders / logic
+
 F10 - God Mode (fly around, cannot be killed)
 
 ## Developers:
