@@ -147,6 +147,9 @@
     <ClInclude Include="Source\DoorKey.h">
       <Filter>HeaderFiles\GameObjects\Pickable</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ResourceFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="HeaderFiles">
@@ -200,5 +203,18 @@
     <Filter Include="HeaderFiles\GameObjects\Pickable">
       <UniqueIdentifier>{0886099d-b249-4c1b-b2b8-7ea2123cc2d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ResourceFiles">
+      <UniqueIdentifier>{1084d4e6-0264-4b3b-90fa-1931457b2e7c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc">
+      <Filter>ResourceFiles</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Output\Assets\Other\icon.ico">
+      <Filter>ResourceFiles</Filter>
+    </Image>
   </ItemGroup>
 </Project>
