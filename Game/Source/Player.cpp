@@ -154,10 +154,8 @@ bool Player::Update(float dt)
 		if (jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
 		{
 			position.y -= JUMPSPEED;
-			if (jumpcounter < 1)
-			{
-				currentAnimation = &jumpAnim;
-			}
+			currentAnimation = &jumpAnim;
+			
 		}
 		else if (canMoveDir[DOWN])
 		{
@@ -173,6 +171,10 @@ bool Player::Update(float dt)
 		if(!canMoveDir[DOWN])
 		{
 		currentAnimation = &idleAnim;
+		}
+		if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
+		{
+			currentAnimation = &doublejumpAnim;
 		}
 
 		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
