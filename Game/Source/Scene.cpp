@@ -69,8 +69,9 @@ bool Scene::Update(float dt)
 	{
 		app->SaveGameRequest();
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || gameScene->pendingtoReload)
 	{
+		gameScene->pendingtoReload = false;
 		gameScene->ReloadLevel();
 		bgSelector();
 	}

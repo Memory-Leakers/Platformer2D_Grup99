@@ -130,8 +130,7 @@ bool Player::Update(float dt)
 {
 	///COLL
 	WillCollision();
-	///
-	currentAnimation->Update();
+
 
 	//RELOCATOR
 	if (!godMode)
@@ -166,10 +165,10 @@ bool Player::Update(float dt)
 			//position.y -= JUMPSPEED*2 +2;
 		}
 
-if(!canMoveDir[DOWN])
-{
-	currentAnimation = &idleAnim;
-}
+		if(!canMoveDir[DOWN])
+		{
+		currentAnimation = &idleAnim;
+		}
 
 		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
 		{
@@ -185,6 +184,10 @@ if(!canMoveDir[DOWN])
 			{
 				currentAnimation = &jumpAnim;
 				leftpressed = true;
+				if(jumpTimer.getDeltaTime() > tempTime)
+				{
+					currentAnimation = &fallAnim;
+				}
 			}
 
 		}
@@ -196,6 +199,10 @@ if(!canMoveDir[DOWN])
 			if (canMoveDir[DOWN])
 			{
 				currentAnimation = &jumpAnim;
+				if (jumpTimer.getDeltaTime() > tempTime)
+				{
+					currentAnimation = &fallAnim;
+				}
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP && !canMoveDir[DOWN])
@@ -219,8 +226,6 @@ if(!canMoveDir[DOWN])
 		{
 			canMoveDir[i] = true;
 		}
-
-		col->SetPos(position);
 
 		cout << playerScore << endl;
 	}
@@ -248,12 +253,14 @@ if(!canMoveDir[DOWN])
 		}
 	}
 
-
-	col->SetPos(position);
-
 	//cout << playerScore << endl;
 
-
+	// Animation update
+	currentAnimation->Update();
+	if (this->col != nullptr)
+	{
+		col->SetPos(position);
+	}
 	return true;
 }
 
@@ -285,10 +292,16 @@ bool Player::PostUpdate()
 }
 
 bool Player::CleanUp() {
+
 	playerRect = nullptr;
 	SDL_DestroyTexture(player_tex);
 	player_tex = nullptr;
 	currentAnimation = nullptr;
+
+	if(this->col != nullptr)
+	{
+		this->col->pendingToDelete = true;
+	}
 
 	return true;
 }
@@ -421,6 +434,10 @@ void Player::WillCollision()
 
 					case 244: //DETH AREA
 
+						if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
+						{
+							app->scene->gameScene->pendingtoReload = true;
+						}
 						break;
 
 					case 247: //Platform move up

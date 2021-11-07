@@ -46,7 +46,7 @@ public:
 	void Update()
 	{
 		if (hasIdle) {
-			current_frame = 0;
+ 			current_frame = 0;
 		}
 		else {
 			current_frame += speed;

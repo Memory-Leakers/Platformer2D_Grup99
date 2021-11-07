@@ -47,6 +47,7 @@ public:
 	
 	Timer jumptimer;
 
+	bool pendingtoReload = false;
 };
 
 #endif // __GAMESCENE_H__
