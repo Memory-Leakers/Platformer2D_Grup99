@@ -36,7 +36,9 @@ bool Scene::Start()
 	gameScene->Start();
 
 	// Load music
-	//app->audio->PlayMusic("Assets/audio/music/Papaya.ogg");
+
+	app->audio->PlayMusic("Assets/audio/music/papaya.ogg");
+
 
 	bgSelector();
 
