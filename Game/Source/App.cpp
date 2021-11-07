@@ -84,8 +84,9 @@ bool App::Awake()
 		// L01: DONE 4: Read the title from the config file
 		title.Create(configApp.child("title").child_value());
 		organization.Create(configApp.child("organization").child_value());
+		app->win->SetTitle(title.GetString());
 	}
-
+	
 	if (ret == true)
 	{
 		ListItem<Module*>* item;
