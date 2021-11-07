@@ -227,13 +227,12 @@ bool GameScene::ReloadLevel()
 	
 	if (doorKey != nullptr)
 	{
-		key = false;
 		doorKey->CleanUp();
 		delete doorKey;
 	}
 	doorKey = new DoorKey(1664, 2096);
 	doorKey->Start();
-
+	key = false;
 
 	//froggy
 	froggy->CleanUp();
