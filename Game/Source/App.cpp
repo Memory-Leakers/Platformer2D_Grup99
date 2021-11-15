@@ -1,7 +1,7 @@
 #include "App.h"
 #include "Defs.h"
 #include "Log.h"
-
+#include "Optick/include/optick.h"
 
 #include <iostream>
 #include <sstream>
@@ -184,6 +184,7 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
+	OPTICK_EVENT();
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
@@ -194,6 +195,7 @@ bool App::PreUpdate()
 {
 	bool ret = true;
 
+	OPTICK_EVENT();
 	ListItem<Module*>* item;
 	Module* pModule = NULL;
 
@@ -236,6 +238,7 @@ bool App::DoUpdate()
 // Call modules after each loop iteration
 bool App::PostUpdate()
 {
+	OPTICK_EVENT();
 	bool ret = true;
 	ListItem<Module*>* item;
 	Module* pModule = NULL;

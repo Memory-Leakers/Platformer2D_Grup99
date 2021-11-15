@@ -1,7 +1,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
-
+#include "Optick/include/optick.h"
 #include "Defs.h"
 #include "Log.h"
 #include <iostream>
@@ -88,7 +88,7 @@ bool Render::Update(float dt)
 
 bool Render::PostUpdate()
 {
-
+	OPTICK_EVENT();
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, background.a);
 	SDL_RenderPresent(renderer);
 	return true;

@@ -2,8 +2,10 @@
 #include "time.h"
 
 
+
 Scene::Scene() : Module()
 {
+	
 	name.Create("scene");
 	gameScene = new GameScene();
 }
