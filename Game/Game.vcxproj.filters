@@ -61,6 +61,9 @@
     <ClCompile Include="Source\DoorKey.cpp">
       <Filter>SourceFiles\GameObjects\Pickable</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ResourceFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
