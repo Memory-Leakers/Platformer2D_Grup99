@@ -64,6 +64,9 @@
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PerformanceTimer.cpp">
+      <Filter>SourceFiles\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -155,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
       <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PerformanceTimer.h">
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

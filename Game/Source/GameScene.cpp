@@ -79,7 +79,7 @@ bool GameScene::PreUpdate()
 		app->render->camera.y = (froggy->position.y *-2) + 260 - froggy->bounds.h;
 	}
 
-	if(key) std::cout << "key->" << "true" << std::endl;
+	//if(key) std::cout << "key->" << "true" << std::endl;
 
 	return ret;
 }

@@ -14,6 +14,7 @@
 #include "Map.h"
 #include "ModuleCollisions.h"
 #include "Timer.h"
+#include "PerformanceTimer.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -126,8 +127,26 @@ private:
 	//pugi::xml_node config;
 	//pugi::xml_node configApp;
 
+	// L07: DONE 4: Calculate some timing measures
+	// required variables are provided:
+	PerformanceTimer* ptimer;
+	PerformanceTimer* frameDuration;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+
+	uint64 frameCount = 0;
+	uint32 framesPerSecond = 0;
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+	float dt = 0.0f;
+
+	uint32 maxFrameRate = 0;
+
+
 	uint frames;
-	float dt;
 
 	mutable bool saveGameRequested;
 	bool loadGameRequested;

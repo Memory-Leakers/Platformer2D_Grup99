@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sstream>
 
-#define FPS 60
+#define FPS 30
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -41,6 +41,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	// Render last to swap buffer
 	AddModule(render);
+
+	//TIMERS APP
+	ptimer = new PerformanceTimer();
+	frameDuration = new PerformanceTimer();
 }
 
 // Destructor
@@ -179,6 +183,13 @@ pugi::xml_node App::LoadPlayer(pugi::xml_document& playerfile) const
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	frameCount++;
+	lastSecFrameCount++;
+	
+
+	// L08: DONE 4: Calculate the dt: differential time since last frame
+	dt = frameDuration->ReadMs();
+	frameDuration->Start();
 }
 
 // ---------------------------------------------
@@ -188,6 +199,32 @@ void App::FinishUpdate()
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
+
+	float secondsSinceStartup = startupTime.getExecuteTime(true);
+
+	lastSecFrameTime.Update();
+	if (lastSecFrameTime.getDeltaTime() > 1) {
+		lastSecFrameTime.Reset();
+		framesPerSecond = lastSecFrameCount;
+		lastSecFrameCount = 0;
+		averageFps = (averageFps + framesPerSecond) / 2;
+	}
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %.0fs Frame Count: %I64u ",
+		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+
+	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
+	float delay = float(maxFrameRate) - frameDuration->ReadMs();
+	//LOG("F: %f Delay:%f", frameDuration->ReadMs(), delay);
+
+	// L08: DONE 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
+	PerformanceTimer* delayt = new PerformanceTimer();
+	delayt->Start();
+	if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
+	LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
+
+	app->win->SetTitle(title);
 }
 
 // Call modules before each loop iteration
