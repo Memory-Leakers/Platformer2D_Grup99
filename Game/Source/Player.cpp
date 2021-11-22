@@ -413,55 +413,66 @@ void Player::WillCollision()
 						//LEFT
 						if (px <= bx + 16 && px >= bx && py + bounds.h > by && py < by + 16)
 						{
-							if (px - MOVESPEED < bx+16)
-							{
-								canMoveDir[LEFT] = false;
-								break;
-							}
-							while (px < bx + 16 && !canMoveDir[DOWN] && !canMoveDir[UP])
-							{
-								position.x += 1;
-								px += 1;
-								canMoveDir[LEFT] = false;
-							}
-							while (py + bounds.h > by && !canMoveDir[DOWN] && canMoveDir[LEFT]) //DOWN
-							{
-								position.y -= 1;
-								py -= 1;
-							}
-							while (py < by + 16 && !canMoveDir[UP] && canMoveDir[LEFT]) //UP
-							{
-								position.y += 1;
-								py += 1;
-							}
+							canMoveDir[LEFT] = false;
+
 						}
 
 						//RIGHT
-						if (px + bounds.w >= bx && px <= bx && py + bounds.h > by && py < by + 16)
+						if (px + bounds.w >= bx && px <= bx && py + (bounds.h) > by && py < by + 16)
 						{
-							if (px + bounds.w + MOVESPEED > bx)
-							{
-								canMoveDir[RIGHT] = false;
-								//break;
-							}
-							while (px + bounds.w >= bx && px + bounds.w <= bx + 16)
-							{
-								position.x -= 1;
-								px -= 1;
-								canMoveDir[RIGHT] = false;
-							}
-							while (py + bounds.h > by && !canMoveDir[DOWN] && canMoveDir[RIGHT]) //DOWN
-							{
-								position.y -= 1;
-								py -= 1;
-							}
-							while (py < by + 16 && !canMoveDir[UP] && canMoveDir[RIGHT]) //UP
-							{
-								position.y += 1;
-								py += 1;
-							}
+							canMoveDir[RIGHT] = false;
+						}
+						/*
+						while (px < bx + 16 && !canMoveDir[DOWN] && !canMoveDir[UP])
+						{
+							position.x += 1;
+							px += 1;
+							canMoveDir[LEFT] = false;
+						}
+						*/
+						while (py + bounds.h > by && py < by && px + bounds.w > bx && px < bx + 16 && !canMoveDir[DOWN] && canMoveDir[UP]) //DOWN
+						{
+							position.y -= 1;
+							py -= 1;
+							break;
+						}
+						while (py <= by + 16 && py >= by && px + bounds.w > bx && px < bx + 16 && canMoveDir[DOWN] && !canMoveDir[UP]) //DOWN
+						{
+							position.y += 1;
+							py += 1;
+							break;
+						}
+						while (px + bounds.w > bx && px < bx && py + bounds.h > by && py < by + 16 && canMoveDir[LEFT] && !canMoveDir[RIGHT] && !canMoveDir[DOWN])
+						{
+							position.x -= 1;
+							px -= 1;
+							break;
+						}
+						while (px < bx + 16 && px > bx && py + bounds.h > by && py < by + 16 && !canMoveDir[LEFT] && canMoveDir[RIGHT] && !canMoveDir[DOWN])
+						{
+							position.x += 1;
+							px += 1;
+							break;
 						}
 
+						/*
+						while (py < by + 16 && !canMoveDir[UP] && canMoveDir[LEFT]) //UP
+						{
+							position.y += 1;
+							py += 1;
+						}
+						while (py + bounds.h > by && !canMoveDir[DOWN] && canMoveDir[RIGHT]) //DOWN
+						{
+							position.y -= 1;
+							py -= 1;
+						}
+						
+						while (py < by + 16 && !canMoveDir[UP] && canMoveDir[RIGHT]) //UP
+						{
+							position.y += 1;
+							py += 1;
+						}
+						*/
 						break;
 
 					case 244: //DETH AREA
