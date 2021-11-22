@@ -244,7 +244,7 @@ bool Player::Update(float dt)
 			canMoveDir[i] = true;
 		}
 
-		cout << playerScore << endl;
+		//cout << playerScore << endl;
 	}
 	else
 	{
@@ -271,7 +271,7 @@ bool Player::Update(float dt)
 	}
 
 	//cout << playerScore << endl;
-	printf("\n%d , %d\n", position.x, position.y);
+	//printf("\n%d , %d\n", position.x, position.y);
 	// Animation update
 	currentAnimation->Update();
 	if (this->col != nullptr)

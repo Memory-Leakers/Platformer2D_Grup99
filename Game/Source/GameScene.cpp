@@ -79,7 +79,7 @@ bool GameScene::PreUpdate()
 		app->render->camera.y = (froggy->position.y *-2) + 260 - froggy->bounds.h;
 	}
 
-	if(key) std::cout << "key->" << "true" << std::endl;
+	//if(key) std::cout << "key->" << "true" << std::endl;
 
 	return ret;
 }
@@ -227,13 +227,12 @@ bool GameScene::ReloadLevel()
 	
 	if (doorKey != nullptr)
 	{
-		key = false;
 		doorKey->CleanUp();
 		delete doorKey;
 	}
 	doorKey = new DoorKey(1664, 2096);
 	doorKey->Start();
-
+	key = false;
 
 	//froggy
 	froggy->CleanUp();
