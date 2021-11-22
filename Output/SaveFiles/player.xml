@@ -2,7 +2,7 @@
 <player_state>
 	<position posX="206" posY="1430" />
 	<score score="0" /> 
-	<gravity value="2"/>
+	<gravity value="4"/>
 	<renderer>
 		<camera x="-118" y="-2401" />
 	</renderer>

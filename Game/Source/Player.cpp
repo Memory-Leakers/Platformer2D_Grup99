@@ -136,17 +136,6 @@ bool Player::Update(float dt)
 	//RELOCATOR
 	if (!godMode)
 	{
-		if (!canMoveDir[RIGHT] && !canMoveDir[LEFT])
-		{
-			if (halfUpDown)
-			{
-				position.y -= 2;
-			}
-			else {
-				position.y += 2;
-			}
-		}
-
 		float tempTime = previousJumpTime + JumpTime;
 		jumpTimer.Update();
 		if (jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
@@ -189,7 +178,7 @@ bool Player::Update(float dt)
 			{
 				app->audio->PlayFx(app->scene->gameScene->playerwalkSFX, 0);
 			}
-			position.x -= 2;
+			position.x -= MOVESPEED;
 			currentAnimation = &leftAnim;
 			isFlip = true;
 			if(canMoveDir[DOWN])
@@ -216,7 +205,7 @@ bool Player::Update(float dt)
 				app->audio->PlayFx(app->scene->gameScene->playerwalkSFX, 0);
 			}
 			leftpressed = false;
-			position.x += 2;
+			position.x += MOVESPEED;
 			currentAnimation = &rightAnim;
 			if (canMoveDir[DOWN])
 			{
@@ -230,6 +219,10 @@ bool Player::Update(float dt)
 					currentAnimation = &doublejumpAnim;
 				}
 			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && canMoveDir[DOWN])
+		{
+			position.y += 2;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP && !canMoveDir[DOWN])
 		{
@@ -405,57 +398,73 @@ void Player::WillCollision()
 					switch (gid)
 					{
 					case 243:
-
-						//DOWN
-
-						if (py + bounds.h >= by&& py <= by && px + bounds.w > bx && px < bx + 16)
-						{
-							canMoveDir[DOWN] = false;
-
-							if (aux + bounds.h >= by && aux <= by) { position.y -= JUMPSPEED; }
-
-							if (py + bounds.h/2 >= by)
-							{
-								halfUpDown = false;
-							}
-							else if (py + bounds.h/2 <= by)
-							{
-								halfUpDown = true;
-							}
-						}
-
-
 						//UP
-						if (py >= by + 16 && py <= by + 16 && px + bounds.w > bx && px < bx + 16)
+						if (py <= by + 16 && py >= by && px + bounds.w > bx && px < bx + 16)
 						{
 							canMoveDir[UP] = false;
-							if (py >= by + 8)
+						}
+
+						//DOWN
+						if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
+						{
+							canMoveDir[DOWN] = false;
+						}
+
+						//LEFT
+						if (px <= bx + 16 && px >= bx && py + bounds.h > by && py < by + 16)
+						{
+							if (px - MOVESPEED < bx+16)
 							{
-								halfUpDown = false;
+								canMoveDir[LEFT] = false;
+								break;
 							}
-							else if (py <= by + 8)
+							while (px < bx + 16 && !canMoveDir[DOWN] && !canMoveDir[UP])
 							{
-								halfUpDown = true;
+								position.x += 1;
+								px += 1;
+								canMoveDir[LEFT] = false;
+							}
+							while (py + bounds.h > by && !canMoveDir[DOWN] && canMoveDir[LEFT]) //DOWN
+							{
+								position.y -= 1;
+								py -= 1;
+							}
+							while (py < by + 16 && !canMoveDir[UP] && canMoveDir[LEFT]) //UP
+							{
+								position.y += 1;
+								py += 1;
 							}
 						}
 
 						//RIGHT
 						if (px + bounds.w >= bx && px <= bx && py + bounds.h > by && py < by + 16)
 						{
-							canMoveDir[RIGHT] = false;
-
-						}
-
-						//LEFT
-						if (px + bounds.w >= bx + 16 && px <= bx + 16 && py + bounds.h > by && py < by + 16)
-						{
-							canMoveDir[LEFT] = false;
+							if (px + bounds.w + MOVESPEED > bx)
+							{
+								canMoveDir[RIGHT] = false;
+								//break;
+							}
+							while (px + bounds.w >= bx && px + bounds.w <= bx + 16)
+							{
+								position.x -= 1;
+								px -= 1;
+								canMoveDir[RIGHT] = false;
+							}
+							while (py + bounds.h > by && !canMoveDir[DOWN] && canMoveDir[RIGHT]) //DOWN
+							{
+								position.y -= 1;
+								py -= 1;
+							}
+							while (py < by + 16 && !canMoveDir[UP] && canMoveDir[RIGHT]) //UP
+							{
+								position.y += 1;
+								py += 1;
+							}
 						}
 
 						break;
 
 					case 244: //DETH AREA
-
 						if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
 						{
 							app->scene->gameScene->pendingtoReload = true;
@@ -463,7 +472,6 @@ void Player::WillCollision()
 						break;
 					case 245:
 						if (app->scene->gameScene->key == true) break;
-
 						//RIGHT
 						if (px + bounds.w >= bx && px <= bx && py + bounds.h > by && py < by + 16)
 						{
@@ -476,18 +484,23 @@ void Player::WillCollision()
 						{
 							canMoveDir[LEFT] = false;
 						}
-
 						break;
 					case 247: //Platform move up
 
 						//DOWN
-						if (py + bounds.h >= by && py <= by - (bounds.h - 4) && px + bounds.w > bx && px < bx + 16)
+						if (py + bounds.h >= by && py <= by -12 && px + bounds.w > bx && px < bx + 16)
 						{
 							canMoveDir[DOWN] = false;
 
+							while (py + bounds.h > by)
+							{
+								position.y -= 1;
+								py -= 1;
+							}
+
 							if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 							{
-								position.y += gravity+1;
+								position.y += gravity*2;
 							}
 
 						}

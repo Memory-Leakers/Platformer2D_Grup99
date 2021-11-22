@@ -147,6 +147,7 @@ public:
 
 		strcpy_s(str, size, string.str);
 
+
 		return(*this);
 	}
 

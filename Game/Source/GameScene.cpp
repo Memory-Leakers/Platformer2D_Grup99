@@ -73,7 +73,7 @@ bool GameScene::PreUpdate()
 
 	//SET CAM ON FROGGY
 
-	if (froggy != nullptr)
+	if (froggy != nullptr && app->input->GetKey(SDL_SCANCODE_C) != KEY_REPEAT)
 	{
 		app->render->camera.x = (froggy->position.x *-2) + 540 - froggy->bounds.w;
 		app->render->camera.y = (froggy->position.y *-2) + 260 - froggy->bounds.h;

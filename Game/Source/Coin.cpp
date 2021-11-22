@@ -81,7 +81,11 @@ bool Coin::PostUpdate()
 bool Coin::CleanUp()
 {
 	pendingToDelete = true;
-	this->col->pendingToDelete = true;
+
+	if (col != nullptr)
+	{
+		this->col->pendingToDelete = true;
+	}
 	rect = nullptr;
 	SDL_DestroyTexture(this->tex);
 	tex = nullptr;

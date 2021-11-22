@@ -9,8 +9,9 @@
 
 
 #define MAX_JUMPS 2
-#define JumpTime 0.25f
-#define JUMPSPEED 2
+#define JumpTime 0.18f
+#define JUMPSPEED 3
+#define MOVESPEED 3
 
 
 
@@ -117,7 +118,5 @@ public:
 	bool godMode = false;
 
 private:
-	bool halfUpDown = false; //false down
-
 	bool leftpressed = false;
 };
