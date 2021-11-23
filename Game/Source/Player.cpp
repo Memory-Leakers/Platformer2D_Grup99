@@ -342,34 +342,7 @@ iPoint Player::GetPlayerCenterPosition()
 
 void Player::OnCollision(Collider* col)
 {
-	//if (!godMode)
-	//{
-		switch (col->type)
-		{
 
-		case Type::WALL:
-
-			break;
-
-		/*case Type::EXPLOSION:
-		case Type::ENEMY:
-			if (invensibleTime <= 0 && InGrid(col)) Die(); break;
-
-		case Type::FIREPOWER:
-			App->scene->playerSettings->powerUpFlame++; break;
-
-		case Type::BOMBPOWER:
-			App->scene->playerSettings->maxBomb++;
-			App->scene->playerSettings->RemainBomb(true); break;
-
-		case Type::INVINCIBLEPOWER:
-			invensibleTime = 10;
-			playerInvensible.invensibleCount = SDL_GetTicks() - (App->debug->pauseTimeOffset * 1000);
-			break;*/
-
-		}
-
-	//}
 }
 
 void Player::WillCollision()
@@ -397,7 +370,7 @@ void Player::WillCollision()
 					int aux = py - JUMPSPEED;
 					switch (gid)
 					{
-					case 243:
+					case 243: //Collisions
 						//UP
 						if (py <= by + 16 && py >= by && px + bounds.w > bx && px < bx + 16)
 						{
@@ -454,25 +427,6 @@ void Player::WillCollision()
 							px += 1;
 							break;
 						}
-
-						/*
-						while (py < by + 16 && !canMoveDir[UP] && canMoveDir[LEFT]) //UP
-						{
-							position.y += 1;
-							py += 1;
-						}
-						while (py + bounds.h > by && !canMoveDir[DOWN] && canMoveDir[RIGHT]) //DOWN
-						{
-							position.y -= 1;
-							py -= 1;
-						}
-						
-						while (py < by + 16 && !canMoveDir[UP] && canMoveDir[RIGHT]) //UP
-						{
-							position.y += 1;
-							py += 1;
-						}
-						*/
 						break;
 
 					case 244: //DETH AREA
@@ -481,7 +435,7 @@ void Player::WillCollision()
 							app->scene->gameScene->pendingtoReload = true;
 						}
 						break;
-					case 245:
+					case 245: //Doors
 						if (app->scene->gameScene->key == true) break;
 						//RIGHT
 						if (px + bounds.w >= bx && px <= bx && py + bounds.h > by && py < by + 16)

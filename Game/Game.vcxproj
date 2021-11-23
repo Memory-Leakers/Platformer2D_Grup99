@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Checkpoint.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\DoorKey.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Checkpoint.h" />
     <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\DoorKey.h" />

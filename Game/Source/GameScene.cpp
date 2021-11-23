@@ -245,12 +245,6 @@ bool GameScene::ReloadLevel()
 
 void GameScene::OnCollision(Collider* c1, Collider* c2)
 {
-
-	if (froggy != nullptr && froggy->col == c1)
-	{
-		froggy->OnCollision(c2);
-	}
-
 	ListItem<Coin*>* fruitItem;
 	//fruitItem = fruitPool->start;
 	fruitItem = app->map->mapData.fruits.start;
@@ -277,7 +271,6 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
-
 }
 
 void GameScene::WillCollision(Collider* c1, Collider* c2)

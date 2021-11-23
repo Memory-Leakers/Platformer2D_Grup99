@@ -67,6 +67,9 @@
     <ClCompile Include="Source\PerformanceTimer.cpp">
       <Filter>SourceFiles\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Checkpoint.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -161,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="Source\PerformanceTimer.h">
       <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Checkpoint.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
