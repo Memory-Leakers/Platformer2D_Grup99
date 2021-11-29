@@ -5,9 +5,9 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1670" posY="2118" score="300" />
-		<startScene value="Level1" doorKey="true" />
-		<background value="Assets/Background/Purple.png" />
+		<player posX="1842" posY="1414" score="1000" />
+		<startScene value="Level1" doorKey="false" />
+		<background value="Assets/Background/Blue.png" />
 	</scene>
 	<map>
 		<fruits>
@@ -40,22 +40,13 @@
 			<f posX="1368" posY="1048" />
 			<f posX="1368" posY="1064" />
 			<f posX="1368" posY="1080" />
-			<f posX="1368" posY="1384" />
-			<f posX="1368" posY="1400" />
-			<f posX="1368" posY="1416" />
 			<f posX="1384" posY="1048" />
 			<f posX="1384" posY="1064" />
 			<f posX="1384" posY="1080" />
-			<f posX="1384" posY="1384" />
-			<f posX="1384" posY="1400" />
-			<f posX="1384" posY="1416" />
 			<f posX="1400" posY="1048" />
 			<f posX="1400" posY="1064" />
 			<f posX="1400" posY="1080" />
 			<f posX="1400" posY="1176" />
-			<f posX="1400" posY="1384" />
-			<f posX="1400" posY="1400" />
-			<f posX="1400" posY="1416" />
 			<f posX="1432" posY="1192" />
 			<f posX="1448" posY="1352" />
 			<f posX="1448" posY="1368" />
@@ -69,7 +60,6 @@
 			<f posX="1496" posY="1240" />
 			<f posX="1512" posY="1160" />
 			<f posX="1512" posY="1240" />
-			<f posX="1528" posY="1400" />
 			<f posX="1528" posY="1784" />
 			<f posX="1528" posY="1800" />
 			<f posX="1576" posY="1128" />
@@ -80,6 +70,8 @@
 			<f posX="1608" posY="1816" />
 			<f posX="1624" posY="1928" />
 			<f posX="1624" posY="1944" />
+			<f posX="1624" posY="2072" />
+			<f posX="1624" posY="2088" />
 			<f posX="1640" posY="1928" />
 			<f posX="1640" posY="1944" />
 			<f posX="1656" posY="1928" />
@@ -89,6 +81,7 @@
 			<f posX="1688" posY="1928" />
 			<f posX="1688" posY="1944" />
 			<f posX="1688" posY="2072" />
+			<f posX="1688" posY="2088" />
 			<f posX="1704" posY="1800" />
 			<f posX="1704" posY="1816" />
 			<f posX="1720" posY="1800" />

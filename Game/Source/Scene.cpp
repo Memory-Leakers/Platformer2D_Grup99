@@ -185,7 +185,7 @@ void Scene::drawBackground()
 		{
 			SDL_Rect r = SDL_Rect({ 0,0,64,64 });
 
-			app->render->DrawTexture(bgTex, x, y, &r, 0.01f, SDL_FLIP_NONE, (0,0));
+			app->render->DrawTexture(bgTex, x, y, &r, 0.01f, SDL_FLIP_NONE, (0, 0));
 
 		}
 	}
