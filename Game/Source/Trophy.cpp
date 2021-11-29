@@ -85,7 +85,9 @@ bool Trophy::PostUpdate()
 
 bool Trophy::CleanUp()
 {
-
+	SDL_DestroyTexture(tex);
+	tex = nullptr;
+	col->pendingToDelete = true;
 	return true;
 }
 

@@ -42,6 +42,10 @@ bool GameScene::Start()
 	trophy = new Trophy(2784, 1792);
 	trophy->Start();
 
+	//Checkpoint
+	checkpoint = new Checkpoint(1856, 1392);
+	checkpoint->Start();
+
 	//Key
 	doorKey = new DoorKey(1664, 2096);
 	doorKey->Start();
@@ -69,7 +73,11 @@ bool GameScene::PreUpdate()
 {
 	bool ret = true;
 
+	//Player (Froggy)
 	froggy->PreUpdate();
+
+	//Checkpoint
+	checkpoint->PreUpdate();
 
 	//SET CAM ON FROGGY
 
@@ -115,6 +123,9 @@ bool GameScene::Update(float dt)
 	//Trophy
 	trophy->Update(dt);
 
+	//Checkpoint
+	checkpoint->Update(dt);
+
 	//Key
 	if (key && doorKey != nullptr)
 	{
@@ -159,13 +170,14 @@ bool GameScene::PostUpdate()
 	//Trophy
 	trophy->PostUpdate();
 
+	//Checkpoint
+	checkpoint->PostUpdate();
+
 	//Key
 	if (!key && doorKey != nullptr)
 	{
 		doorKey->PostUpdate();
 	}
-	
-
 
 	//GUI
 	if (key)
@@ -184,13 +196,20 @@ bool GameScene::CleanUp()
 {
 	LOG("Freeing Game Scene");
 
+	//Player (Froggy)
 	froggy->CleanUp();
 	delete froggy;
 	froggy = nullptr;
 
+	//Trophy
 	trophy->CleanUp();
 	delete trophy;
 	trophy = nullptr;
+
+	//Checkpoint
+	checkpoint->CleanUp();
+	delete checkpoint;
+	checkpoint = nullptr;
 
 	if (doorKey != nullptr)
 	{
@@ -261,6 +280,11 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 	if (trophy != nullptr && trophy->col == c1)
 	{
 		trophy->OnCollision(c2);
+	}
+
+	if (checkpoint != nullptr && checkpoint->col == c2)
+	{
+		checkpoint->OnCollision(c1);
 	}
 
 	if (doorKey != nullptr && doorKey->col == c1)

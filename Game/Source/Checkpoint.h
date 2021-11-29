@@ -6,6 +6,19 @@
 #include "Collider.h"
 
 
+enum CHECKSTATE
+{
+	BASE = 0,
+	ACTIVATION,
+	ACTIVATED
+};
+
+enum SAVEPETITION
+{
+	SAVEPETITION_NONE,
+	SAVEPETITION_SAVE,
+	SAVEPETITION_BLOCK
+};
 
 class Checkpoint
 {
@@ -28,12 +41,21 @@ public:
 
 	void WillCollision();
 
-
+private:
+	void loadAnimBase();
+	void loadAnimActivation();
+	void loadAnimActivated();
 private:
 
 	Animation animBase;
 	Animation animActivation;
 	Animation animActivated;
+
+	CHECKSTATE currentState = BASE;
+	void stateMachine();
+	bool stateChanged = true;
+
+	int savePetition = 0;
 
 public:
 
@@ -41,9 +63,10 @@ public:
 	iPoint position;
 	SDL_Rect bounds;
 	Collider* col = nullptr;
-	SDL_Texture* texBase;
-	SDL_Texture* texActivation;
-	SDL_Texture* texActivated;
+	SDL_Texture* tex;
+	//SDL_Texture* texBase;
+	//SDL_Texture* texActivation;
+	//SDL_Texture* texActivated;
 	bool collided = false;
 
 };

@@ -7,6 +7,7 @@
 #include "Coin.h"
 #include "Trophy.h"
 #include "DoorKey.h"
+#include "Checkpoint.h"
 
 class GameScene
 {
@@ -47,6 +48,8 @@ public:
 	Player* froggy = nullptr;
 
 	Trophy* trophy = nullptr;
+
+	Checkpoint* checkpoint = nullptr;
 
 	DoorKey* doorKey = nullptr;
 	
