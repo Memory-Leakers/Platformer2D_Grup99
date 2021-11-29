@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<enemy_state>
+	<position posX="206" posY="1430" /> 
+	<gravity value="4"/>
+	<renderer/>
+	<textures>
+		<angryPigIdle width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Idle(36x30).png"/>
+		<angryPigRun width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Run(36x30).png"/>
+		<angryPigWalk width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Walk(36x30).png"/>
+		<angryPigHit width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Hit(36x30).png"/>
+	</textures>
+</enemy_state>

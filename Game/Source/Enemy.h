@@ -6,8 +6,6 @@ class Enemy
 public:
 	Enemy();
 
-	Enemy(iPoint position,float speed);
-
 	~Enemy();
 
 	virtual bool Start();
@@ -29,7 +27,6 @@ public:
 	virtual void WillCollision();
 
 private:
-	iPoint pos;
-	float speed;
+	
 };
 

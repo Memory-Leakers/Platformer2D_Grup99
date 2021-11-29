@@ -25,6 +25,9 @@ bool GameScene::Start()
 
 	froggy = new Player();
 	froggy->Start();
+	//Enemy
+	peppa = new WalkingEnemy();
+	peppa->Start();
 
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
@@ -96,6 +99,8 @@ bool GameScene::Update(float dt)
 
 	froggy->Update(dt);
 
+	peppa->Update(dt);
+
 	ListItem<Coin*>* fruitItem;
 	//fruitItem = fruitPool->start;
 	fruitItem = app->map->mapData.fruits.start;
@@ -163,7 +168,8 @@ bool GameScene::PostUpdate()
 		}
 		fruitItem = fruitItem->next;
 	}
-
+	//Enemy
+	peppa->PostUpdate();
 	//Trophy
 	trophy->PostUpdate();
 

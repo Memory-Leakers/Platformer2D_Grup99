@@ -8,6 +8,7 @@
 #include "Trophy.h"
 #include "DoorKey.h"
 #include "Checkpoint.h"
+#include "WalkingEnemy.h"
 
 class GameScene
 {
@@ -46,6 +47,8 @@ public:
 	bool debugTiles = false;
 
 	Player* froggy = nullptr;
+
+	WalkingEnemy* peppa = nullptr;
 
 	Trophy* trophy = nullptr;
 

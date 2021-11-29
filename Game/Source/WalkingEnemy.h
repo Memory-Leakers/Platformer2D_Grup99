@@ -4,7 +4,7 @@ class WalkingEnemy :
     public Enemy
 {
 public:
-	WalkingEnemy(iPoint position, float speed);
+	WalkingEnemy();
 
 	~WalkingEnemy();
 
@@ -25,11 +25,30 @@ public:
 
 	void WillCollision() override;
 
+	
+
 private:
 
+	iPoint pos;
+	float speed;
 
+	SDL_Texture* enemytextures[4];
 
+	Animation angrypigIdle;
 
-	
+	Animation angrypigRun;
+
+	Animation angrypigWalk;
+
+	Animation angrypigHit;
+
+	Animation* Currentenemyanimation;
+
+	pugi::xml_document WalkingEnemyfile;
+	pugi::xml_node Walking_Enemy_node;
+
+	SDL_Rect Enemybounds;
+
+	SDL_Rect* EnemyRect;
 };
 

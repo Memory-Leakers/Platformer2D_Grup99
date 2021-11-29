@@ -180,6 +180,19 @@ pugi::xml_node App::LoadPlayer(pugi::xml_document& playerfile) const
 	return ret;
 }
 
+pugi::xml_node App::LoadWalkingEnemy(pugi::xml_document& walkingenemyfile) const
+{
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = walkingenemyfile.load_file(ENEMY_FILENAME);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", ENEMY_FILENAME, result.description());
+	else ret = walkingenemyfile.child("enemy_state");
+
+	return ret;
+	
+}
+
 // ---------------------------------------------
 void App::PrepareUpdate()
 {

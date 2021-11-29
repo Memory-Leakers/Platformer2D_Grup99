@@ -1,10 +1,9 @@
 #include "Enemy.h"
 
-Enemy::Enemy(iPoint position,float speed)
+
+Enemy::Enemy()
 {
-    this->pos.x = position.x;
-    this->pos.y = position.y;
-    this->speed = speed;
+
 }
 
 Enemy::~Enemy()

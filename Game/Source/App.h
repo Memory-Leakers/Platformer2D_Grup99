@@ -21,6 +21,7 @@
 #define CONFIG_FILENAME		"SaveFiles/config.xml"
 #define SAVE_STATE_FILENAME "SaveFiles/save_game.xml"
 #define PLAYER_FILENAME "SaveFiles/player.xml"
+#define ENEMY_FILENAME "SaveFiles/enemy.xml"
 
 // Modules
 class Window;
@@ -69,6 +70,8 @@ public:
 	void SaveGameRequest() const;
 
 	pugi::xml_node LoadPlayer(pugi::xml_document&) const;
+
+	pugi::xml_node LoadWalkingEnemy(pugi::xml_document&) const;
 
 private:
 
