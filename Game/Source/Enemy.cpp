@@ -1,5 +1,18 @@
 #include "Enemy.h"
 
+Enemy::Enemy(iPoint position,float speed)
+{
+    this->pos.x = position.x;
+    this->pos.y = position.y;
+    this->speed = speed;
+}
+
+Enemy::~Enemy()
+{
+}
+
+
+
 bool Enemy::Start()
 {
     return true;
@@ -26,5 +39,9 @@ bool Enemy::CleanUp()
 }
 
 void Enemy::OnCollision(Collider* col)
+{
+}
+
+void Enemy::WillCollision()
 {
 }
