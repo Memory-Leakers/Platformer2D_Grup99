@@ -433,6 +433,15 @@ void Player::WillCollision()
 						if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
 						{
 							app->scene->gameScene->pendingtoReload = true;
+
+							if (app->scene->gameScene->checkpoint->getCurrentState() == 2)
+							{
+								app->LoadGameRequest();
+							}
+							else {
+								app->scene->gameScene->pendingtoReload = true;
+							}
+
 						}
 						break;
 					case 245: //Doors

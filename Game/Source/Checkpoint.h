@@ -55,7 +55,7 @@ private:
 	void stateMachine();
 	bool stateChanged = true;
 
-	int savePetition = 0;
+	int savePetition = SAVEPETITION_NONE;
 
 public:
 
@@ -68,6 +68,24 @@ public:
 	//SDL_Texture* texActivation;
 	//SDL_Texture* texActivated;
 	bool collided = false;
+
+public:
+
+	int getCurrentState()
+	{
+		return currentState;
+	}
+
+	void setCurrentState(int newState)
+	{
+		currentState = (CHECKSTATE) newState;
+	}
+
+	void setStateChanged(bool value)
+	{
+		stateChanged = value;
+	}
+
 
 };
 

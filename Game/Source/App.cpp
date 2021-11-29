@@ -211,8 +211,8 @@ void App::FinishUpdate()
 	}
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %.0fs Frame Count: %I64u ",
-		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %.0fs Frame Count: %I64u VSync: %s",
+		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount, render->VSync ? "ON" : "OFF");
 
 	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
 	float delay = float(maxFrameRate) - frameDuration->ReadMs();
@@ -222,9 +222,10 @@ void App::FinishUpdate()
 	PerformanceTimer* delayt = new PerformanceTimer();
 	delayt->Start();
 	if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
-	LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
+	//LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
 
 	app->win->SetTitle(title);
+	delete delayt;
 }
 
 // Call modules before each loop iteration

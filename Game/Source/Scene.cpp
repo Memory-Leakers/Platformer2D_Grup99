@@ -143,6 +143,8 @@ bool Scene::LoadState(pugi::xml_node& data)
 	//Level/Map related
 	bgTex = app->tex->Load(data.child("background").attribute("value").as_string());
 	gameScene->key = data.child("startScene").attribute("doorKey").as_bool();
+	gameScene->checkpoint->setCurrentState(data.child("checkpoint").attribute("state").as_int());
+	gameScene->checkpoint->setStateChanged(true);
 
 	return true;
 }
@@ -156,6 +158,7 @@ bool Scene::SaveState(pugi::xml_node& data) const
 	//Level/Map related
 	data.child("background").attribute("value") = bg.GetString();
 	data.child("startScene").attribute("doorKey") = gameScene->key;
+	data.child("checkpoint").attribute("state") = gameScene->checkpoint->getCurrentState() == ACTIVATION ? ACTIVATED:BASE; //2 ACTIVE/ 0 UNACTIVE
 
 	return true;
 }

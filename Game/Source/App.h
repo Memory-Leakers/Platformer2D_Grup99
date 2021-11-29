@@ -33,7 +33,6 @@ class Scene;
 class Map;
 class ModuleCollisions;
 
-
 class App
 {
 public:

@@ -54,7 +54,7 @@ public:
 	SDL_Rect viewport;
 	SDL_Color background;
 
-	
+	bool VSync = false;
 
 private:
 	

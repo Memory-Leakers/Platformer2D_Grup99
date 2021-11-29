@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<checkpoint_config>
+    <position posX="1856" posY="1392" /> 
+    <renderer/>
+    <textures>
+        <base width = "32" height="48" scale = "1" path ="Assets/Items/Checkpoints/Checkpoint/CheckpointBase.png"/>
+        <activation width = "32" height="48" scale = "1" path ="Assets/Items/Checkpoints/Checkpoint/CheckpointActivation.png"/>
+        <activated width = "48" height="48" scale = "1" path ="Assets/Items/Checkpoints/Checkpoint/CheckpointActivated.png"/>
+    </textures>
+</checkpoint_config>

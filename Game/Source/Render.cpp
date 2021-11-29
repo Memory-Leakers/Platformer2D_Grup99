@@ -6,9 +6,8 @@
 #include "Log.h"
 #include <iostream>
 
-#define VSYNC true
-#define camX -118
-#define camY -2401
+#define camX 0
+#define camY 0
 
 Render::Render() : Module()
 {
@@ -31,7 +30,9 @@ bool Render::Awake(pugi::xml_node& config)
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	if(config.child("vsync").attribute("value").as_bool(true) == true)
+	VSync = config.child("vsync").attribute("value").as_bool(true);
+
+	if(VSync == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");

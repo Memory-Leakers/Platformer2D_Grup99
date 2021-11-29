@@ -46,17 +46,17 @@ bool Checkpoint::Update(float dt)
 			break;
 		case ACTIVATION:
 			animActivation.Update();
+			if (savePetition == SAVEPETITION_SAVE)
+			{
+				app->SaveGameRequest();
+
+				savePetition = SAVEPETITION_BLOCK;
+			}
 			break;
 		case ACTIVATED:
 			animActivated.Update();
+			//savePetition = SAVEPETITION_BLOCK;
 			break;
-	}
-
-	if(savePetition == SAVEPETITION_SAVE)
-	{
-		app->SaveGameRequest();
-
-		savePetition = SAVEPETITION_BLOCK;
 	}
 
 	return true;

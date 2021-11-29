@@ -87,8 +87,6 @@ bool GameScene::PreUpdate()
 		app->render->camera.y = (froggy->position.y *-2) + 260 - froggy->bounds.h;
 	}
 
-	//if(key) std::cout << "key->" << "true" << std::endl;
-
 	return ret;
 }
 
@@ -152,7 +150,6 @@ bool GameScene::PostUpdate()
 	froggy->PostUpdate();
 
 	ListItem<Coin*>* fruitItem;
-	//fruitItem = fruitPool->start;
 	fruitItem = app->map->mapData.fruits.start;
 
 	while (fruitItem != NULL)
@@ -229,7 +226,6 @@ bool GameScene::CleanUp()
 
 bool GameScene::ReloadLevel()
 {
-
 	app->map->UnloadFruits();
 	app->map->LoadFruits();
 	ListItem<Coin*>* fruitItem;
@@ -258,6 +254,12 @@ bool GameScene::ReloadLevel()
 	delete froggy;
 	froggy = new Player();
 	froggy->Start();
+
+	//Checkpoint
+	checkpoint->CleanUp();
+	delete checkpoint;
+	checkpoint = new Checkpoint(1856, 1392);
+	checkpoint->Start();
 
 	return true;
 }
