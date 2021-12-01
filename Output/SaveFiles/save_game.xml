@@ -5,7 +5,7 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1842" posY="1414" score="300" />
+		<player posX="1843" posY="1414" score="1300" />
 		<startScene value="Level1" doorKey="false" />
 		<background value="Assets/Background/Yellow.png" />
 		<checkpoint state="2" />
@@ -16,10 +16,6 @@
 			<f posX="216" posY="1288" />
 			<f posX="232" posY="1272" />
 			<f posX="232" posY="1288" />
-			<f posX="376" posY="1256" />
-			<f posX="376" posY="1272" />
-			<f posX="392" posY="1256" />
-			<f posX="392" posY="1272" />
 			<f posX="808" posY="1096" />
 			<f posX="808" posY="1112" />
 			<f posX="808" posY="1128" />
@@ -33,40 +29,34 @@
 			<f posX="872" posY="1224" />
 			<f posX="920" posY="1208" />
 			<f posX="968" posY="1224" />
-			<f posX="1000" posY="1240" />
 			<f posX="1032" posY="1144" />
 			<f posX="1048" posY="1272" />
-			<f posX="1080" posY="1176" />
-			<f posX="1080" posY="1192" />
 			<f posX="1368" posY="1048" />
 			<f posX="1368" posY="1064" />
 			<f posX="1368" posY="1080" />
 			<f posX="1368" posY="1384" />
 			<f posX="1368" posY="1400" />
+			<f posX="1368" posY="1416" />
 			<f posX="1384" posY="1048" />
 			<f posX="1384" posY="1064" />
 			<f posX="1384" posY="1080" />
 			<f posX="1384" posY="1384" />
 			<f posX="1384" posY="1400" />
+			<f posX="1384" posY="1416" />
 			<f posX="1400" posY="1048" />
 			<f posX="1400" posY="1064" />
 			<f posX="1400" posY="1080" />
-			<f posX="1400" posY="1176" />
 			<f posX="1400" posY="1384" />
 			<f posX="1400" posY="1400" />
-			<f posX="1432" posY="1192" />
+			<f posX="1400" posY="1416" />
 			<f posX="1448" posY="1352" />
 			<f posX="1448" posY="1368" />
-			<f posX="1464" posY="1240" />
 			<f posX="1464" posY="1352" />
 			<f posX="1464" posY="1368" />
-			<f posX="1480" posY="1240" />
 			<f posX="1480" posY="1352" />
 			<f posX="1480" posY="1368" />
 			<f posX="1496" posY="1096" />
-			<f posX="1496" posY="1240" />
 			<f posX="1512" posY="1160" />
-			<f posX="1512" posY="1240" />
 			<f posX="1528" posY="1400" />
 			<f posX="1528" posY="1784" />
 			<f posX="1528" posY="1800" />

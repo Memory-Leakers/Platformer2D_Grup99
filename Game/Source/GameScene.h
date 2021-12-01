@@ -43,6 +43,9 @@ public:
 
 	void WillCollision(Collider* c1, Collider* c2);
 
+private:
+	void gameUI();
+
 public:
 	bool debugTiles = false;
 
@@ -69,6 +72,10 @@ public:
 	uint keypickupSFX;
 	uint playerjumpSFX;
 	uint playerwalkSFX;
+
+private:
+	
+
 };
 
 #endif // __GAMESCENE_H__

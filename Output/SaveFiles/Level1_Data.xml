@@ -1,0 +1,22 @@
+<Level>
+	<Enemies>
+		<enemy id = "0">
+			<position posX="206" posY="1430" /> 
+		</enemy>
+		<enemy id = "0">
+			<position posX="206" posY="1430" /> 
+		</enemy>
+		<enemy id = "1">
+			<position posX="206" posY="1430" /> 
+		</enemy>
+		<enemy id = "0">
+			<position posX="206" posY="1430" /> 
+		</enemy>
+		<enemy id = "0">
+			<position posX="206" posY="1430" /> 
+		</enemy>
+	</Enemies>
+	<Traps>
+	
+	</Traps>
+</Level>

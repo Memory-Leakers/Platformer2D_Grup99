@@ -73,7 +73,7 @@ bool Checkpoint::PostUpdate()
 			rect = &animActivation.GetCurrentFrame();
 			
 			if (animActivation.getCurrentFrameI() == 0 && savePetition == SAVEPETITION_NONE)
-			{//On first framse, save the game
+			{//On first frame, save the game
 				savePetition = SAVEPETITION_SAVE;
 			}
 			
@@ -198,4 +198,11 @@ void Checkpoint::loadAnimActivated()
 
 	animActivated.speed = 0.30;
 	animActivated.hasIdle = false;
+}
+
+void Checkpoint::loadData(pugi::xml_node node)
+{
+	
+	//dirAnimActivated = Walking_Enemy_textures_node.child("angryPigHit").attribute("path").as_string();
+
 }
