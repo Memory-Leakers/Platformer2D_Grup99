@@ -1,9 +1,9 @@
 #include "GUI.h"
 #include "App.h"
 
-GUI::GUI(SDL_Texture* tex, iPoint pos, int frames, SDL_Rect bounds, int frameSize, bool camRelative = true)
+GUI::GUI(SString tex, iPoint pos, int frames, SDL_Rect bounds, int frameSize, bool camRelative)
 {
-	this->tex = tex;
+	this->tex = app->tex->Load(tex.GetString());
 	this->position = pos;
 	this->camRelative = camRelative;
 	this->frames = frames;
@@ -31,6 +31,8 @@ bool GUI::Update()
 	{
 		anim.getFrame(*frame_value);
 	}
+
+	return true;
 }
 
 bool GUI::PostUpdate()
@@ -40,4 +42,6 @@ bool GUI::PostUpdate()
 	guiRect = &anim.GetCurrentFrame();
 
 	app->render->DrawTexture(tex, position.x, position.y, guiRect);
+
+	return true;
 }

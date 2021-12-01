@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Point.h"
 #include "DynArray.h"
-
+#include "SString.h"
 
 
 enum GUI_TYPE
@@ -16,7 +16,7 @@ enum GUI_TYPE
 class GUI
 {
 public:
-	GUI(SDL_Texture* tex, iPoint pos, int frames, SDL_Rect bounds, int frameSize, bool camRelative = true);
+	GUI(SString tex, iPoint pos, int frames, SDL_Rect bounds, int frameSize, bool camRelative = true);
 
 	~GUI();
 

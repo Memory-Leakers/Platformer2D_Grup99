@@ -55,22 +55,25 @@
     <ClCompile Include="Source\Coin.cpp">
       <Filter>SourceFiles\GameObjects\Pickable</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Trophy.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DoorKey.cpp">
       <Filter>SourceFiles\GameObjects\Pickable</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Source\PerformanceTimer.cpp">
       <Filter>SourceFiles\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Checkpoint.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>SourceFiles\GameObjects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Source\WalkingEnemy.cpp">
+      <Filter>SourceFiles\GameObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Checkpoint.cpp">
+      <Filter>SourceFiles\GameObjects\Interactables</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Trophy.cpp">
+      <Filter>SourceFiles\GameObjects\Interactables</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -153,25 +156,28 @@
     <ClInclude Include="Source\Timer.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Trophy.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Source\DoorKey.h">
       <Filter>HeaderFiles\GameObjects\Pickable</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ResourceFiles</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PerformanceTimer.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Checkpoint.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Source\WalkingEnemy.h">
+      <Filter>HeaderFiles\GameObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>HeaderFiles\GameObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Trophy.h">
+      <Filter>HeaderFiles\GameObjects\Interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Checkpoint.h">
+      <Filter>HeaderFiles\GameObjects\Interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI.h">
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -229,6 +235,18 @@
     </Filter>
     <Filter Include="ResourceFiles">
       <UniqueIdentifier>{1084d4e6-0264-4b3b-90fa-1931457b2e7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameObjects\Enemies">
+      <UniqueIdentifier>{d7c064e8-df8d-40f3-8e5a-9385e1c19ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameObjects\Interactables">
+      <UniqueIdentifier>{c2ad1a99-c2d3-466a-b5ac-c3f44ffb15a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects\Enemies">
+      <UniqueIdentifier>{3396c096-2e13-4d2e-bb66-c1c24009dd5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects\Interactables">
+      <UniqueIdentifier>{ea6bf134-a17b-4903-838a-6bf5732d7787}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

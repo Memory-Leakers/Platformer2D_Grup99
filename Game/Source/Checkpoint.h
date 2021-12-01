@@ -4,6 +4,8 @@
 #include "Point.h"
 #include "Animation.h"
 #include "Collider.h"
+#include "PugiXml/src/pugixml.hpp"
+
 
 
 enum CHECKSTATE
