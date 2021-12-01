@@ -342,7 +342,7 @@ iPoint Player::GetPlayerCenterPosition()
 
 void Player::OnCollision(Collider* col)
 {
-
+	
 }
 
 void Player::WillCollision()

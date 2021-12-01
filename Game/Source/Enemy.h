@@ -26,7 +26,42 @@ public:
 
 	virtual void WillCollision();
 
+	/*virtual void pathFindingA(const iPoint& origin, const iPoint& destination);*/
+
 private:
-	
+
+	//struct PathList;
+
+	//struct PathNode
+	//{
+	//	int g;
+	//	int h;
+	//	iPoint pos;
+	//	const PathNode* parent; // needed to reconstruct the path in the end
+
+	//	// Convenient constructors
+	//	PathNode();
+	//	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
+	//	PathNode(const PathNode& node);
+
+	//	// Fills a list (PathList) of all valid adjacent pathnodes
+	//	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+	//	// Calculates this tile score
+	//	int Score() const;
+	//	// Calculate the F for a specific destination tile
+	//	int CalculateF(const iPoint& destination);
+	//};
+
+	//struct PathList
+	//{
+	//	// Looks for a node in this list and returns it's list node or NULL
+	//	ListItem<PathNode>* Find(const iPoint& point) const;
+
+	//	// Returns the Pathnode with lowest score in this list or NULL if empty
+	//	ListItem<PathNode>* GetNodeLowestScore() const;
+
+	//	// The list itself, note they are not pointers!
+	//	List<PathNode> list;
+	//};
 };
 
