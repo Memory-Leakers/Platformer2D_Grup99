@@ -32,6 +32,10 @@ private:
 	iPoint pos;
 	float speed;
 
+	// Collider
+	Collider* col = nullptr;
+
+
 	SDL_Texture* enemytextures[4];
 
 	Animation angrypigIdle;

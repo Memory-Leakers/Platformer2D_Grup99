@@ -97,6 +97,8 @@ bool WalkingEnemy::Start()
 	enemytextures[2] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigWalk").attribute("path").as_string());
 	//HIT
 	enemytextures[3] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigHit").attribute("path").as_string());
+
+	this->col = app->col->AddCollider(Enemybounds, Type::ENEMY, app->scene);
 	
 	return false;
 }
@@ -139,6 +141,8 @@ bool WalkingEnemy::CleanUp()
 
 void WalkingEnemy::OnCollision(Collider* col)
 {
+	
+	
 }
 
 void WalkingEnemy::WillCollision()

@@ -203,7 +203,10 @@ bool GameScene::CleanUp()
 	froggy->CleanUp();
 	delete froggy;
 	froggy = nullptr;
-
+	//Enemy 
+	peppa->CleanUp();
+	delete peppa;
+	peppa = nullptr;
 	//Trophy
 	trophy->CleanUp();
 	delete trophy;
