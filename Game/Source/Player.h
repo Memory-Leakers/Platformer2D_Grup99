@@ -82,6 +82,10 @@ private:
 
 public:
 
+	//STATS
+	int maxHealht = 3;
+	int health = maxHealht;
+
 	//Physics
 
 	int gravity;

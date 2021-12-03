@@ -182,9 +182,9 @@ bool Scene::CleanUp()
 
 void Scene::drawBackground()
 {
-	for (int x = 0; x <= 1000; x += 64)
+	for (int x = -64; x <= 576; x += 64)
 	{
-		for (int y = bgPivY; y <= 6000; y += 64)
+		for (int y = bgPivY; y <= 320; y += 64)
 		{
 			SDL_Rect r = SDL_Rect({ 0,0,64,64 });
 

@@ -42,21 +42,27 @@ bool GameScene::Start()
 	}
 	
 	//Trophy
-	trophy = new Trophy(2784, 1792);
+	trophy = new Trophy(2640, 752);
 	trophy->Start();
 
 	//Checkpoint
-	checkpoint = new Checkpoint(1856, 1392);
+	checkpoint = new Checkpoint(1712, 352);
 	checkpoint->Start();
 
 	//Key
-	doorKey = new DoorKey(1664, 2096);
+	doorKey = new DoorKey(1520, 1056);
 	doorKey->Start();
 
 
 	//GUI
 	guiKeyRect = new SDL_Rect({ 16, 0, 16, 16 });
 	guiKey = app->tex->Load("Assets/Items/DoorKey.png");
+
+	healthBar = new GUI("Assets/Menu/Ingame/healthBar.png", { 5, 5 }, 4, {0, 0, 58, 16 }, 16);
+	healthBar->texScale = 1.65f;
+	healthBar->frameOnX = false;
+	healthBar->setFrameFollow(&froggy->health);
+	healthBar->Start();
 
 
 	//SOUNDS
@@ -86,8 +92,10 @@ bool GameScene::PreUpdate()
 
 	if (froggy != nullptr && app->input->GetKey(SDL_SCANCODE_C) != KEY_REPEAT)
 	{
-		app->render->camera.x = (froggy->position.x *-2) + 540 - froggy->bounds.w;
-		app->render->camera.y = (froggy->position.y *-2) + 260 - froggy->bounds.h;
+		int scale = app->win->GetScale();
+
+		app->render->camera.x = (froggy->position.x *  -scale) + app->render->camera.w / 2 - froggy->bounds.w;
+		app->render->camera.y = (froggy->position.y * -scale) + app->render->camera.h / 2 - froggy->bounds.h;
 	}
 
 	return ret;
@@ -141,6 +149,10 @@ bool GameScene::Update(float dt)
 		doorKey->Update(dt);
 	}	
 
+	//GUI
+	healthBar->Update();
+
+
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
@@ -187,6 +199,8 @@ bool GameScene::PostUpdate()
 	{
 		app->render->DrawTexture(guiKey, froggy->position.x + 3 , froggy->position.y - 16, guiKeyRect);
 	}
+
+	healthBar->PostUpdate();
 
 	//Clean
 	delete fruitItem;
@@ -254,7 +268,7 @@ bool GameScene::ReloadLevel()
 		doorKey->CleanUp();
 		delete doorKey;
 	}
-	doorKey = new DoorKey(1664, 2096);
+	doorKey = new DoorKey(1520, 1056);
 	doorKey->Start();
 	key = false;
 
@@ -267,7 +281,7 @@ bool GameScene::ReloadLevel()
 	//Checkpoint
 	checkpoint->CleanUp();
 	delete checkpoint;
-	checkpoint = new Checkpoint(1856, 1392);
+	checkpoint = new Checkpoint(1712, 352);
 	checkpoint->Start();
 
 	return true;

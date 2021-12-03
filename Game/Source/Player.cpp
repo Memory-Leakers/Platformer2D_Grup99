@@ -129,6 +129,13 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
+	//Player death
+	if (health == 0)
+	{
+		return true;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) { health--; }
+
 	///COLL
 	WillCollision();
 
@@ -269,9 +276,7 @@ bool Player::Update(float dt)
 			currentAnimation = &rightAnim;
 		}
 	}
-
-	//cout << playerScore << endl;
-	//printf("\n%d , %d\n", position.x, position.y);
+	
 	// Animation update
 	currentAnimation->Update();
 	if (this->col != nullptr)
@@ -283,6 +288,11 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
+	if (health == 0)
+	{
+		return true;
+	}
+
 	playerRect = &currentAnimation->GetCurrentFrame();
 
 	iPoint tempPos = position;
@@ -303,6 +313,8 @@ bool Player::PostUpdate()
 		bounds.x = position.x;
 		bounds.y = position.y;
 		app->render->DrawRectangle(bounds, 255, 255, 255, 80);
+
+		std::cout << "Player pos-> " << position.x << " | " << position.y << std::endl;
 	}
 
 	return true;

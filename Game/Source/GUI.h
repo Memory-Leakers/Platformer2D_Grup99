@@ -20,6 +20,7 @@ public:
 
 	~GUI();
 
+
 	bool Start();
 
 	bool Update();
@@ -30,7 +31,7 @@ public:
 
 public:
 
-	int setFrameFollow(int* value)
+	void setFrameFollow(int* value)
 	{
 		frame_value = value;
 		type = FRAME_FOLLOW;
@@ -39,7 +40,9 @@ public:
 public:
 	SDL_Texture* tex;
 	Animation anim;
+	float texScale = 1.0f;
 
+	iPoint positionOnScreen;
 	iPoint position;
 
 	bool camRelative = true;
@@ -48,11 +51,12 @@ public:
 	SDL_Rect bounds;
 	SDL_Rect* guiRect;
 	int frameSize = 0;
+	bool frameOnX = true;
 
 	GUI_TYPE type = FRAME_FOLLOW;
 
 	//FRAME FOLLOW
-	int* frame_value;
+	int* frame_value = 0;
 
 };
 
