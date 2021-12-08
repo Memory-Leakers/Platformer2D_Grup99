@@ -18,6 +18,7 @@ enum class Type
 	ENEMY,
 	PICKER,
 	AREA,
+	TRAP,
 	MAX
 };
 

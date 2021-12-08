@@ -13,6 +13,8 @@
 #define JUMPSPEED 3
 #define MOVESPEED 3
 
+#define textureOpacityNormal 255
+#define textureOpacityHurt 155
 
 
 enum Dir
@@ -52,9 +54,7 @@ public:
 	// Callback if will be collision, called when the player intersects with another
 	void WillCollision();
 
-	void Jump(float dt);
-
-	void move(const float dir_x, const float dir_y);
+	bool Death();
 
 	iPoint GetPlayerCenterPosition();	
 
@@ -79,6 +79,14 @@ private:
 	Animation doublejumpAnim;
 
 	Animation* currentAnimation = nullptr;
+
+	float hurtTimeJump = 0.15f;
+	float hurtOpacityTime = 0.8f;
+	float hurtTime = 0.0f;
+	bool hurt = false;
+	bool startHurt = false;
+	int lastDirHorizontal = LEFT;
+	int texOpacity = 255;
 
 public:
 

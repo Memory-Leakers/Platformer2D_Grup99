@@ -29,6 +29,7 @@ bool GameScene::Start()
 	peppa = new WalkingEnemy();
 	peppa->Start();
 
+	//Fruit
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
 
@@ -39,6 +40,19 @@ bool GameScene::Start()
 			fruitItem->data->Start();
 		}
 		fruitItem = fruitItem->next;
+	}
+
+	//Traps
+	ListItem<Trap*>* trapItem;
+	trapItem = app->map->mapData.trap.start;
+
+	while (trapItem != NULL)
+	{
+		if (trapItem->data != nullptr)
+		{
+			trapItem->data->Start();
+		}
+		trapItem = trapItem->next;
 	}
 	
 	//Trophy
@@ -74,6 +88,9 @@ bool GameScene::Start()
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
+	
+	delete trapItem;
+	trapItem = nullptr;
 
 	return ret;
 }
@@ -166,6 +183,7 @@ bool GameScene::PostUpdate()
 
 	froggy->PostUpdate();
 
+	//Fruits
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
 
@@ -180,6 +198,20 @@ bool GameScene::PostUpdate()
 		}
 		fruitItem = fruitItem->next;
 	}
+
+	//Traps
+	ListItem<Trap*>* trapItem;
+	trapItem = app->map->mapData.trap.start;
+
+	while (trapItem != NULL)
+	{
+		if (trapItem->data != nullptr)
+		{
+			trapItem->data->PostUpdate();
+		}
+		trapItem = trapItem->next;
+	}
+
 	//Enemy
 	peppa->PostUpdate();
 	//Trophy
@@ -205,6 +237,9 @@ bool GameScene::PostUpdate()
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
+
+	delete trapItem;
+	trapItem = nullptr;
 
 	return ret;
 }
@@ -239,6 +274,7 @@ bool GameScene::CleanUp()
 	}
 
 	//Coinpool cleanup is done in map.cpp
+	//Trappool cleanup is done in map.cpp
 	
 	//GUI
 	SDL_DestroyTexture(guiKey);
@@ -249,8 +285,10 @@ bool GameScene::CleanUp()
 
 bool GameScene::ReloadLevel()
 {
-	app->map->UnloadFruits();
-	app->map->LoadFruits();
+	app->map->UnLoadMapObjects();
+	app->map->LoadMapObjects();
+
+	//Fruits
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
 
@@ -262,7 +300,25 @@ bool GameScene::ReloadLevel()
 		}
 		fruitItem = fruitItem->next;
 	}
-	
+	delete fruitItem;
+	fruitItem = nullptr;
+
+	//Traps
+	ListItem<Trap*>* trapItem;
+	trapItem = app->map->mapData.trap.start;
+
+	while (trapItem != NULL)
+	{
+		if (trapItem->data != nullptr)
+		{
+			trapItem->data->Start();
+		}
+		trapItem = trapItem->next;
+	}
+	delete trapItem;
+	trapItem = nullptr;
+
+	//Door key
 	if (doorKey != nullptr)
 	{
 		doorKey->CleanUp();
@@ -289,8 +345,11 @@ bool GameScene::ReloadLevel()
 
 void GameScene::OnCollision(Collider* c1, Collider* c2)
 {
+
+
+
+	//Fruits
 	ListItem<Coin*>* fruitItem;
-	//fruitItem = fruitPool->start;
 	fruitItem = app->map->mapData.fruits.start;
 
 	while (fruitItem != NULL)
@@ -301,7 +360,14 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 		}
 		fruitItem = fruitItem->next;
 	}
-	
+
+	//Player/ Froggy
+	if (froggy != nullptr && froggy->col == c1)
+	{
+		froggy->OnCollision(c2);
+	}
+
+	//Rest
 	if (trophy != nullptr && trophy->col == c1)
 	{
 		trophy->OnCollision(c2);
