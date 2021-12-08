@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <enemy_state>
-	<position posX="206" posY="1430" /> 
+	<position posX="276" posY="1410" /> 
 	<gravity value="4"/>
 	<renderer/>
 	<textures>

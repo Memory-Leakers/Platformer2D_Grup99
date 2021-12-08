@@ -67,6 +67,7 @@ public:
 
 	SDL_Rect* guiKeyRect = nullptr;
 	SDL_Texture* guiKey = nullptr;
+	SDL_Texture* pathTex;
 
 	uint pickupSFX;
 	uint keypickupSFX;
@@ -75,7 +76,7 @@ public:
 
 private:
 	
-
+	
 };
 
 #endif // __GAMESCENE_H__

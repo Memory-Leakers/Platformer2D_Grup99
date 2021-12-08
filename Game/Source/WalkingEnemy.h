@@ -25,12 +25,15 @@ public:
 
 	void WillCollision() override;
 
+	iPoint GetCenterEnemyPos();
 	
 
 private:
 
 	iPoint pos;
 	float speed;
+
+	int cont = 0;
 
 	// Collider
 	Collider* col = nullptr;

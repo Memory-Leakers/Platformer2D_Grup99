@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "App.h"
+#include "DynArray.h"
 
 GameScene::GameScene()
 {
@@ -28,6 +29,9 @@ bool GameScene::Start()
 	//Enemy
 	peppa = new WalkingEnemy();
 	peppa->Start();
+
+	//PATH
+	pathTex = app->tex->Load("Assets/maps/path2.png");
 
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
@@ -82,6 +86,8 @@ bool GameScene::PreUpdate()
 	//Checkpoint
 	checkpoint->PreUpdate();
 
+	peppa->PreUpdate();
+
 	//SET CAM ON FROGGY
 
 	if (froggy != nullptr && app->input->GetKey(SDL_SCANCODE_C) != KEY_REPEAT)
@@ -89,6 +95,8 @@ bool GameScene::PreUpdate()
 		app->render->camera.x = (froggy->position.x *-2) + 540 - froggy->bounds.w;
 		app->render->camera.y = (froggy->position.y *-2) + 260 - froggy->bounds.h;
 	}
+
+	
 
 	return ret;
 }
@@ -98,6 +106,15 @@ bool GameScene::Update(float dt)
 	bool ret = true;
 
 	froggy->Update(dt);
+
+	
+	/*const DynArray<iPoint>* path = peppa->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(pathTex, pos.x, pos.y);
+	}*/
 
 	peppa->Update(dt);
 

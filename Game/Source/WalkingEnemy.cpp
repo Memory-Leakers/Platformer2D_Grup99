@@ -105,12 +105,29 @@ bool WalkingEnemy::Start()
 
 bool WalkingEnemy::PreUpdate()
 {
+	pathFindingA(app->scene->gameScene->peppa->pos, app->scene->gameScene->froggy->GetPlayerCenterPosition());
 	return false;
 }
 
 bool WalkingEnemy::Update(float dt)
 {
 	Currentenemyanimation->Update();
+	
+
+	if ( cont < GetLastPath()->Count())
+	{
+		
+		pos.x = lastPath.At(cont)->x;
+		pos.y = lastPath.At(cont)->y;
+
+		cont++;
+	}
+	/*for (int i = 0; i < lastPath.Count(); i++)
+	{
+		pos.x += lastPath.At(i)->x;
+		pos.y += lastPath.At(i)->y;
+	}*/
+	col->SetPos(pos);
 	return false;
 }
 
@@ -147,4 +164,12 @@ void WalkingEnemy::OnCollision(Collider* col)
 
 void WalkingEnemy::WillCollision()
 {
+}
+
+iPoint WalkingEnemy::GetCenterEnemyPos()
+{
+	iPoint pos;
+	pos.x = this->pos.x + (Enemybounds.w / 2);
+	pos.y = this->pos.y + (Enemybounds.h / 2);
+	return pos;
 }

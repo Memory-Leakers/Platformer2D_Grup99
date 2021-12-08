@@ -7,6 +7,7 @@
 #include <sstream>
 
 #define FPS 30
+#define INVALID_WALK_CODE 243 
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -58,7 +59,7 @@ App::~App()
 		RELEASE(item->data);
 		item = item->prev;
 	}
-
+	RELEASE_ARRAY(mapo);
 	modules.clear();
 }
 
@@ -193,6 +194,34 @@ pugi::xml_node App::LoadWalkingEnemy(pugi::xml_document& walkingenemyfile) const
 	
 }
 
+bool App::IsWalkable(const iPoint& pos) const
+{
+
+	uchar t = GetTileAt(pos);
+	return t != INVALID_WALK_CODE && t > 0;
+}
+
+uchar App::GetTileAt(const iPoint& pos) const
+{
+	
+	
+	return mapo[pos.y + pos.x];
+	
+	//return INVALID_WALK_CODE;
+}
+
+void App::SetMap(uint width, uint height, uchar* data)
+{
+	
+	this->width = width;
+	this->height = height;
+	//RELEASE_ARRAY(mapo);
+	
+	mapo = new uchar[width * height];
+	memcpy(mapo, data, width * height);
+	
+}
+
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
@@ -320,7 +349,7 @@ bool App::CleanUp()
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
-
+	RELEASE_ARRAY(mapo);
 	return ret;
 }
 

@@ -14,6 +14,7 @@
 #include "Map.h"
 #include "ModuleCollisions.h"
 #include "Timer.h"
+#include "Enemy.h"
 #include "PerformanceTimer.h"
 
 #include "PugiXml/src/pugixml.hpp"
@@ -73,6 +74,12 @@ public:
 
 	pugi::xml_node LoadWalkingEnemy(pugi::xml_document&) const;
 
+	bool IsWalkable(const iPoint& pos) const;
+
+	uchar GetTileAt(const iPoint& pos) const;
+
+	void SetMap(uint width, uint height, uchar* data);
+
 private:
 
 	// Load config file
@@ -113,6 +120,7 @@ public:
 
 	Timer globalTime;
 	
+	uchar* mapo;
 
 private:
 
@@ -152,6 +160,10 @@ private:
 
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
+
+	// size of the map
+	uint width;
+	uint height;
 };
 
 extern App* app;

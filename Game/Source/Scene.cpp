@@ -33,7 +33,16 @@ bool Scene::Start()
 
 
 	// L03: DONE: Load map
-	app->map->Load(levelList[0]->file.GetString());
+
+	if (app->map->Load(levelList[0]->file.GetString()) == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+
+		if (app->map->CreateWalkabilityMap(w, h, &data)) app->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
 
 	gameScene->Start();
 
