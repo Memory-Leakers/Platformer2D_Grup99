@@ -93,25 +93,18 @@ bool Scene::Update(float dt)
 		gameScene->froggy->godMode = !gameScene->froggy->godMode;
 	}
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y += 2;
+	/*if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		app->render->camera.y += 10;
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y -= 2;
+		app->render->camera.y -= 10;
 
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x += 2;
+		app->render->camera.x += 10;
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= 2;
-
-	// L03: DONE 7: Set the window title with map/tileset info
-	/*SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-				   app->map->mapData.width, app->map->mapData.height,
-				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
-				   app->map->mapData.tilesets.count());
-	app->win->SetTitle(title.GetString());*/
-	
+		app->render->camera.x -= 10;
+	*/
 
 	return true;
 }
@@ -133,8 +126,6 @@ bool Scene::PostUpdate()
 	bool ret = true;
 	gameScene->PostUpdate();
 
-
-
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -148,6 +139,7 @@ bool Scene::LoadState(pugi::xml_node& data)
 	gameScene->froggy->position.x = data.child("player").attribute("posX").as_int();
 	gameScene->froggy->position.y = data.child("player").attribute("posY").as_int();
 	gameScene->froggy->playerScore = data.child("player").attribute("score").as_int();
+	gameScene->froggy->health = data.child("player").attribute("health").as_int();
 
 	//Level/Map related
 	bgTex = app->tex->Load(data.child("background").attribute("value").as_string());
@@ -163,6 +155,7 @@ bool Scene::SaveState(pugi::xml_node& data) const
 	data.child("player").attribute("posX") = gameScene->froggy->position.x;
 	data.child("player").attribute("posY") = gameScene->froggy->position.y;
 	data.child("player").attribute("score") = gameScene->froggy->playerScore;
+	data.child("player").attribute("health") = gameScene->froggy->health;
 
 	//Level/Map related
 	data.child("background").attribute("value") = bg.GetString();
@@ -191,9 +184,9 @@ bool Scene::CleanUp()
 
 void Scene::drawBackground()
 {
-	for (int x = 0; x <= 1000; x += 64)
+	for (int x = -64; x <= 576; x += 64)
 	{
-		for (int y = bgPivY; y <= 6000; y += 64)
+		for (int y = bgPivY; y <= 320; y += 64)
 		{
 			SDL_Rect r = SDL_Rect({ 0,0,64,64 });
 

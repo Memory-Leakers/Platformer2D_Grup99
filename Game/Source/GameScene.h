@@ -9,6 +9,7 @@
 #include "DoorKey.h"
 #include "Checkpoint.h"
 #include "WalkingEnemy.h"
+#include "GUI.h"
 
 class GameScene
 {
@@ -68,6 +69,8 @@ public:
 	SDL_Rect* guiKeyRect = nullptr;
 	SDL_Texture* guiKey = nullptr;
 	SDL_Texture* pathTex;
+
+	GUI* healthBar = nullptr;
 
 	uint pickupSFX;
 	uint keypickupSFX;

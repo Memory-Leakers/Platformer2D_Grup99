@@ -333,7 +333,6 @@ bool App::PostUpdate()
 
 		ret = item->data->PostUpdate();
 	}
-
 	return ret;
 }
 

@@ -109,6 +109,7 @@
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
+    <ClCompile Include="Source\Trap.cpp" />
     <ClCompile Include="Source\Trophy.cpp" />
     <ClCompile Include="Source\WalkingEnemy.cpp" />
     <ClCompile Include="Source\Window.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Source\Render.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Trap.h" />
     <ClInclude Include="Source\Trophy.h" />
     <ClInclude Include="Source\WalkingEnemy.h" />
     <ClInclude Include="Source\Window.h" />

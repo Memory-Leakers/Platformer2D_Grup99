@@ -21,8 +21,6 @@ Map::~Map()
 // L06: TODO 7: Ask for the value of a custom property
 int Properties::GetProperty(const char* value, int defaultValue) const
 {
-	//...
-
 	ListItem<Property*>* item = list.start;
 
 	while (item)
@@ -49,7 +47,6 @@ bool Map::Awake(pugi::xml_node& config)
 // Draw the map (all requried layers)
 void Map::Draw()
 {
-
 	if (mapLoaded == false) return;
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
@@ -72,10 +69,6 @@ void Map::Draw()
 					int gid = mapLayerItem->data->Get(x, y);
 
 					if (gid > 0) {
-
-						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
-						//now we always use the firt tileset in the list
-						//TileSet* tileset = mapData.tilesets.start->data;
 						TileSet* tileset = GetTilesetFromTileId(gid);
 
 						SDL_Rect r = tileset->GetTileRect(gid);
@@ -86,10 +79,6 @@ void Map::Draw()
 							pos.x,
 							pos.y,
 							&r);
-					}
-					else
-					{
-							
 					}
 					
 				}
@@ -258,9 +247,26 @@ bool Map::CleanUp()
 
 	mapData.fruits.clear();
 
+	//Remove all traps
+	ListItem<Trap*>* trapItem;
+	trapItem = mapData.trap.start;
+
+	while (trapItem != NULL)
+	{
+		trapItem->data->CleanUp();
+		delete trapItem->data;
+		trapItem->data = nullptr;
+
+		trapItem = trapItem->next;
+	}
+
+	mapData.trap.clear();
+
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
+	delete trapItem;
+	trapItem = nullptr;
 	delete item;
 	item = nullptr;
 	delete item2;
@@ -307,7 +313,7 @@ bool Map::Load(const char* filename)
 
 	if (ret == true)
 	{
-		LoadFruits();
+		LoadMapObjects();
 	}
 
     
@@ -476,11 +482,8 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-void Map::LoadFruits ()
+void Map::LoadMapObjects ()
 {
-	//List<Coin*> toReturn;
-
-
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
 
@@ -495,13 +498,23 @@ void Map::LoadFruits ()
 				{
 					int gid = mapLayerItem->data->Get(x, y);
 
-					if (gid == 246)
+					switch(gid) 
 					{
-						//Coin c = Coin(x, y);
-
-						mapData.fruits.add(new Coin(x*16-8, y*16-8));
-						//toReturn->add(&c);
-						//mapData.col.add(app->col->AddCollider({ x * 16, y * 16, 16 , 16 }, Type::WALL, app->scene));
+						case 246:
+							mapData.fruits.add(new Coin(x*16-8, y*16-8));
+							break;
+						case 250: //SPIKE UP
+							mapData.trap.add(new Trap(x * 16, y * 16));
+							break;
+						case 251: //SPIKE DOWN
+							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::DOWN));
+							break;
+						case 252: //SPIKE RIGHT
+							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::RIGHT));
+							break;
+						case 253: //SPIKE LEFT
+							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::LEFT));
+							break;
 					}
 				}
 			}
@@ -510,11 +523,11 @@ void Map::LoadFruits ()
 		mapLayerItem = mapLayerItem->next;
 	}
 
-
-	//return toReturn;
+	delete mapLayerItem;
+	mapLayerItem = nullptr;
 }
 
-void Map::UnloadFruits()
+void Map::UnLoadMapObjects(bool unloadAll)
 {
 	//Remove all fruits
 	ListItem<Coin*>* fruitItem;
@@ -532,16 +545,36 @@ void Map::UnloadFruits()
 
 	mapData.fruits.clear();
 
-	//Clean
+	//Clean fruitItem
 	delete fruitItem;
 	fruitItem = nullptr;
 
+	if (!unloadAll) return;
+
+	//Remove all traps
+	ListItem<Trap*>* trapItem;
+	trapItem = mapData.trap.start;
+
+	while (trapItem != NULL)
+	{
+		trapItem->data->CleanUp();
+		delete trapItem->data;
+		trapItem->data = nullptr;
+
+		trapItem = trapItem->next;
+	}
+
+	mapData.trap.clear();
+
+	//Clean trapItem
+	delete trapItem;
+	trapItem = nullptr;
 }
 
 bool Map::LoadState(pugi::xml_node& data)
 {
 
-	UnloadFruits();
+	UnLoadMapObjects(false);
 
 	pugi::xml_node f = data.child("fruits").first_child();
 

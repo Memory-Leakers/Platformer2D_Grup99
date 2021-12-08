@@ -32,6 +32,7 @@ ModuleCollisions::ModuleCollisions()
 	matrix[uint(Type::PLAYER)][uint(Type::ENEMY)] = true;
 	matrix[uint(Type::PLAYER)][uint(Type::PICKER)] = true;
 	matrix[uint(Type::PLAYER)][uint(Type::AREA)] = true;
+	matrix[uint(Type::PLAYER)][uint(Type::TRAP)] = true;
 
 	//ENEMY
 	matrix[uint(Type::ENEMY)][uint(Type::WALL)] = true;
@@ -48,11 +49,18 @@ ModuleCollisions::ModuleCollisions()
 	matrix[uint(Type::PICKER)][uint(Type::AREA)] = false;
 
 	//Area
-	matrix[uint(Type::PICKER)][uint(Type::WALL)] = false;
-	matrix[uint(Type::PICKER)][uint(Type::PLAYER)] = true;
-	matrix[uint(Type::PICKER)][uint(Type::ENEMY)] = false;
-	matrix[uint(Type::PICKER)][uint(Type::PICKER)] = false;
-	matrix[uint(Type::PICKER)][uint(Type::AREA)] = false;
+	matrix[uint(Type::AREA)][uint(Type::WALL)] = false;
+	matrix[uint(Type::AREA)][uint(Type::PLAYER)] = true;
+	matrix[uint(Type::AREA)][uint(Type::ENEMY)] = false;
+	matrix[uint(Type::AREA)][uint(Type::PICKER)] = false;
+	matrix[uint(Type::AREA)][uint(Type::AREA)] = false;
+
+	//Trap
+	matrix[uint(Type::TRAP)][uint(Type::WALL)] = false;
+	matrix[uint(Type::TRAP)][uint(Type::PLAYER)] = true;
+	matrix[uint(Type::TRAP)][uint(Type::ENEMY)] = false;
+	matrix[uint(Type::TRAP)][uint(Type::PICKER)] = false;
+	matrix[uint(Type::TRAP)][uint(Type::AREA)] = false;
 
 	
 }

@@ -57,6 +57,10 @@ bool Coin::PreUpdate()
 
 bool Coin::Update(float dt)
 {
+	if (col == NULL)
+	{
+		this->col = app->col->AddCollider(bounds, Type::PICKER, app->scene);
+	}
 
 	anim.Update();
 
@@ -70,7 +74,7 @@ bool Coin::PostUpdate()
 	app->render->DrawTexture(tex, position.x, position.y, rect);
 
 	//Debug
-	if (app->scene->gameScene->debugTiles)
+	if (app->scene->gameScene->debugTiles && col != NULL)
 	{
 		app->render->DrawRectangle(bounds, 113, 85, 84, 127);
 	}

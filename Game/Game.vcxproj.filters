@@ -76,6 +76,9 @@
     <ClCompile Include="Source\GUI.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Trap.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -178,6 +181,9 @@
       <Filter>HeaderFiles\GameObjects\Interactables</Filter>
     </ClInclude>
     <ClInclude Include="Source\GUI.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Trap.h">
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

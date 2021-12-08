@@ -4,19 +4,24 @@
 GUI::GUI(SString tex, iPoint pos, int frames, SDL_Rect bounds, int frameSize, bool camRelative)
 {
 	this->tex = app->tex->Load(tex.GetString());
-	this->position = pos;
+	this->positionOnScreen = pos;
 	this->camRelative = camRelative;
 	this->frames = frames;
 	this->bounds = bounds;
 	this->frameSize = frameSize;
+
+	if (camRelative) this->positionOnScreen = pos;
+	else this->position = pos;
+
 }
 
 bool GUI::Start()
 {
 	//LoadAnims
-	for (int x = 0; bounds.x > x; x+=frameSize)
+	for (int x = 0, f = 0; frames != f; f++ ,x+=frameSize)
 	{
-		anim.PushBack({ x , bounds.h, bounds.w, bounds.h });
+		if(frameOnX) anim.PushBack({ x , 0, bounds.w, bounds.h });
+		else anim.PushBack({ 0 , x, bounds.w, bounds.h});
 	}
 
 	anim.speed = 0;
@@ -27,21 +32,30 @@ bool GUI::Start()
 
 bool GUI::Update()
 {
-	if (type == FRAME_FOLLOW)
+	if (camRelative)
 	{
-		anim.getFrame(*frame_value);
+		int scale = app->win->GetScale();
+
+		position.x = -app->render->camera.x/scale + positionOnScreen.x;
+		position.y = -app->render->camera.y/scale + positionOnScreen.y;
 	}
+
+	
 
 	return true;
 }
 
 bool GUI::PostUpdate()
 {
-	
+	if (type == FRAME_FOLLOW)
+	{
+		guiRect = &anim.getFrame(*frame_value);
+	}
+	else {
+		guiRect = &anim.GetCurrentFrame();
+	}
 
-	guiRect = &anim.GetCurrentFrame();
-
-	app->render->DrawTexture(tex, position.x, position.y, guiRect);
+	app->render->DrawTexture(tex, position.x, position.y, guiRect, 1.0F, SDL_FLIP_NONE, 0.0, 2147483647, 2147483647, texScale);
 
 	return true;
 }

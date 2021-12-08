@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <player_state>
-	<position posX="206" posY="1430" />
+	<position posX="64" posY="390" />
 	<score score="0" /> 
 	<gravity value="4"/>
 	<renderer>
