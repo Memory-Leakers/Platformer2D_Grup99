@@ -1,5 +1,6 @@
-#include "Trap.h"
 #include "App.h"
+#include "Trap.h"
+
 
 Trap::Trap(int x, int y, TrapDirection trapDirection)
 {

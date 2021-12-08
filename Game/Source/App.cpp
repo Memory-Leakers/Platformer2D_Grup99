@@ -204,8 +204,8 @@ bool App::IsWalkable(const iPoint& pos) const
 uchar App::GetTileAt(const iPoint& pos) const
 {
 	
-	
-	return mapo[pos.y + pos.x];
+	//check boundaries
+	return mapo[(pos.y * map->mapData.width) + pos.x];
 	
 	//return INVALID_WALK_CODE;
 }

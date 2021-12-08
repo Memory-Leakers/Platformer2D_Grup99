@@ -114,7 +114,7 @@ bool WalkingEnemy::Update(float dt)
 	Currentenemyanimation->Update();
 	
 
-	if ( cont < GetLastPath()->Count())
+	if ( cont < lastPath.Count())
 	{
 		
 		pos.x = lastPath.At(cont)->x;

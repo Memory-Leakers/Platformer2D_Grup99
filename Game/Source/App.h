@@ -14,7 +14,6 @@
 #include "Map.h"
 #include "ModuleCollisions.h"
 #include "Timer.h"
-#include "Enemy.h"
 #include "PerformanceTimer.h"
 
 #include "PugiXml/src/pugixml.hpp"
@@ -22,7 +21,7 @@
 #define CONFIG_FILENAME		"SaveFiles/config.xml"
 #define SAVE_STATE_FILENAME "SaveFiles/save_game.xml"
 #define PLAYER_FILENAME "SaveFiles/player.xml"
-#define ENEMY_FILENAME "SaveFiles/enemy.xml"
+#define ENEMY_FILENAME "SaveFiles/GameObjects/enemy.xml"
 
 // Modules
 class Window;
