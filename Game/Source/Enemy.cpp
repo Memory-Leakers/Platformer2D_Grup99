@@ -38,6 +38,11 @@ bool Enemy::PostUpdate()
 
 bool Enemy::CleanUp()
 {
+
+    LOG("Freeing pathfinding library");
+
+    lastPath.Clear();
+ 
     return true;
 }
 
