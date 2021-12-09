@@ -79,6 +79,9 @@ public:
 
 	void SetMap(uint width, uint height, uchar* data);
 
+	bool CheckBoundaries(const iPoint& pos) const;
+	
+
 private:
 
 	// Load config file

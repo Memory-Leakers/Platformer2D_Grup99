@@ -30,9 +30,6 @@ public:
 	virtual int pathFindingA(const iPoint& origin, const iPoint& destination);
 
 	const DynArray<iPoint>* GetLastPath();
-	
-
-	
 
 private:
 

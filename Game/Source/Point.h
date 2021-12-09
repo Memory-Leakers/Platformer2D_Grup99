@@ -102,6 +102,15 @@ public:
 		return(*this);
 	}
 
+	TYPE Module()
+	{
+		TYPE m;
+
+		m = sqrt(x * x + y * y);
+
+		return m;
+	}
+
 	// Distances ---------------------------------------------
 	TYPE DistanceTo(const Point& v) const
 	{

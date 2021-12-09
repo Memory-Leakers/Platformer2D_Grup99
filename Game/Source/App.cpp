@@ -205,9 +205,11 @@ uchar App::GetTileAt(const iPoint& pos) const
 {
 	//Determinar bien la condicion
 	//check boundaries
-	return mapo[(pos.y * map->mapData.width) + pos.x];
-	
-	//return INVALID_WALK_CODE;
+	if (CheckBoundaries(pos))
+	{
+		return mapo[(pos.y * map->mapData.width) + pos.x];
+	}
+	return INVALID_WALK_CODE;
 }
 
 void App::SetMap(uint width, uint height, uchar* data)
@@ -219,6 +221,12 @@ void App::SetMap(uint width, uint height, uchar* data)
 	mapo = new uchar[width * height];
 	memcpy(mapo, data, width * height);
 	
+}
+
+bool App::CheckBoundaries(const iPoint& pos) const
+{
+	return (pos.x >= 0 && pos.x <= (int)width &&
+		pos.y >= 0 && pos.y <= (int)height);
 }
 
 // ---------------------------------------------
