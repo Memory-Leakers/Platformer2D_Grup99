@@ -196,14 +196,14 @@ pugi::xml_node App::LoadWalkingEnemy(pugi::xml_document& walkingenemyfile) const
 
 bool App::IsWalkable(const iPoint& pos) const
 {
-
+	//Determinar bien la condicion
 	uchar t = GetTileAt(pos);
 	return t != INVALID_WALK_CODE && t > 0;
 }
 
 uchar App::GetTileAt(const iPoint& pos) const
 {
-	
+	//Determinar bien la condicion
 	//check boundaries
 	return mapo[(pos.y * map->mapData.width) + pos.x];
 	
@@ -212,7 +212,6 @@ uchar App::GetTileAt(const iPoint& pos) const
 
 void App::SetMap(uint width, uint height, uchar* data)
 {
-	
 	this->width = width;
 	this->height = height;
 	//RELEASE_ARRAY(mapo);

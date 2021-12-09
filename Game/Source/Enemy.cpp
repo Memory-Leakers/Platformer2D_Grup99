@@ -51,7 +51,7 @@ void Enemy::WillCollision()
 
 int Enemy::pathFindingA(const iPoint& origin, const iPoint& destination)
 {
-    if (app->IsWalkable(origin) && app->IsWalkable(destination))
+    if (app->IsWalkable(app->map->WorldToMap(origin.x,origin.y)) && app->IsWalkable(app->map->WorldToMap(destination.x, destination.y)))
     {
         int ret = -1;
 
@@ -60,7 +60,7 @@ int Enemy::pathFindingA(const iPoint& origin, const iPoint& destination)
 
         PathNode originNode;
 
-        originNode.pos = origin;
+        originNode.pos = app->map->WorldToMap(origin.x, origin.y);
 
         open.list.add(originNode);
         while (open.list.count() > 0)
@@ -68,7 +68,7 @@ int Enemy::pathFindingA(const iPoint& origin, const iPoint& destination)
             ListItem<PathNode>* lowest = open.GetNodeLowestScore();
             ListItem<PathNode>* node = closed.list.add(lowest->data);
             open.list.del(open.GetNodeLowestScore());
-            if (node->data.pos == destination)
+            if (node->data.pos == app->map->WorldToMap(destination.x, destination.y))
             {
                 lastPath.Clear();
 
@@ -103,7 +103,7 @@ int Enemy::pathFindingA(const iPoint& origin, const iPoint& destination)
                 ListItem<PathNode>* adjacentInOpen = open.Find(item->data.pos);
                 if (adjacentInOpen == NULL)
                 {
-                    item->data.CalculateF(destination);
+                    item->data.CalculateF(app->map->WorldToMap(destination.x, destination.y));
                     open.list.add(item->data);
                 }
                 // If it is already in the open list, check if it is a better path (compare G)
@@ -113,7 +113,7 @@ int Enemy::pathFindingA(const iPoint& origin, const iPoint& destination)
                     if (adjacentInOpen->data.g > item->data.g + 1)
                     {
                         adjacentInOpen->data.parent = item->data.parent;
-                        adjacentInOpen->data.CalculateF(destination);
+                        adjacentInOpen->data.CalculateF(app->map->WorldToMap(destination.x, destination.y));
                     }
                 }
             }

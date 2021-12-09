@@ -35,6 +35,10 @@ private:
 
 	int cont = 0;
 
+	int size;
+
+	iPoint lastPlayerPos = { 0,0 };
+
 	// Collider
 	Collider* col = nullptr;
 

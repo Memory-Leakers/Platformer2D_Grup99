@@ -649,8 +649,14 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 			{
 				if(layer->Get(x,y) == 254)
 				{
-					map[(y * layer->width) + x] == 1;
+					map[(y * layer->width) + x] = 1;
 				}
+				else 
+				{
+					map[(y * layer->width) + x] = 0;
+
+				}
+				
 				/*int i = (y * layer->width) + x;
 
 				int tileId = layer->Get(x, y);

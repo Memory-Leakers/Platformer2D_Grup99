@@ -105,7 +105,12 @@ bool WalkingEnemy::Start()
 
 bool WalkingEnemy::PreUpdate()
 {
-	pathFindingA(app->scene->gameScene->peppa->pos, app->scene->gameScene->froggy->GetPlayerCenterPosition());
+	if (app->scene->gameScene->froggy->GetPlayerCenterPosition() != lastPlayerPos)
+	{
+		 pathFindingA(app->scene->gameScene->peppa->pos, app->scene->gameScene->froggy->GetPlayerCenterPosition());
+	}
+	lastPlayerPos = app->scene->gameScene->froggy->GetPlayerCenterPosition();
+
 	return false;
 }
 
@@ -114,11 +119,13 @@ bool WalkingEnemy::Update(float dt)
 	Currentenemyanimation->Update();
 	
 
-	if ( cont < lastPath.Count())
+	const DynArray<iPoint>* path = GetLastPath();
+
+	if ( cont < path->Count())
 	{
-		
-		pos.x = lastPath.At(cont)->x;
-		pos.y = lastPath.At(cont)->y;
+		iPoint pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
+		this->pos.x = pos.x;
+		this->pos.y = pos.y;
 
 		cont++;
 	}
