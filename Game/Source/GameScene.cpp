@@ -412,4 +412,8 @@ void GameScene::WillCollision(Collider* c1, Collider* c2)
 	{
 		froggy->WillCollision();
 	}
+	if (peppa != nullptr && peppa->col == c1)
+	{
+		peppa->WillCollision();
+	}
 }

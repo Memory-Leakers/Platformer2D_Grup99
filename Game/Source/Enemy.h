@@ -2,6 +2,7 @@
 #include "DynArray.h"
 
 #pragma once
+
 class Enemy
 {
 public:
@@ -30,11 +31,18 @@ public:
 	virtual int pathFindingA(const iPoint& origin, const iPoint& destination);
 
 	const DynArray<iPoint>* GetLastPath();
-
+public:
+	// Collider
+	Collider* col = nullptr;
 private:
 
+	iPoint pos;
 	// we store the created path here
 	DynArray<iPoint> lastPath;
+
+	SDL_Rect Enemybounds;
+
+	bool canMoveDir[4];
 	
 	friend class WalkingEnemy;
 };

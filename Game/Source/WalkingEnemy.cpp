@@ -100,18 +100,18 @@ bool WalkingEnemy::Start()
 
 	this->col = app->col->AddCollider(Enemybounds, Type::ENEMY, app->scene);
 	
-	return false;
+	return true;
 }
 
 bool WalkingEnemy::PreUpdate()
 {
-	if (app->scene->gameScene->froggy->GetPlayerCenterPosition() != lastPlayerPos)
+	if (app->map->WorldToMap(app->scene->gameScene->froggy->position.x, app->scene->gameScene->froggy->position.y) != lastPlayerPos)
 	{
 		 pathFindingA(app->scene->gameScene->peppa->pos, app->scene->gameScene->froggy->position);
 	}
-	lastPlayerPos = app->scene->gameScene->froggy->GetPlayerCenterPosition();
+	lastPlayerPos = app->map->WorldToMap(app->scene->gameScene->froggy->position.x, app->scene->gameScene->froggy->position.y);
 
-	return false;
+	return true;
 }
 
 bool WalkingEnemy::Update(float dt)
@@ -125,18 +125,42 @@ bool WalkingEnemy::Update(float dt)
 	{
 		iPoint pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
 		/*int magnitude = pos.Module();*/
-		this->pos = pos;
+		
+		if (pos.x >= this->pos.x && canMoveDir[RIGHT])
+		{
+			this->pos.x += speed;
+		}
+		else if(pos.x <= this->pos.x && canMoveDir[LEFT])
+		{
+			this->pos.x -= speed;
+		}
+		/*else if (pos.y <= this->pos.y && canMoveDir[UP])
+		{
+			this->pos.y -= speed;
+		}*/
+		/*if (canMoveDir[DOWN])
+		{
+			this->pos.y += speed;
+		}*/
+
+		//this->pos = pos;
 		
 
 		cont++;
 	}
-	/*for (int i = 0; i < lastPath.Count(); i++)
+	else 
 	{
-		pos.x += lastPath.At(i)->x;
-		pos.y += lastPath.At(i)->y;
-	}*/
+		cont = 0;
+
+	}
 	col->SetPos(pos);
-	return false;
+
+	for (int i = 0; i < 4; i++)
+	{
+		canMoveDir[i] = true;
+	}
+	
+	return true;
 }
 
 bool WalkingEnemy::PostUpdate()
@@ -147,7 +171,15 @@ bool WalkingEnemy::PostUpdate()
 
 	app->render->DrawTexture(enemytextures[0], tempPos.x, tempPos.y, EnemyRect);
 
-	return false;
+	if (app->scene->gameScene->debugTiles)
+	{
+
+		Enemybounds.x = pos.x;
+		Enemybounds.y = pos.y;
+		app->render->DrawRectangle(Enemybounds, 255, 200, 255, 80);
+		std::cout << " EnemyBounds:" << pos.x << "," << pos.y << endl;
+	}
+	return true;
 }
 
 bool WalkingEnemy::CleanUp()
@@ -161,7 +193,7 @@ bool WalkingEnemy::CleanUp()
 	Currentenemyanimation = nullptr;
 	
 
-	return false;
+	return true;
 }
 
 void WalkingEnemy::OnCollision(Collider* col)
@@ -172,6 +204,7 @@ void WalkingEnemy::OnCollision(Collider* col)
 
 void WalkingEnemy::WillCollision()
 {
+	Enemy::WillCollision();
 }
 
 iPoint WalkingEnemy::GetCenterEnemyPos()

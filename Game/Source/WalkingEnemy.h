@@ -30,18 +30,14 @@ public:
 
 private:
 
-	iPoint pos;
-	float speed;
+	
+	float speed = 2.0f;
 
 	int cont = 0;
 
 	int size;
 
 	iPoint lastPlayerPos = { 0,0 };
-
-	// Collider
-	Collider* col = nullptr;
-
 
 	SDL_Texture* enemytextures[4];
 
@@ -58,7 +54,7 @@ private:
 	pugi::xml_document WalkingEnemyfile;
 	pugi::xml_node Walking_Enemy_node;
 
-	SDL_Rect Enemybounds;
+	
 
 	SDL_Rect* EnemyRect;
 };

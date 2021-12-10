@@ -52,6 +52,81 @@ void Enemy::OnCollision(Collider* col)
 
 void Enemy::WillCollision()
 {
+    int px = pos.x;
+    int py = pos.y;
+
+    ListItem<MapLayer*>* mapLayerItem;
+    mapLayerItem = app->map->mapData.layers.start;
+
+    while (mapLayerItem != NULL) {
+        if (mapLayerItem->data->properties.GetProperty("Navigation") == 1)
+        {
+            for (int x = 0; x < mapLayerItem->data->width; x++)
+            {
+                for (int y = 0; y < mapLayerItem->data->height; y++)
+                {
+                    int gid = mapLayerItem->data->Get(x, y);
+
+                    int bx = x * 16;
+                    int by = y * 16;
+                    int aux = py - JUMPSPEED;
+                    switch (gid)
+                    {
+                    case 243: //Collisions
+                        //UP
+                        if (py <= by + 16 && py >= by && px + Enemybounds.w > bx && px < bx + 16)
+                        {
+                            canMoveDir[UP] = false;
+                        }
+
+                        //DOWN
+                        if (py + Enemybounds.h >= by && py <= by && px + Enemybounds.w > bx && px < bx + 16)
+                        {
+                            canMoveDir[DOWN] = false;
+                        }
+
+                        //LEFT
+                        if (px <= bx + 16 && px >= bx && py + Enemybounds.h > by && py < by + 16)
+                        {
+                            canMoveDir[LEFT] = false;
+
+                        }
+
+                        //RIGHT
+                        if (px + Enemybounds.w >= bx && px <= bx && py + (Enemybounds.h) > by && py < by + 16)
+                        {
+                            canMoveDir[RIGHT] = false;
+                        }
+                        while (py + Enemybounds.h > by && py < by && px + Enemybounds.w > bx && px < bx + 16 && !canMoveDir[DOWN] && canMoveDir[UP]) //DOWN
+                        {
+                            pos.y -= 1;
+                            py -= 1;
+                            break;
+                        }
+                        while (py <= by + 16 && py >= by && px + Enemybounds.w > bx && px < bx + 16 && canMoveDir[DOWN] && !canMoveDir[UP]) //DOWN
+                        {
+                            pos.y += 1;
+                            py += 1;
+                            break;
+                        }
+                        while (px + Enemybounds.w > bx && px < bx && py + Enemybounds.h > by && py < by + 16 && canMoveDir[LEFT] && !canMoveDir[RIGHT] && !canMoveDir[DOWN])
+                        {
+                            pos.x -= 1;
+                            px -= 1;
+                            break;
+                        }
+                        while (px < bx + 16 && px > bx && py + Enemybounds.h > by && py < by + 16 && !canMoveDir[LEFT] && canMoveDir[RIGHT] && !canMoveDir[DOWN])
+                        {
+                            pos.x += 1;
+                            px += 1;
+                            break;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 int Enemy::pathFindingA(const iPoint& origin, const iPoint& destination)
