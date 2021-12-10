@@ -105,45 +105,77 @@ bool WalkingEnemy::Start()
 
 bool WalkingEnemy::PreUpdate()
 {
-	if (app->map->WorldToMap(app->scene->gameScene->froggy->position.x, app->scene->gameScene->froggy->position.y) != lastPlayerPos)
-	{
+	//if ( app->scene->gameScene->froggy->position != lastPlayerPos)
+	//{
 		 pathFindingA(app->scene->gameScene->peppa->pos, app->scene->gameScene->froggy->position);
-	}
-	lastPlayerPos = app->map->WorldToMap(app->scene->gameScene->froggy->position.x, app->scene->gameScene->froggy->position.y);
+	//}
+	lastPlayerPos = app->scene->gameScene->froggy->position;
 
 	return true;
 }
 
 bool WalkingEnemy::Update(float dt)
 {
+
+	///COLL
+	WillCollision();
+
 	Currentenemyanimation->Update();
 	
 
 	const DynArray<iPoint>* path = GetLastPath();
 
-	if ( cont < path->Count())
-	{
-		iPoint pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
-		/*int magnitude = pos.Module();*/
-		
-		if (pos.x >= this->pos.x && canMoveDir[RIGHT])
-		{
-			this->pos.x += speed;
-		}
-		else if(pos.x <= this->pos.x && canMoveDir[LEFT])
-		{
-			this->pos.x -= speed;
-		}
-		/*else if (pos.y <= this->pos.y && canMoveDir[UP])
-		{
-			this->pos.y -= speed;
-		}*/
-		/*if (canMoveDir[DOWN])
-		{
-			this->pos.y += speed;
-		}*/
 
-		//this->pos = pos;
+	int pathCount = path->Count();
+
+	if ( cont < pathCount && pathCount <= walkingPathRange)
+	{
+		iPoint pos;
+
+		//Flickering prevention
+		//if (path->Count() != 2)
+		//{
+			 pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
+		//}
+		//else {
+		//	 pos = app->map->MapToWorld(path->At(1)->x, path->At(1)->y);
+		//}
+
+		int posDifX = abs(pos.x+ 8 - this->pos.x);
+
+		//Movement
+		if (posDifX >= 15)
+		{
+			if (pos.x > this->pos.x && canMoveDir[RIGHT])
+			{
+				this->pos.x += speed;
+			}
+			else if (pos.x < this->pos.x && canMoveDir[LEFT])
+			{
+				this->pos.x -= speed;
+			}
+		}
+		
+		
+ 		int posDifY = abs(pos.y - this->pos.y);
+		//Jump
+		if (pos.y < this->pos.y && !jumping && !canMoveDir[DOWN] && posDifY > 8 )
+		{
+			jumping = true;
+			startJump = dt;
+		}
+
+		if (jumping == true)
+		{
+
+			if (dt - startJump <= jumpTime)
+			{
+				if(canMoveDir[UP]) this->pos.y -= 2;
+			}
+			else {
+				jumping = false;
+			}
+		}
 		
 
 		cont++;
@@ -153,6 +185,13 @@ bool WalkingEnemy::Update(float dt)
 		cont = 0;
 
 	}
+
+	//Gravity
+	if (canMoveDir[DOWN] && !jumping)
+	{
+		this->pos.y += 4;
+	}
+
 	col->SetPos(pos);
 
 	for (int i = 0; i < 4; i++)
@@ -173,11 +212,21 @@ bool WalkingEnemy::PostUpdate()
 
 	if (app->scene->gameScene->debugTiles)
 	{
-
 		Enemybounds.x = pos.x;
 		Enemybounds.y = pos.y;
 		app->render->DrawRectangle(Enemybounds, 255, 200, 255, 80);
 		std::cout << " EnemyBounds:" << pos.x << "," << pos.y << endl;
+
+
+		//PATH
+		const DynArray<iPoint>* path = GetLastPath();
+
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawRectangle({ pos.x, pos.y, 16, 16 }, 0, 0, 0, 80);
+		}
+
 	}
 	return true;
 }
@@ -202,10 +251,6 @@ void WalkingEnemy::OnCollision(Collider* col)
 	
 }
 
-void WalkingEnemy::WillCollision()
-{
-	Enemy::WillCollision();
-}
 
 iPoint WalkingEnemy::GetCenterEnemyPos()
 {

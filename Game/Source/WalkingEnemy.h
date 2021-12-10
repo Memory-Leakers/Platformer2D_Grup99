@@ -1,5 +1,8 @@
 #pragma once
 #include "Enemy.h"
+
+#define walkingPathRange 12
+
 class WalkingEnemy :
     public Enemy
 {
@@ -22,8 +25,6 @@ public:
 	bool CleanUp() override;
 
 	void OnCollision(Collider* col) override;
-
-	void WillCollision() override;
 
 	iPoint GetCenterEnemyPos();
 	
@@ -54,8 +55,10 @@ private:
 	pugi::xml_document WalkingEnemyfile;
 	pugi::xml_node Walking_Enemy_node;
 
-	
-
 	SDL_Rect* EnemyRect;
+
+	float jumpTime = 0.35f;
+	float startJump = 0.0f;
+	bool jumping = false;
 };
 

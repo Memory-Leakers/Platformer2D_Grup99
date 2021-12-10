@@ -73,6 +73,7 @@ void Enemy::WillCollision()
                     switch (gid)
                     {
                     case 243: //Collisions
+                    case 247:
                         //UP
                         if (py <= by + 16 && py >= by && px + Enemybounds.w > bx && px < bx + 16)
                         {
@@ -126,6 +127,7 @@ void Enemy::WillCollision()
                 }
             }
         }
+        mapLayerItem = mapLayerItem->next;
     }
 }
 

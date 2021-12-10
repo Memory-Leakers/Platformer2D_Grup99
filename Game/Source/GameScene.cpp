@@ -351,6 +351,12 @@ bool GameScene::ReloadLevel()
 	froggy = new Player();
 	froggy->Start();
 
+	//PEPPA
+	peppa->CleanUp();
+	delete peppa;
+	peppa = new WalkingEnemy();
+	peppa->Start();
+
 	//Checkpoint
 	checkpoint->CleanUp();
 	delete checkpoint;
@@ -362,9 +368,6 @@ bool GameScene::ReloadLevel()
 
 void GameScene::OnCollision(Collider* c1, Collider* c2)
 {
-
-
-
 	//Fruits
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
@@ -412,6 +415,7 @@ void GameScene::WillCollision(Collider* c1, Collider* c2)
 	{
 		froggy->WillCollision();
 	}
+
 	if (peppa != nullptr && peppa->col == c1)
 	{
 		peppa->WillCollision();

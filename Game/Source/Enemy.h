@@ -45,6 +45,7 @@ private:
 	bool canMoveDir[4];
 	
 	friend class WalkingEnemy;
+
 };
 
 
