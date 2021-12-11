@@ -51,8 +51,6 @@ public:
 	bool death = false;
 private:
 
-	const short enemy_id = 0;
-
 	iPoint pos;
 	// we store the created path here
 	DynArray<iPoint> lastPath;

@@ -47,8 +47,6 @@ public:
 private:
 	void gameUI();
 
-	void loadMapData();
-
 public:
 	bool debugTiles = false;
 

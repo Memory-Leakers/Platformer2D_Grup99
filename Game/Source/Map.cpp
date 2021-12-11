@@ -238,10 +238,13 @@ bool Map::CleanUp()
 
 	while (fruitItem != NULL)
 	{
-		fruitItem->data->CleanUp();
+		if (fruitItem->data != nullptr)
+		{
+			fruitItem->data->CleanUp();
+		}
 		delete fruitItem->data;
 		fruitItem->data = nullptr;
-		//fruitItem->data->pendingToDelete = true;
+
 		fruitItem = fruitItem->next;
 	}
 
@@ -544,10 +547,13 @@ void Map::UnLoadMapObjects(bool unloadAll)
 
 	while (fruitItem != NULL)
 	{
+		if (fruitItem->data != nullptr)
+		{
 			fruitItem->data->CleanUp();
-			delete fruitItem->data;
-			fruitItem->data = nullptr;
-			//fruitItem->data->col->pendingToDelete = true;
+			
+		}
+		delete fruitItem->data;
+		fruitItem->data = nullptr;
 
 		fruitItem = fruitItem->next;
 	}
@@ -621,12 +627,16 @@ bool Map::SaveState(pugi::xml_node& data) const
 
 	while (fruitItem != NULL)
 	{
-		if(!fruitItem->data->pendingToDelete)
+		if (fruitItem->data != nullptr)
 		{
-			pugi::xml_node f = data.child("fruits").append_child("f");
-			f.append_attribute("posX") = fruitItem->data->position.x;
-			f.append_attribute("posY") = fruitItem->data->position.y;
+			if (!fruitItem->data->pendingToDelete)
+			{
+				pugi::xml_node f = data.child("fruits").append_child("f");
+				f.append_attribute("posX") = fruitItem->data->position.x;
+				f.append_attribute("posY") = fruitItem->data->position.y;
+			}
 		}
+		
 		fruitItem = fruitItem->next;
 	}
 
