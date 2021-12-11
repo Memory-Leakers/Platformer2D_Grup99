@@ -272,6 +272,7 @@ bool Map::CleanUp()
 	delete item2;
 	item2 = nullptr;
 
+
     return true;
 }
 
@@ -325,6 +326,8 @@ bool Map::Load(const char* filename)
     }
 
     mapLoaded = ret;
+
+	tmp.Clear();
 
     return ret;
 }
@@ -414,7 +417,10 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		// L03: DONE 4: Load Tileset image
 		SString tmp("%s%s", folder.GetString(), image.attribute("source").as_string());
 		set->texture = app->tex->Load(tmp.GetString());
+		tmp.Clear();
 	}
+
+	
 
 	return ret;
 }
@@ -514,6 +520,9 @@ void Map::LoadMapObjects ()
 							break;
 						case 253: //SPIKE LEFT
 							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::LEFT));
+							break;
+						case 255: //WALKING ENEMY
+							app->scene->gameScene->enemies.add(new WalkingEnemy(x * 16, y*16));
 							break;
 					}
 				}
@@ -656,16 +665,6 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 					map[(y * layer->width) + x] = 0;
 
 				}
-				
-				/*int i = (y * layer->width) + x;
-
-				int tileId = layer->Get(x, y);
-				TileSet* tileset = (tileId > 0) ? GetTilesetFromTileId(tileId) : NULL;
-
-				if (tileset != NULL)
-				{
-					map[i] = (tileId - tileset->firstgid) > 0 ? 0 : 1;
-				}*/
 			}
 		}
 

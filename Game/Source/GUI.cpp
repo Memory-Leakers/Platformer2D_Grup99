@@ -55,7 +55,11 @@ bool GUI::PostUpdate()
 		guiRect = &anim.GetCurrentFrame();
 	}
 
-	app->render->DrawTexture(tex, position.x, position.y, guiRect, 1.0F, SDL_FLIP_NONE, 0.0, 2147483647, 2147483647, texScale);
+	if (guiRect != nullptr)
+	{
+		std::cout << guiRect->x << ", " << guiRect->y << ", " << guiRect->w << ", " << guiRect->h << std::endl;
+		app->render->DrawTexture(tex, position.x, position.y, guiRect, 1.0F, SDL_FLIP_NONE, 0.0, 2147483647, 2147483647, texScale);
+	}
 
 	return true;
 }

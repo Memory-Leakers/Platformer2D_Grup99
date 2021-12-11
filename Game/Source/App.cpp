@@ -356,6 +356,7 @@ bool App::CleanUp()
 		item = item->prev;
 	}
 	RELEASE_ARRAY(mapo);
+
 	return ret;
 }
 
@@ -434,6 +435,7 @@ bool App::LoadGame()
 	loadGameRequested = false;
 
 	//Clean
+	doc->~xml_document();
 	delete doc;
 	doc = nullptr;
 	delete item;

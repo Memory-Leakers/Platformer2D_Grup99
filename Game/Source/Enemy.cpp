@@ -48,6 +48,31 @@ bool Enemy::CleanUp()
 
 void Enemy::OnCollision(Collider* col)
 {
+    if (col->type == Type::PLAYER)
+    {
+        SDL_Rect pCol = col->rect;
+        pCol.y = (pCol.y + pCol.h );
+        SDL_Rect eCol = this->col->rect;
+
+       // if (pCol.y < eCol.y && pCol.y >= eCol.y - 8 && pCol.x <= eCol.x && pCol.x >= (eCol.x - eCol.w))
+        if(pCol.y >= eCol.y && pCol.y <= eCol.y + 10)
+        {
+            if (damaged) return;
+
+
+            if (health <= 0)
+            {
+                death = true;
+            }
+            else
+            {
+                damaged = true;
+                health--;
+            }
+        }
+
+
+    }
 }
 
 void Enemy::WillCollision()
@@ -121,6 +146,12 @@ void Enemy::WillCollision()
                             pos.x += 1;
                             px += 1;
                             break;
+                        }
+                        break;
+                    case 244: //DETH AREA
+                        if (py + Enemybounds.h >= by && py <= by && px + Enemybounds.w > bx && px < bx + 16)
+                        {
+                            death = true;
                         }
                         break;
                     }
@@ -215,25 +246,6 @@ const DynArray<iPoint>* Enemy::GetLastPath()
     
 }
 
-//bool Enemy::IsWalkable(iPoint pos)
-//{
-//    ListItem<MapLayer*>* mapLayerItem;
-//    mapLayerItem = app->map->mapData.layers.start;
-//
-//    while (mapLayerItem != NULL) {
-//        if (mapLayerItem->data->properties.GetProperty("Navigation") == 1)
-//        {
-//            if (mapLayerItem->data->Get(pos.x, pos.y) == 243)
-//            {
-//                return false;
-//            }
-//        }
-//        mapLayerItem = mapLayerItem->next;
-//    }
-//
-//    return true;
-//}
-
 PathNode::PathNode() : g(-1), h(-1), pos(-1, -1), parent(NULL)
 {
 }
@@ -319,4 +331,10 @@ ListItem<PathNode>* PathList::GetNodeLowestScore() const
         item = item->prev;
     }
     return ret;
+}
+
+
+void Enemy::stateMachine()
+{
+
 }

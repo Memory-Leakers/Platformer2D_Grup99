@@ -5,23 +5,13 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1697" posY="374" score="4400" health="1" />
+		<player posX="1697" posY="368" score="5400" health="1" />
 		<startScene value="Level1" doorKey="false" />
-		<background value="Assets/Background/Purple.png" />
+		<background value="Assets/Background/Pink.png" />
 		<checkpoint state="2" />
 	</scene>
 	<map>
 		<fruits>
-			<f posX="248" posY="216" />
-			<f posX="664" posY="56" />
-			<f posX="664" posY="72" />
-			<f posX="664" posY="88" />
-			<f posX="680" posY="56" />
-			<f posX="680" posY="72" />
-			<f posX="680" posY="88" />
-			<f posX="696" posY="56" />
-			<f posX="696" posY="72" />
-			<f posX="696" posY="88" />
 			<f posX="1384" posY="744" />
 			<f posX="1384" posY="760" />
 			<f posX="1448" posY="760" />

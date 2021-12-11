@@ -3,6 +3,15 @@
 
 #pragma once
 
+
+enum class EnemyState {
+	IDLE = 0,
+	WALKING,
+	RUNNING,
+	HIT,
+	DEATH
+};
+
 class Enemy
 {
 public:
@@ -31,10 +40,18 @@ public:
 	virtual int pathFindingA(const iPoint& origin, const iPoint& destination);
 
 	const DynArray<iPoint>* GetLastPath();
+
+private:
+	virtual void stateMachine();
+
 public:
 	// Collider
 	Collider* col = nullptr;
+	
+	bool death = false;
 private:
+
+	const short enemy_id = 0;
 
 	iPoint pos;
 	// we store the created path here
@@ -45,6 +62,11 @@ private:
 	bool canMoveDir[4];
 	
 	friend class WalkingEnemy;
+
+	EnemyState eState = EnemyState::IDLE;
+
+	int health = 2;
+	bool damaged = false;
 
 };
 

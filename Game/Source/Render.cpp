@@ -100,7 +100,6 @@ bool Render::CleanUp()
 {
 	LOG("Destroying SDL render");
 	SDL_DestroyRenderer(renderer);
-
 	return true;
 }
 

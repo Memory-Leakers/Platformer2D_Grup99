@@ -1,85 +1,89 @@
 #include "App.h"
 #include "WalkingEnemy.h"
 
-WalkingEnemy::WalkingEnemy()
+WalkingEnemy::WalkingEnemy(int x, int y)
 {
 
 	Walking_Enemy_node = app->LoadWalkingEnemy(WalkingEnemyfile);
 
 	Walking_Enemy_node = WalkingEnemyfile.child("enemy_state");
 
-	pos.x = Walking_Enemy_node.child("position").attribute("posX").as_int();
-	pos.y = Walking_Enemy_node.child("position").attribute("posY").as_int();
+	this->pos.x = x;
+	this->pos.y = y - 14;
 
 	/*gravity = Walking_Enemy_node.child("gravity").attribute("value").as_int();*/
 	
 	Enemybounds.x = pos.x;
 	Enemybounds.y = pos.y;
 	Enemybounds.w = 32;
-	Enemybounds.h = 28;
-
+	Enemybounds.h = 30;
 
 	//SET OF ANIMATIONS
 
 	//IDLE
-	angrypigIdle.PushBack({ 2,2,33,28 });
-	angrypigIdle.PushBack({ 38,2,33,28 });
-	angrypigIdle.PushBack({ 75,2,33,28 });
-	angrypigIdle.PushBack({ 111,2,33,28 });
-	angrypigIdle.PushBack({ 147,2,33,28 });
-	angrypigIdle.PushBack({ 183,2,33,28 });
-	angrypigIdle.PushBack({ 219,2,33,28 });
-	angrypigIdle.PushBack({ 255,2,33,28 });
-	angrypigIdle.PushBack({ 292,2,33,28 });
+	angrypigIdle.PushBack({ 0,0,36,30 });
+	angrypigIdle.PushBack({ 36,0,36,30 });
+	angrypigIdle.PushBack({ 72,0,36,30 });
+	angrypigIdle.PushBack({ 108,0,36,30 });
+	angrypigIdle.PushBack({ 144,0,36,30 });
+	angrypigIdle.PushBack({ 180,0,36,30 });
+	angrypigIdle.PushBack({ 216,0,36,30 });
+	angrypigIdle.PushBack({ 252,0,36,30 });
+	angrypigIdle.PushBack({ 288,0,36,30 });
+
 	angrypigIdle.speed = 0.20;
 	angrypigIdle.hasIdle = false;
 
 	//RUN
-	angrypigRun.PushBack({ 4,1,33,29 });
-	angrypigRun.PushBack({ 40,1,33,29 });
-	angrypigRun.PushBack({ 76,1,33,29 });
-	angrypigRun.PushBack({ 112,1,33,29 });
-	angrypigRun.PushBack({ 146,1,33,29 });
-	angrypigRun.PushBack({ 182,1,33,29 });
-	angrypigRun.PushBack({ 218,1,33,29 });
-	angrypigRun.PushBack({ 254,1,33,29 });
-	angrypigRun.PushBack({ 290,1,33,29 });
-	angrypigRun.PushBack({ 326,1,33,29 });
-	angrypigRun.PushBack({ 362,1,33,29 });
-	angrypigRun.PushBack({ 398,1,33,29 });
+	angrypigRun.PushBack({ 0,0,36,30 });
+	angrypigRun.PushBack({ 36,0,36,30 });
+	angrypigRun.PushBack({ 72,0,36,30 });
+	angrypigRun.PushBack({ 108,0,36,30 });
+	angrypigRun.PushBack({ 144,0,36,30 });
+	angrypigRun.PushBack({ 180,0,36,30 });
+	angrypigRun.PushBack({ 216,0,36,30 });
+	angrypigRun.PushBack({ 252,0,36,30 });
+	angrypigRun.PushBack({ 288,0,36,30 });
+	angrypigRun.PushBack({ 324,0,36,30 });
+	angrypigRun.PushBack({ 360,0,36,30 });
+	angrypigRun.PushBack({ 396,0,36,30 });
 	angrypigRun.speed = 0.20;
 	angrypigRun.hasIdle = false;
 
 	//WALK
-	angrypigWalk.PushBack({ 4,0,33,29 });
-	angrypigWalk.PushBack({ 40,0,33,29 });
-	angrypigWalk.PushBack({ 76,0,33,29 });
-	angrypigWalk.PushBack({ 112,0,33,29 });
-	angrypigWalk.PushBack({ 148,0,33,29 });
-	angrypigWalk.PushBack({ 184,0,33,29 });
-	angrypigWalk.PushBack({ 218,0,33,29 });
-	angrypigWalk.PushBack({ 254,0,33,29 });
-	angrypigWalk.PushBack({ 290,0,33,29 });
-	angrypigWalk.PushBack({ 326,0,33,29 });
-	angrypigWalk.PushBack({ 362,0,33,29 });
-	angrypigWalk.PushBack({ 398,0,33,29 });
-	angrypigWalk.PushBack({ 434,0,33,29 });
-	angrypigWalk.PushBack({ 471,0,33,29 });
-	angrypigWalk.PushBack({ 506,0,33,29 });
-	angrypigWalk.PushBack({ 542,0,33,29 });
+	angrypigWalk.PushBack({ 0,0,36,30 });
+	angrypigWalk.PushBack({ 36,0,36,30 });
+	angrypigWalk.PushBack({ 72,0,36,30 });
+	angrypigWalk.PushBack({ 108,0,36,30 });
+	angrypigWalk.PushBack({ 144,0,36,30 });
+	angrypigWalk.PushBack({ 180,0,36,30 });
+	angrypigWalk.PushBack({ 216,0,36,30 });
+	angrypigWalk.PushBack({ 252,0,36,30 });
+	angrypigWalk.PushBack({ 288,0,36,30 });
+	angrypigWalk.PushBack({ 324,0,36,30 });
+	angrypigWalk.PushBack({ 360,0,36,30 });
+	angrypigWalk.PushBack({ 396,0,36,30 });
+	angrypigWalk.PushBack({ 432,0,36,30 });
+	angrypigWalk.PushBack({ 468,0,36,30 });
+	angrypigWalk.PushBack({ 504,0,36,30 });
+	angrypigWalk.PushBack({ 540,0,36,30 });
+
 	angrypigWalk.speed = 0.20;
 	angrypigWalk.hasIdle = false;
 
 	//HIT
-	angrypigHit.PushBack({147,2,33,28});
-	angrypigHit.PushBack({111,2,33,28});
-	angrypigHit.PushBack({74,2,33,28 });
-	angrypigHit.PushBack({37,2,35,28 });
+	angrypigHit.PushBack({ 0,0,36,30 });
+	angrypigHit.PushBack({ 36,0,36,30 });
+	angrypigHit.PushBack({ 72,0,36,30 });
+	angrypigHit.PushBack({ 108,0,36,30 });
+	angrypigHit.PushBack({ 144,0,36,30 });
 	angrypigHit.speed = 0.20;
 	angrypigHit.hasIdle = false;
 
 
 	Currentenemyanimation = &angrypigIdle;
+
+	//DELETES OPEN XML FILE
 }
 
 WalkingEnemy::~WalkingEnemy()
@@ -92,22 +96,30 @@ bool WalkingEnemy::Start()
 	//IDLE
 	enemytextures[0] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigIdle").attribute("path").as_string());
 	//RUN
-	enemytextures[1] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigRun").attribute("path").as_string());
+	enemytextures[2] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigRun").attribute("path").as_string());
 	//WALK
-	enemytextures[2] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigWalk").attribute("path").as_string());
+	enemytextures[1] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigWalk").attribute("path").as_string());
 	//HIT
 	enemytextures[3] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigHit").attribute("path").as_string());
 
 	this->col = app->col->AddCollider(Enemybounds, Type::ENEMY, app->scene);
-	
+
 	return true;
 }
 
 bool WalkingEnemy::PreUpdate()
 {
+	int xx = (pos.x - app->scene->gameScene->froggy->position.x);
+	int yy = (pos.y - app->scene->gameScene->froggy->position.y);
+	int posPDif = sqrt(xx*xx + yy*yy);
+
+	if (posPDif > 200)
+	{
+		return true;
+	}
 	//if ( app->scene->gameScene->froggy->position != lastPlayerPos)
 	//{
-		 pathFindingA(app->scene->gameScene->peppa->pos, app->scene->gameScene->froggy->position);
+		 pathFindingA(pos, app->scene->gameScene->froggy->position);
 	//}
 	lastPlayerPos = app->scene->gameScene->froggy->position;
 
@@ -117,29 +129,35 @@ bool WalkingEnemy::PreUpdate()
 bool WalkingEnemy::Update(float dt)
 {
 
+	if (damaged)
+	{
+		Currentenemyanimation->Update();
+		eState = EnemyState::HIT;
+		return true;
+	}
+
 	///COLL
 	WillCollision();
-
-	Currentenemyanimation->Update();
 	
-
 	const DynArray<iPoint>* path = GetLastPath();
 
 
 	int pathCount = path->Count();
 
-	if ( cont < pathCount && pathCount <= walkingPathRange)
+	if (pathCount <= walkingPathRange && pathCount != 0)
+	{
+		eState = EnemyState::WALKING;
+	}
+	else
+	{
+		eState = EnemyState::IDLE;
+	}
+
+	if (cont < pathCount && pathCount <= walkingPathRange)
 	{
 		iPoint pos;
-
-		//Flickering prevention
-		//if (path->Count() != 2)
-		//{
-			 pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
-		//}
-		//else {
-		//	 pos = app->map->MapToWorld(path->At(1)->x, path->At(1)->y);
-		//}
+		
+		pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
 
 		int posDifX = abs(pos.x+ 8 - this->pos.x);
 
@@ -149,6 +167,7 @@ bool WalkingEnemy::Update(float dt)
 			if (pos.x > this->pos.x && canMoveDir[RIGHT])
 			{
 				this->pos.x += speed;
+				
 			}
 			else if (pos.x < this->pos.x && canMoveDir[LEFT])
 			{
@@ -156,34 +175,34 @@ bool WalkingEnemy::Update(float dt)
 			}
 		}
 		
-		
  		int posDifY = abs(pos.y - this->pos.y);
 		//Jump
-		if (pos.y < this->pos.y && !jumping && !canMoveDir[DOWN] && posDifY > 8 )
+		if (pos.y < this->pos.y && !jumping 
+			&& !canMoveDir[DOWN] && posDifY > 8 
+			&& dt - startJump >= jumpDelayTime)
 		{
 			jumping = true;
 			startJump = dt;
 		}
 
-		if (jumping == true)
-		{
-
-			if (dt - startJump <= jumpTime)
-			{
-				if(canMoveDir[UP]) this->pos.y -= 2;
-			}
-			else {
-				jumping = false;
-			}
-		}
-		
 
 		cont++;
 	}
 	else 
 	{
 		cont = 0;
+	}
 
+	//JUMP
+	if (jumping == true)
+	{
+		if (dt - startJump <= jumpTime)
+		{
+			if (canMoveDir[UP]) this->pos.y -= 2;
+		}
+		else {
+			jumping = false;
+		}
 	}
 
 	//Gravity
@@ -199,22 +218,21 @@ bool WalkingEnemy::Update(float dt)
 		canMoveDir[i] = true;
 	}
 	
+
+	Currentenemyanimation->Update();
+
 	return true;
 }
 
 bool WalkingEnemy::PostUpdate()
 {
-	EnemyRect = &Currentenemyanimation->GetCurrentFrame();
-
-	iPoint tempPos = pos;
-
-	app->render->DrawTexture(enemytextures[0], tempPos.x, tempPos.y, EnemyRect);
+	stateMachine();
 
 	if (app->scene->gameScene->debugTiles)
 	{
 		Enemybounds.x = pos.x;
 		Enemybounds.y = pos.y;
-		app->render->DrawRectangle(Enemybounds, 255, 200, 255, 80);
+		app->render->DrawRectangle(Enemybounds, 0, 200, 255, 80);
 		std::cout << " EnemyBounds:" << pos.x << "," << pos.y << endl;
 
 
@@ -224,7 +242,7 @@ bool WalkingEnemy::PostUpdate()
 		for (uint i = 0; i < path->Count(); ++i)
 		{
 			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			app->render->DrawRectangle({ pos.x, pos.y, 16, 16 }, 0, 0, 0, 80);
+			app->render->DrawRectangle({ pos.x, pos.y, 16, 16 }, 0, 0, 0, 160);
 		}
 
 	}
@@ -240,15 +258,13 @@ bool WalkingEnemy::CleanUp()
 		enemytextures[i] = nullptr;
 	}
 	Currentenemyanimation = nullptr;
-	
 
+	if (col != nullptr)
+	{
+		col->pendingToDelete = true;
+	}
+	WalkingEnemyfile.~xml_document();
 	return true;
-}
-
-void WalkingEnemy::OnCollision(Collider* col)
-{
-	
-	
 }
 
 
@@ -258,4 +274,38 @@ iPoint WalkingEnemy::GetCenterEnemyPos()
 	pos.x = this->pos.x + (Enemybounds.w / 2);
 	pos.y = this->pos.y + (Enemybounds.h / 2);
 	return pos;
+}
+
+void WalkingEnemy::stateMachine()
+{
+	iPoint tempPos = pos;
+
+	switch (eState)
+	{
+	case EnemyState::IDLE:
+		Currentenemyanimation = &angrypigIdle;
+		break;
+	case EnemyState::WALKING:
+		Currentenemyanimation = &angrypigWalk;
+		break;
+	case EnemyState::RUNNING:
+		Currentenemyanimation = &angrypigRun;
+		break;
+	case EnemyState::HIT:
+		Currentenemyanimation = &angrypigHit;
+		break;
+	case EnemyState::DEATH:
+		//app->render->DrawTexture(enemytextures[3], tempPos.x, tempPos.y, EnemyRect);
+		break;
+	}
+	EnemyRect = &Currentenemyanimation->GetCurrentFrame();
+
+	if (Currentenemyanimation == &angrypigHit && Currentenemyanimation->getCurrentFrameI() == angrypigHit.size() - 1)
+	{
+		damaged = false;
+	}
+
+	app->render->DrawTexture(enemytextures[(int) eState], tempPos.x, tempPos.y, EnemyRect);
+
+
 }

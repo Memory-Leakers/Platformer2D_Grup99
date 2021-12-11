@@ -4,9 +4,9 @@
 	<gravity value="4"/>
 	<renderer/>
 	<textures>
-		<angryPigIdle width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Idle(36x30).png"/>
-		<angryPigRun width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Run(36x30).png"/>
-		<angryPigWalk width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Walk(36x30).png"/>
-		<angryPigHit width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Hit(36x30).png"/>
+		<angryPigIdle width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Idle.png"/>
+		<angryPigRun width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Run.png"/>
+		<angryPigWalk width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Walk.png"/>
+		<angryPigHit width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Hit.png"/>
 	</textures>
 </enemy_state>

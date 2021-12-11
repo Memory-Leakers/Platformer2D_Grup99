@@ -190,7 +190,7 @@ bool ModuleCollisions::CleanUp()
 			colliders[i] = nullptr;
 		}
 	}
-
+	name.~SString();
 	return true;
 }
 

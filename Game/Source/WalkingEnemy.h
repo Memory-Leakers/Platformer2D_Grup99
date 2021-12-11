@@ -1,13 +1,13 @@
 #pragma once
 #include "Enemy.h"
 
-#define walkingPathRange 12
+#define walkingPathRange 10
 
 class WalkingEnemy :
     public Enemy
 {
 public:
-	WalkingEnemy();
+	WalkingEnemy(int x, int y);
 
 	~WalkingEnemy();
 
@@ -24,13 +24,14 @@ public:
 	// Called before quitting
 	bool CleanUp() override;
 
-	void OnCollision(Collider* col) override;
-
 	iPoint GetCenterEnemyPos();
 	
+private:
+	void stateMachine() override;
 
 private:
 
+	const short enemy_id = 1;
 	
 	float speed = 2.0f;
 
@@ -59,6 +60,7 @@ private:
 
 	float jumpTime = 0.35f;
 	float startJump = 0.0f;
+	float jumpDelayTime = 1.65f; //Delay of jump after jump
 	bool jumping = false;
 };
 

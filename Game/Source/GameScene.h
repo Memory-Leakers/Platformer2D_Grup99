@@ -47,12 +47,15 @@ public:
 private:
 	void gameUI();
 
+	void loadMapData();
+
 public:
 	bool debugTiles = false;
 
 	Player* froggy = nullptr;
 
 	WalkingEnemy* peppa = nullptr;
+	List<Enemy*> enemies;
 
 	Trophy* trophy = nullptr;
 

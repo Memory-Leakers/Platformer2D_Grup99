@@ -60,6 +60,9 @@ public:
 
 private:
 
+	pugi::xml_document playerfile;
+	pugi::xml_node player_state_node;
+
 	// A set of animations
 
 	Animation idleAnim;
@@ -80,13 +83,17 @@ private:
 
 	Animation* currentAnimation = nullptr;
 
-	float hurtTimeJump = 0.15f;
-	float hurtOpacityTime = 0.8f;
+	float hurtTimeJump = 0.20f;
+	float movementPrevention = 0.15f;
+	float hurtOpacityTime = 1.25f;
 	float hurtTime = 0.0f;
 	bool hurt = false;
+	bool hit = false;
 	bool startHurt = false;
 	int lastDirHorizontal = LEFT;
 	int texOpacity = 255;
+	int hurtSpeedHorizontal = 5;
+	int hurtSpeedVertical = 6;
 
 public:
 

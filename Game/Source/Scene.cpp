@@ -30,10 +30,6 @@ bool Scene::Start()
 	levelList[0]->camX = 209;
 	levelList[0]->camY = -2401;
 
-
-
-	// L03: DONE: Load map
-
 	if (app->map->Load(levelList[0]->file.GetString()) == true)
 	{
 		int w, h;
@@ -47,7 +43,6 @@ bool Scene::Start()
 	gameScene->Start();
 
 	// Load music
-
 	app->audio->PlayMusic("Assets/audio/music/papaya.ogg");
 
 
@@ -92,19 +87,6 @@ bool Scene::Update(float dt)
 	{
 		gameScene->froggy->godMode = !gameScene->froggy->godMode;
 	}
-
-	/*if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y += 10;
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y -= 10;
-
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x += 10;
-
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= 10;
-	*/
 
 	return true;
 }
@@ -171,12 +153,15 @@ bool Scene::SaveState(pugi::xml_node& data) const
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	levelList.At(0)->data->file.Clear();
 	levelList.clear();
 
 
 	gameScene->CleanUp();
 	delete gameScene;
 	gameScene = nullptr;
+
+	bg.~SString();
 
 	return true;
 }

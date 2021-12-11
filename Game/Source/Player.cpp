@@ -3,13 +3,6 @@
 
 Player::Player()
 {
-	/*
-	#define camX -118
-	#define camY -2401
-	*/
-	pugi::xml_document playerfile;
-	pugi::xml_node player_state_node;
-
 	player_state_node = app->LoadPlayer(playerfile);
 
 	player_state_node = playerfile.child("player_state");
@@ -100,6 +93,7 @@ Player::Player()
 		canMoveDir[i] = true;
 	}
 	canMoveDir[UP] = false;
+
 }
 
 bool Player::Start()
@@ -166,30 +160,32 @@ bool Player::Update(float dt)
 		{
 			if (lastDirHorizontal == LEFT && canMoveDir[LEFT])
 			{
-				position.x -= 5;
-							}
+				position.x -= hurtSpeedHorizontal;
+			}
 			else if (lastDirHorizontal == RIGHT && canMoveDir[RIGHT])
 			{
-				position.x += 5;
-			}
-			else {
-				position.x -= 5;
+				position.x += hurtSpeedHorizontal;
 			}
 
 			if (canMoveDir[UP])
 			{
-				position.y -= 6;
+				position.y -= hurtSpeedVertical;
 			}
 			else {
 				position.y += 2;
 			}
 		}
-
-		///if (canMoveDir[DOWN])
-		//{
+		if (dt - hurtTime <= movementPrevention)
+		{
 			canMoveDir[RIGHT] = false; //Prevents going back to the hurt col
 			canMoveDir[LEFT] = false;
 			canMoveDir[UP] = false;
+		}
+		///if (canMoveDir[DOWN])
+		//{
+			//canMoveDir[RIGHT] = true; //Prevents going back to the hurt col
+			//canMoveDir[LEFT] = true;
+			
 		//}
 
 		if  (dt - hurtTime <= hurtOpacityTime)
@@ -234,12 +230,23 @@ bool Player::Update(float dt)
 			currentAnimation = &doublejumpAnim;
 		}
 
-		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
+
+		if (hit && jumpcounter == MAX_JUMPS)
+		{
+			jumpcounter -= 1;
+		}
+		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || hit) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
 		{
 			previousJumpTime = jumpTimer.getDeltaTime() + JumpTime;
-			jumpcounter += 1;
-			app->audio->PlayFx(app->scene->gameScene->playerjumpSFX, 0);
-			
+			app->audio->PlayFx(app->scene->gameScene->playerjumpSFX, 0);	
+			if (hit)
+			{
+				hit = false;
+			}
+			else
+			{
+				jumpcounter += 1;
+			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 		{
@@ -374,7 +381,7 @@ bool Player::PostUpdate()
 
 		bounds.x = position.x;
 		bounds.y = position.y;
-		app->render->DrawRectangle(bounds, 255, 255, 255, 80);
+		app->render->DrawRectangle(bounds, 255, 255, 0, 160);
 
 		std::cout << "Player pos-> " << position.x << " | " << position.y << std::endl;
 	}
@@ -391,6 +398,9 @@ bool Player::CleanUp() {
 	playerRect = nullptr;
 
 	this->col->pendingToDelete = true;
+
+	//Clean data file
+	//playerfile.~xml_document();
 
 	return true;
 }
@@ -428,10 +438,29 @@ void Player::OnCollision(Collider* col)
 {
 	if (col->type == Type::TRAP && !hurt && !godMode)
 	{
-		std::cout << "OUCH" << std::endl;
+		//std::cout << "OUCH" << std::endl;
 		hurt = true;
 		startHurt = true;
 		health--;
+	}
+	if (col->type == Type::ENEMY && !godMode)
+	{
+		SDL_Rect pCol = this->col->rect;
+		pCol.y = (pCol.y + bounds.h);
+		SDL_Rect eCol = col->rect;
+
+		if(pCol.y >= eCol.y && pCol.y <= eCol.y + 12 && !hurt)
+		{
+			hit = true;
+		}
+		else if(!hurt && !hit)
+		{
+			hurt = true;
+			startHurt = true;
+			health--;
+		}
+
+		
 	}
 }
 

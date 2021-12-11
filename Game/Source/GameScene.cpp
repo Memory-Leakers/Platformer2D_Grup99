@@ -27,11 +27,25 @@ bool GameScene::Start()
 	froggy = new Player();
 	froggy->Start();
 	//Enemy
-	peppa = new WalkingEnemy();
-	peppa->Start();
+	
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = enemies.start;
 
-	//PATH
-	pathTex = app->tex->Load("Assets/maps/path2.png");
+	while (enemyItem != NULL)
+	{
+		enemyItem->data->Start();
+
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+	
+	 
+	//enemies.add(new WalkingEnemy());
+	//enemies.At(enemies.count() - 1)->data->Start();
+	//peppa = new WalkingEnemy();
+	//peppa->Start();
 	
   //Fruit
 	ListItem<Coin*>* fruitItem;
@@ -108,8 +122,32 @@ bool GameScene::PreUpdate()
 
 	//Checkpoint
 	checkpoint->PreUpdate();
+	
+	//ENEMIES
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = enemies.start;
 
-	peppa->PreUpdate();
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			if (enemyItem->data->death)
+			{
+				enemyItem->data->CleanUp();
+				delete enemyItem->data;
+				enemyItem->data = nullptr;
+			}
+			else
+			{
+				enemyItem->data->PreUpdate();
+			}
+		}
+
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
 
 	//SET CAM ON FROGGY
 
@@ -121,8 +159,6 @@ bool GameScene::PreUpdate()
 		app->render->camera.y = (froggy->position.y * -scale) + app->render->camera.h / 2 - froggy->bounds.h;
 	}
 
-
-
 	return ret;
 }
 
@@ -132,16 +168,25 @@ bool GameScene::Update(float dt)
 
 	froggy->Update(dt);
 
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = enemies.start;
 
-	/*const DynArray<iPoint>* path = peppa->GetLastPath();
-
-	for (uint i = 0; i < path->Count(); ++i)
+	while (enemyItem != NULL)
 	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(pathTex, pos.x, pos.y);
-	}*/
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->Update(dt);
+		}
+		enemyItem = enemyItem->next;
+	}
 
-	peppa->Update(dt);
+	delete enemyItem;
+	enemyItem = nullptr;
+	/*if (peppa != nullptr)
+	{
+		peppa->Update(dt);
+	}*/
+	
 
 	ListItem<Coin*>* fruitItem;
 	//fruitItem = fruitPool->start;
@@ -230,7 +275,24 @@ bool GameScene::PostUpdate()
 	}
 
 	//Enemy
-	peppa->PostUpdate();
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->PostUpdate();
+		}
+		enemyItem = enemyItem->next;
+	}
+	delete enemyItem;
+	enemyItem = nullptr;
+
+	/*if (peppa != nullptr)
+	{
+		peppa->PostUpdate();
+	}*/
 	//Trophy
 	trophy->PostUpdate();
 
@@ -270,9 +332,29 @@ bool GameScene::CleanUp()
 	delete froggy;
 	froggy = nullptr;
 	//Enemy
-	peppa->CleanUp();
-	delete peppa;
-	peppa = nullptr;
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->CleanUp();
+			delete enemyItem->data;
+			enemyItem->data = nullptr;
+		}
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
+	/*if (peppa != nullptr)
+	{
+		peppa->CleanUp();
+		delete peppa;
+		peppa = nullptr;
+	}*/
 	//Trophy
 	trophy->CleanUp();
 	delete trophy;
@@ -302,6 +384,23 @@ bool GameScene::CleanUp()
 
 bool GameScene::ReloadLevel()
 {
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->CleanUp();
+			delete enemyItem->data;
+			enemyItem->data = nullptr;
+		}
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
 	app->map->UnLoadMapObjects();
 	app->map->LoadMapObjects();
 
@@ -351,11 +450,20 @@ bool GameScene::ReloadLevel()
 	froggy = new Player();
 	froggy->Start();
 
-	//PEPPA
-	peppa->CleanUp();
-	delete peppa;
-	peppa = new WalkingEnemy();
-	peppa->Start();
+	//ENEMIES
+	enemyItem = enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->Start();
+		}
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
 
 	//Checkpoint
 	checkpoint->CleanUp();
@@ -387,6 +495,29 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 		froggy->OnCollision(c2);
 	}
 
+	//Enemy
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = enemies.start;
+
+	while (enemyItem != NULL)
+	{
+
+		if (enemyItem->data != nullptr && enemyItem->data->col == c1)
+		{
+			enemyItem->data->OnCollision(c2);
+		}
+
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
+	/*if (peppa != nullptr && peppa->col == c1)
+	{
+		peppa->OnCollision(c2);
+	}*/
+
 	//Rest
 	if (trophy != nullptr && trophy->col == c1)
 	{
@@ -410,14 +541,37 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 
 void GameScene::WillCollision(Collider* c1, Collider* c2)
 {
-
+	//Player / Froggy
 	if (froggy != nullptr && froggy->col == c1)
 	{
 		froggy->WillCollision();
 	}
 
-	if (peppa != nullptr && peppa->col == c1)
+	//Enemies
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = enemies.start;
+
+	while (enemyItem != NULL)
+	{
+
+		if (enemyItem->data != nullptr && enemyItem->data->col == c1)
+		{
+			enemyItem->data->WillCollision();
+		}
+
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
+	/*if (peppa != nullptr && peppa->col == c1)
 	{
 		peppa->WillCollision();
-	}
+	}*/
+}
+
+void GameScene::loadMapData()
+{
+
 }
