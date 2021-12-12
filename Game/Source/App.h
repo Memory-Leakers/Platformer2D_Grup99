@@ -21,6 +21,7 @@
 #define CONFIG_FILENAME		"SaveFiles/config.xml"
 #define SAVE_STATE_FILENAME "SaveFiles/save_game.xml"
 #define PLAYER_FILENAME "SaveFiles/player.xml"
+#define ENEMY_FILENAME "SaveFiles/GameObjects/enemy.xml"
 
 // Modules
 class Window;
@@ -70,6 +71,17 @@ public:
 
 	pugi::xml_node LoadPlayer(pugi::xml_document&) const;
 
+	pugi::xml_node LoadWalkingEnemy(pugi::xml_document&) const;
+
+	bool IsWalkable(const iPoint& pos) const;
+
+	uchar GetTileAt(const iPoint& pos) const;
+
+	void SetMap(uint width, uint height, uchar* data);
+
+	bool CheckBoundaries(const iPoint& pos) const;
+	
+
 private:
 
 	// Load config file
@@ -110,6 +122,7 @@ public:
 
 	Timer globalTime;
 	
+	uchar* mapo;
 
 private:
 
@@ -149,6 +162,10 @@ private:
 
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
+
+	// size of the map
+	uint width;
+	uint height;
 };
 
 extern App* app;

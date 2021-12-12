@@ -6,6 +6,7 @@
 #include "Point.h"
 #include "Collider.h"
 #include "Coin.h"
+#include "Trap.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -114,6 +115,8 @@ struct MapData
 	List<Collider*> col;
 
 	List<Coin*> fruits;
+	List<Trap*> trap;
+	List<Enemy*> enemies;
 };
 
 class Map : public Module
@@ -143,12 +146,14 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
-	void LoadFruits();
+	void LoadMapObjects();
 
-	void UnloadFruits();
+	void UnLoadMapObjects(bool unLoadAll = true);
 
 	bool LoadState(pugi::xml_node&) override;
 	bool SaveState(pugi::xml_node&) const override;
+
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 private:
 

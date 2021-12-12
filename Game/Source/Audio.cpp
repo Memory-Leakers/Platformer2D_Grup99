@@ -81,7 +81,6 @@ bool Audio::CleanUp()
 	Mix_CloseAudio();
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
-
 	return true;
 }
 

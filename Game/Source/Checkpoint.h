@@ -4,6 +4,8 @@
 #include "Point.h"
 #include "Animation.h"
 #include "Collider.h"
+#include "PugiXml/src/pugixml.hpp"
+
 
 
 enum CHECKSTATE
@@ -41,10 +43,13 @@ public:
 
 	void WillCollision();
 
+	void loadData(pugi::xml_node node);
+
 private:
 	void loadAnimBase();
 	void loadAnimActivation();
 	void loadAnimActivated();
+	
 private:
 
 	Animation animBase;
@@ -56,6 +61,10 @@ private:
 	bool stateChanged = true;
 
 	int savePetition = SAVEPETITION_NONE;
+
+	SString dirAnimBase;
+	SString dirAnimActivation;
+	SString dirAnimActivated;
 
 public:
 

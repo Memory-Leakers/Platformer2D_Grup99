@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<enemy_state>
+	<enemy_walk>
+		<enemy_walk1>
+			<position posX="208" posY="307" /> 
+		</enemy_walk1>
+		<enemy_walk2>
+			<position posX="208" posY="307" /> 
+		</enemy_walk2>
+		<gravity value="4"/>
+		<renderer/>
+		<textures>
+			<angryPigIdle width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Idle.png"/>
+			<angryPigRun width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Run.png"/>
+			<angryPigWalk width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Walk.png"/>
+			<angryPigHit width = "36" height="30" scale = "1" path ="Assets/Enemies/AngryPig/Hit.png"/>
+		</textures>
+	</enemy_walk>
+	<enemy_fly>
+		<enemy_fly1>
+			<position posX="248" posY="307" /> 
+		</enemy_fly1>
+		<enemy_fly2>
+			<position posX="208" posY="307" /> 
+		</enemy_fly2>
+		<gravity value="4"/>
+		<renderer/>
+		<textures>
+			<ghostIdle width = "44" height="30" scale = "1" path ="Assets/Enemies/Ghost/Idle(44x30).png"/>
+			<ghostHit width = "44" height="30" scale = "1" path ="Assets/Enemies/Ghost/Hit(44x30).png"/>
+			<ghostDeath width = "44" height="30" scale = "1" path ="Assets/Enemies/Ghost/Death(44x30).png"/>
+			<ghostAppear width = "44" height="30" scale = "1" path ="Assets/Enemies/Ghost/Appear(44x30).png"/>
+		</textures>
+	</enemy_fly>
+</enemy_state>

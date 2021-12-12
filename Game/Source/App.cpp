@@ -7,6 +7,7 @@
 #include <sstream>
 
 #define FPS 30
+#define INVALID_WALK_CODE 243 
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -58,7 +59,7 @@ App::~App()
 		RELEASE(item->data);
 		item = item->prev;
 	}
-
+	RELEASE_ARRAY(mapo);
 	modules.clear();
 }
 
@@ -180,6 +181,54 @@ pugi::xml_node App::LoadPlayer(pugi::xml_document& playerfile) const
 	return ret;
 }
 
+pugi::xml_node App::LoadWalkingEnemy(pugi::xml_document& walkingenemyfile) const
+{
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = walkingenemyfile.load_file(ENEMY_FILENAME);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", ENEMY_FILENAME, result.description());
+	else ret = walkingenemyfile.child("enemy_state");
+
+	return ret;
+	
+}
+
+bool App::IsWalkable(const iPoint& pos) const
+{
+	//Determinar bien la condicion
+	uchar t = GetTileAt(pos);
+	return t != INVALID_WALK_CODE && t > 0;
+}
+
+uchar App::GetTileAt(const iPoint& pos) const
+{
+	//Determinar bien la condicion
+	//check boundaries
+	if (CheckBoundaries(pos))
+	{
+		return mapo[(pos.y * map->mapData.width) + pos.x];
+	}
+	return INVALID_WALK_CODE;
+}
+
+void App::SetMap(uint width, uint height, uchar* data)
+{
+	this->width = width;
+	this->height = height;
+	//RELEASE_ARRAY(mapo);
+	
+	mapo = new uchar[width * height];
+	memcpy(mapo, data, width * height);
+	
+}
+
+bool App::CheckBoundaries(const iPoint& pos) const
+{
+	return (pos.x >= 0 && pos.x <= (int)width &&
+		pos.y >= 0 && pos.y <= (int)height);
+}
+
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
@@ -291,7 +340,6 @@ bool App::PostUpdate()
 
 		ret = item->data->PostUpdate();
 	}
-
 	return ret;
 }
 
@@ -307,6 +355,7 @@ bool App::CleanUp()
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
+	RELEASE_ARRAY(mapo);
 
 	return ret;
 }

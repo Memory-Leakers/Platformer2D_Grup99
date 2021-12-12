@@ -1,10 +1,13 @@
 #pragma once
 #include "Enemy.h"
+
+#define walkingPathRange 10
+
 class WalkingEnemy :
     public Enemy
 {
 public:
-	WalkingEnemy(iPoint position, float speed);
+	WalkingEnemy(int x, int y);
 
 	~WalkingEnemy();
 
@@ -21,15 +24,42 @@ public:
 	// Called before quitting
 	bool CleanUp() override;
 
-	void OnCollision(Collider* col) override;
+	iPoint GetCenterEnemyPos();
 
-	void WillCollision() override;
+private:
+	void stateMachine() override;
 
 private:
 
+	bool isFlip = false;
 
+	float speed = 2.0f;
 
+	int cont = 0;
 
-	
+	int size;
+
+	iPoint lastPlayerPos = { 0,0 };
+
+	SDL_Texture* enemytextures[4];
+
+	Animation angrypigIdle;
+
+	Animation angrypigRun;
+
+	Animation angrypigWalk;
+
+	Animation angrypigHit;
+
+	Animation* Currentenemyanimation;
+
+	pugi::xml_document WalkingEnemyfile;
+	pugi::xml_node Walking_Enemy_node;
+
+	SDL_Rect* EnemyRect;
+
+	float jumpTime = 0.35f;
+	float startJump = 0.0f;
+	float jumpDelayTime = 1.65f; //Delay of jump after jump
+	bool jumping = false;
 };
-

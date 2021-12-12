@@ -8,6 +8,9 @@
 #include "Trophy.h"
 #include "DoorKey.h"
 #include "Checkpoint.h"
+#include "WalkingEnemy.h"
+#include "FlyingEnemy.h"
+#include "GUI.h"
 
 class GameScene
 {
@@ -42,17 +45,22 @@ public:
 
 	void WillCollision(Collider* c1, Collider* c2);
 
+private:
+
+
 public:
 	bool debugTiles = false;
 
 	Player* froggy = nullptr;
+
+	FlyingEnemy* donald = nullptr;
 
 	Trophy* trophy = nullptr;
 
 	Checkpoint* checkpoint = nullptr;
 
 	DoorKey* doorKey = nullptr;
-	
+
 	Timer jumptimer;
 
 	bool pendingtoReload = false;
@@ -61,11 +69,18 @@ public:
 
 	SDL_Rect* guiKeyRect = nullptr;
 	SDL_Texture* guiKey = nullptr;
+	SDL_Texture* pathTex;
+
+	GUI* healthBar = nullptr;
 
 	uint pickupSFX;
 	uint keypickupSFX;
 	uint playerjumpSFX;
 	uint playerwalkSFX;
+
+private:
+
+
 };
 
 #endif // __GAMESCENE_H__

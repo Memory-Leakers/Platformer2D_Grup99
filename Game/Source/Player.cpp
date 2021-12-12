@@ -3,13 +3,6 @@
 
 Player::Player()
 {
-	/*
-	#define camX -118
-	#define camY -2401
-	*/
-	pugi::xml_document playerfile;
-	pugi::xml_node player_state_node;
-
 	player_state_node = app->LoadPlayer(playerfile);
 
 	player_state_node = playerfile.child("player_state");
@@ -100,6 +93,7 @@ Player::Player()
 		canMoveDir[i] = true;
 	}
 	canMoveDir[UP] = false;
+
 }
 
 bool Player::Start()
@@ -116,6 +110,11 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	if (health <= 0)
+	{
+		Death();
+	}
+
 	if (!leftpressed)
 	{
 		isFlip = false;
@@ -129,8 +128,75 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
+	//Player death
+	if (health == 0)
+	{
+		return true;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) { health--; }
+
 	///COLL
 	WillCollision();
+
+	//Last direction
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		lastDirHorizontal = LEFT;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		lastDirHorizontal = RIGHT;
+	}
+
+	//Hurt animation
+	if (hurt)
+	{
+		if (startHurt)
+		{
+			hurtTime = dt;
+			startHurt = false;
+		}
+		if (dt - hurtTime <= hurtTimeJump) 
+		{
+			if (lastDirHorizontal == LEFT && canMoveDir[LEFT])
+			{
+				position.x -= hurtSpeedHorizontal;
+			}
+			else if (lastDirHorizontal == RIGHT && canMoveDir[RIGHT])
+			{
+				position.x += hurtSpeedHorizontal;
+			}
+
+			if (canMoveDir[UP])
+			{
+				position.y -= hurtSpeedVertical;
+			}
+			else {
+				position.y += 2;
+			}
+		}
+		if (dt - hurtTime <= movementPrevention)
+		{
+			canMoveDir[RIGHT] = false; //Prevents going back to the hurt col
+			canMoveDir[LEFT] = false;
+			canMoveDir[UP] = false;
+		}
+		///if (canMoveDir[DOWN])
+		//{
+			//canMoveDir[RIGHT] = true; //Prevents going back to the hurt col
+			//canMoveDir[LEFT] = true;
+			
+		//}
+
+		if  (dt - hurtTime <= hurtOpacityTime)
+		{
+			texOpacity = textureOpacityHurt;
+		}
+		else {
+			hurt = false;
+			texOpacity = textureOpacityNormal;
+		}
+	}
 
 
 	//RELOCATOR
@@ -152,7 +218,6 @@ bool Player::Update(float dt)
 		else
 		{
 			jumpcounter = 0;
-			//position.y -= JUMPSPEED*2 +2;
 		}
 		if(!canMoveDir[DOWN])
 		{
@@ -163,12 +228,23 @@ bool Player::Update(float dt)
 			currentAnimation = &doublejumpAnim;
 		}
 
-		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
+
+		if (hit && jumpcounter == MAX_JUMPS)
+		{
+			jumpcounter -= 1;
+		}
+		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || hit) && canMoveDir[UP] && jumpcounter < MAX_JUMPS)
 		{
 			previousJumpTime = jumpTimer.getDeltaTime() + JumpTime;
-			jumpcounter += 1;
-			app->audio->PlayFx(app->scene->gameScene->playerjumpSFX, 0);
-			
+			app->audio->PlayFx(app->scene->gameScene->playerjumpSFX, 0);	
+			if (hit)
+			{
+				hit = false;
+			}
+			else
+			{
+				jumpcounter += 1;
+			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && canMoveDir[LEFT])
 		{
@@ -186,12 +262,10 @@ bool Player::Update(float dt)
 				if(jumpTimer.getDeltaTime() > tempTime)
 				{
 					currentAnimation = &fallAnim;
-					
 				}
 				if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
 				{
 					currentAnimation = &doublejumpAnim;
-					
 				}
 			}
 
@@ -267,9 +341,7 @@ bool Player::Update(float dt)
 			currentAnimation = &rightAnim;
 		}
 	}
-
-	//cout << playerScore << endl;
-	//printf("\n%d , %d\n", position.x, position.y);
+	
 	// Animation update
 	currentAnimation->Update();
 	if (this->col != nullptr)
@@ -281,9 +353,16 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
+	if (health == 0)
+	{
+		return true;
+	}
+
 	playerRect = &currentAnimation->GetCurrentFrame();
 
 	iPoint tempPos = position;
+
+	SDL_SetTextureAlphaMod(player_tex, texOpacity);
 
 	if (isFlip)
 	{
@@ -300,7 +379,9 @@ bool Player::PostUpdate()
 
 		bounds.x = position.x;
 		bounds.y = position.y;
-		app->render->DrawRectangle(bounds, 255, 255, 255, 80);
+		app->render->DrawRectangle(bounds, 255, 255, 0, 160);
+
+		std::cout << "Player pos-> " << position.x << " | " << position.y << std::endl;
 	}
 
 	return true;
@@ -316,6 +397,9 @@ bool Player::CleanUp() {
 
 	this->col->pendingToDelete = true;
 
+	//Clean data file
+	//playerfile.~xml_document();
+
 	return true;
 }
 
@@ -324,8 +408,18 @@ Player::~Player()
 
 }
 
-void Player::Jump(float dt)
+bool Player::Death()
 {
+	app->scene->gameScene->pendingtoReload = true;
+
+	if (app->scene->gameScene->checkpoint->getCurrentState() == 2) //2 == Activated
+	{
+		app->LoadGameRequest();
+	}
+	else {
+		app->scene->gameScene->pendingtoReload = true;
+	}
+	return true;
 }
 
 iPoint Player::GetPlayerCenterPosition()
@@ -340,7 +434,32 @@ iPoint Player::GetPlayerCenterPosition()
 
 void Player::OnCollision(Collider* col)
 {
+	if (col->type == Type::TRAP && !hurt && !godMode)
+	{
+		//std::cout << "OUCH" << std::endl;
+		hurt = true;
+		startHurt = true;
+		health--;
+	}
+	if (col->type == Type::ENEMY && !godMode)
+	{
+		SDL_Rect pCol = this->col->rect;
+		pCol.y = (pCol.y + bounds.h);
+		SDL_Rect eCol = col->rect;
 
+		if(pCol.y >= eCol.y && pCol.y <= eCol.y + 12 && !hurt)
+		{
+			hit = true;
+		}
+		else if(!hurt && !hit)
+		{
+			hurt = true;
+			startHurt = true;
+			health--;
+		}
+
+		
+	}
 }
 
 void Player::WillCollision()
@@ -393,14 +512,6 @@ void Player::WillCollision()
 						{
 							canMoveDir[RIGHT] = false;
 						}
-						/*
-						while (px < bx + 16 && !canMoveDir[DOWN] && !canMoveDir[UP])
-						{
-							position.x += 1;
-							px += 1;
-							canMoveDir[LEFT] = false;
-						}
-						*/
 						while (py + bounds.h > by && py < by && px + bounds.w > bx && px < bx + 16 && !canMoveDir[DOWN] && canMoveDir[UP]) //DOWN
 						{
 							position.y -= 1;
@@ -430,16 +541,7 @@ void Player::WillCollision()
 					case 244: //DETH AREA
 						if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
 						{
-							app->scene->gameScene->pendingtoReload = true;
-
-							if (app->scene->gameScene->checkpoint->getCurrentState() == 2)
-							{
-								app->LoadGameRequest();
-							}
-							else {
-								app->scene->gameScene->pendingtoReload = true;
-							}
-
+							health = 0;
 						}
 						break;
 					case 245: //Doors

@@ -21,8 +21,6 @@ Map::~Map()
 // L06: TODO 7: Ask for the value of a custom property
 int Properties::GetProperty(const char* value, int defaultValue) const
 {
-	//...
-
 	ListItem<Property*>* item = list.start;
 
 	while (item)
@@ -49,7 +47,6 @@ bool Map::Awake(pugi::xml_node& config)
 // Draw the map (all requried layers)
 void Map::Draw()
 {
-
 	if (mapLoaded == false) return;
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
@@ -72,10 +69,6 @@ void Map::Draw()
 					int gid = mapLayerItem->data->Get(x, y);
 
 					if (gid > 0) {
-
-						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
-						//now we always use the firt tileset in the list
-						//TileSet* tileset = mapData.tilesets.start->data;
 						TileSet* tileset = GetTilesetFromTileId(gid);
 
 						SDL_Rect r = tileset->GetTileRect(gid);
@@ -86,10 +79,6 @@ void Map::Draw()
 							pos.x,
 							pos.y,
 							&r);
-					}
-					else
-					{
-							
 					}
 					
 				}
@@ -249,22 +238,64 @@ bool Map::CleanUp()
 
 	while (fruitItem != NULL)
 	{
-		fruitItem->data->CleanUp();
+		if (fruitItem->data != nullptr)
+		{
+			fruitItem->data->CleanUp();
+		}
 		delete fruitItem->data;
 		fruitItem->data = nullptr;
-		//fruitItem->data->pendingToDelete = true;
+
 		fruitItem = fruitItem->next;
 	}
 
 	mapData.fruits.clear();
 
+	//Enemy
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = app->map->mapData.enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->CleanUp();
+			delete enemyItem->data;
+			enemyItem->data = nullptr;
+		}
+		enemyItem = enemyItem->next;
+	}
+
+	mapData.enemies.clear();
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
+
+	//Remove all traps
+	ListItem<Trap*>* trapItem;
+	trapItem = mapData.trap.start;
+
+	while (trapItem != NULL)
+	{
+		trapItem->data->CleanUp();
+		delete trapItem->data;
+		trapItem->data = nullptr;
+
+		trapItem = trapItem->next;
+	}
+
+	mapData.trap.clear();
+
 	//Clean
 	delete fruitItem;
 	fruitItem = nullptr;
+	delete trapItem;
+	trapItem = nullptr;
 	delete item;
 	item = nullptr;
 	delete item2;
 	item2 = nullptr;
+
 
     return true;
 }
@@ -307,7 +338,7 @@ bool Map::Load(const char* filename)
 
 	if (ret == true)
 	{
-		LoadFruits();
+		LoadMapObjects();
 	}
 
     
@@ -319,6 +350,8 @@ bool Map::Load(const char* filename)
     }
 
     mapLoaded = ret;
+
+	tmp.Clear();
 
     return ret;
 }
@@ -408,7 +441,10 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		// L03: DONE 4: Load Tileset image
 		SString tmp("%s%s", folder.GetString(), image.attribute("source").as_string());
 		set->texture = app->tex->Load(tmp.GetString());
+		tmp.Clear();
 	}
+
+	
 
 	return ret;
 }
@@ -476,11 +512,8 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-void Map::LoadFruits ()
+void Map::LoadMapObjects ()
 {
-	//List<Coin*> toReturn;
-
-
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
 
@@ -495,13 +528,29 @@ void Map::LoadFruits ()
 				{
 					int gid = mapLayerItem->data->Get(x, y);
 
-					if (gid == 246)
+					switch(gid) 
 					{
-						//Coin c = Coin(x, y);
-
-						mapData.fruits.add(new Coin(x*16-8, y*16-8));
-						//toReturn->add(&c);
-						//mapData.col.add(app->col->AddCollider({ x * 16, y * 16, 16 , 16 }, Type::WALL, app->scene));
+						case 246:
+							mapData.fruits.add(new Coin(x*16-8, y*16-8));
+							break;
+						case 250: //SPIKE UP
+							mapData.trap.add(new Trap(x * 16, y * 16));
+							break;
+						case 251: //SPIKE DOWN
+							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::DOWN));
+							break;
+						case 252: //SPIKE RIGHT
+							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::RIGHT));
+							break;
+						case 253: //SPIKE LEFT
+							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::LEFT));
+							break;
+						case 255: //WALKING ENEMY
+							mapData.enemies.add(new WalkingEnemy(x * 16, y*16));
+							break;
+						case 256: //FLYING ENEMY
+							mapData.enemies.add(new FlyingEnemy(x * 16, y * 16));
+							break;
 					}
 				}
 			}
@@ -510,11 +559,11 @@ void Map::LoadFruits ()
 		mapLayerItem = mapLayerItem->next;
 	}
 
-
-	//return toReturn;
+	delete mapLayerItem;
+	mapLayerItem = nullptr;
 }
 
-void Map::UnloadFruits()
+void Map::UnLoadMapObjects(bool unloadAll)
 {
 	//Remove all fruits
 	ListItem<Coin*>* fruitItem;
@@ -522,27 +571,72 @@ void Map::UnloadFruits()
 
 	while (fruitItem != NULL)
 	{
+		if (fruitItem->data != nullptr)
+		{
 			fruitItem->data->CleanUp();
-			delete fruitItem->data;
-			fruitItem->data = nullptr;
-			//fruitItem->data->col->pendingToDelete = true;
+			
+		}
+		delete fruitItem->data;
+		fruitItem->data = nullptr;
 
 		fruitItem = fruitItem->next;
 	}
 
 	mapData.fruits.clear();
 
-	//Clean
+	//Clean fruitItem
 	delete fruitItem;
 	fruitItem = nullptr;
 
+	//Enemies
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = mapData.enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->CleanUp();
+		}
+		delete enemyItem->data;
+		enemyItem->data = nullptr;
+		enemyItem = enemyItem->next;
+	}
+
+	mapData.enemies.clear();
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
+
+
+	if (!unloadAll) return;
+
+	//Remove all traps
+	ListItem<Trap*>* trapItem;
+	trapItem = mapData.trap.start;
+
+	while (trapItem != NULL)
+	{
+		trapItem->data->CleanUp();
+		delete trapItem->data;
+		trapItem->data = nullptr;
+
+		trapItem = trapItem->next;
+	}
+
+	mapData.trap.clear();
+
+	//Clean trapItem
+	delete trapItem;
+	trapItem = nullptr;
 }
 
 bool Map::LoadState(pugi::xml_node& data)
 {
+	UnLoadMapObjects(false);
 
-	UnloadFruits();
-
+	//LOAD FRUITS FROM SAVE_FILE
 	pugi::xml_node f = data.child("fruits").first_child();
 
 	while (f != NULL)
@@ -563,12 +657,46 @@ bool Map::LoadState(pugi::xml_node& data)
 	delete fruitItem;
 	fruitItem = nullptr;
 
+	//LOAD ENEMIES FROM SAVE_FILE
+	pugi::xml_node e = data.child("enemies").first_child();
+
+	while (e != NULL)
+	{
+		switch (e.attribute("id").as_int())
+		{
+		case 0 :
+
+			break;
+		case 1:
+			mapData.enemies.add(new WalkingEnemy(e.attribute("posX").as_int(), e.attribute("posY").as_int()));
+			break;
+		case 2:
+			mapData.enemies.add(new FlyingEnemy(e.attribute("posX").as_int(), e.attribute("posY").as_int()));
+			break;
+		}
+		e = e.next_sibling();
+	}
+
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = mapData.enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		enemyItem->data->Start();
+
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
 	return true;
 }
 
 bool Map::SaveState(pugi::xml_node& data) const
 {
 
+	//SAVE FRUITS TO SAVE_FILE
 	ListItem<Coin*>* fruitItem;
 	fruitItem = mapData.fruits.start;
 
@@ -579,17 +707,90 @@ bool Map::SaveState(pugi::xml_node& data) const
 
 	while (fruitItem != NULL)
 	{
-		if(!fruitItem->data->pendingToDelete)
+		if (fruitItem->data != nullptr)
 		{
-			pugi::xml_node f = data.child("fruits").append_child("f");
-			f.append_attribute("posX") = fruitItem->data->position.x;
-			f.append_attribute("posY") = fruitItem->data->position.y;
+			if (!fruitItem->data->pendingToDelete)
+			{
+				pugi::xml_node f = data.child("fruits").append_child("f");
+				f.append_attribute("posX") = fruitItem->data->position.x;
+				f.append_attribute("posY") = fruitItem->data->position.y;
+			}
 		}
+		
 		fruitItem = fruitItem->next;
 	}
 
 	delete fruitItem;
 	fruitItem = nullptr;
 
+	//SAVE ENEMIES TO SAVE_FILE
+
+	while (data.child("enemies").child("e"))
+	{
+		data.child("enemies").remove_child("e");
+	}
+
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = mapData.enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			pugi::xml_node e = data.child("enemies").append_child("e");
+			e.append_attribute("posX") = enemyItem->data->pos.x;
+			e.append_attribute("posY") = enemyItem->data->pos.y;
+			e.append_attribute("id") = enemyItem->data->enemy_id;
+		}
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
+
 	return true;
+}
+
+bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	ListItem<MapLayer*>* item;
+	item = mapData.layers.start;
+
+	for (item = mapData.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.GetProperty("walkable", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->width * layer->height];
+		memset(map, 1, layer->width * layer->height);
+
+		for (int y = 0; y < mapData.height; ++y)
+		{
+			for (int x = 0; x < mapData.width; ++x)
+			{
+				if(layer->Get(x,y) == 254)
+				{
+					map[(y * layer->width) + x] = 1;
+				}
+				else 
+				{
+					map[(y * layer->width) + x] = 0;
+
+				}
+			}
+		}
+
+		*buffer = map;
+		width = mapData.width;
+		height = mapData.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
 }
