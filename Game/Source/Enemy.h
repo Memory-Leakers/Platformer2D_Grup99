@@ -47,7 +47,7 @@ private:
 public:
 	// Collider
 	Collider* col = nullptr;
-	
+
 	bool death = false;
 private:
 
@@ -60,14 +60,17 @@ private:
 	SDL_Rect Enemybounds;
 
 	bool canMoveDir[4];
-	
-	friend class WalkingEnemy;
+
+
 
 	EnemyState eState = EnemyState::IDLE;
 
 	int health = 2;
 	bool damaged = false;
 
+	friend class WalkingEnemy;
+	
+	friend class FlyingEnemy;
 };
 
 

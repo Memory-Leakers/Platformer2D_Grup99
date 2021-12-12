@@ -16,7 +16,7 @@ ModuleCollisions::ModuleCollisions()
 	}
 
 	//TRUE -> Can be detected BY FIRST OBJECT // FALSE -> CAN'T BE DETECTED BY FIRST OBJECT
-	// EX-> matrix[uint(Type::WALL)][uint(Type::PLAYER)] = false;
+	// EX-> matrix[uint(Type::WALL)][uint(Type::PLAYER)] = True;
 	// WALL CAN DETECT PLAYER
 
 	//WALL

@@ -9,6 +9,7 @@
 #include "DoorKey.h"
 #include "Checkpoint.h"
 #include "WalkingEnemy.h"
+#include "FlyingEnemy.h"
 #include "GUI.h"
 
 class GameScene
@@ -56,6 +57,8 @@ public:
 
 	WalkingEnemy* peppa = nullptr;
 	List<Enemy*> enemies;
+
+	FlyingEnemy* donald = nullptr;
 
 	Trophy* trophy = nullptr;
 

@@ -31,6 +31,8 @@ private:
 
 private:
 
+	bool isFlip = false;
+
 	const short enemy_id = 1;
 	
 	float speed = 2.0f;

@@ -94,6 +94,7 @@
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\DoorKey.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\FlyingEnemy.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\DoorKey.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\FlyingEnemy.h" />
     <ClInclude Include="Source\GameScene.h" />
     <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\Map.h" />
