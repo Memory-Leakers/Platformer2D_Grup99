@@ -15,6 +15,11 @@ public:
 	Point()
 	{}
 
+	~Point()
+	{
+
+	}
+
 	Point(const Point<TYPE>& v)
 	{
 		this->x = v.x;

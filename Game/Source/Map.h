@@ -146,7 +146,7 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
-	void LoadMapObjects();
+	void LoadMapObjects(bool gTrap = false);
 
 	void UnLoadMapObjects(bool unLoadAll = true);
 

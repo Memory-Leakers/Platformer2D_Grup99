@@ -11,7 +11,7 @@ WalkingEnemy::WalkingEnemy(int x, int y)
 	Walking_Enemy_node = WalkingEnemyfile.child("enemy_state").child("enemy_walk");
 
 	this->pos.x = x;
-	this->pos.y = y - 14;
+	this->pos.y = y;
 
 	/*gravity = Walking_Enemy_node.child("gravity").attribute("value").as_int();*/
 

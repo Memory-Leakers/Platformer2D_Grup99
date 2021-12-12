@@ -121,8 +121,11 @@ public:
 	ModuleCollisions* col;
 
 	Timer globalTime;
+	Timer gameTime;
 	
 	uchar* mapo;
+
+	int FPS = 60;
 
 private:
 

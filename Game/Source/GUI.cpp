@@ -15,6 +15,11 @@ GUI::GUI(SString tex, iPoint pos, int frames, SDL_Rect bounds, int frameSize, bo
 
 }
 
+GUI::~GUI()
+{
+
+}
+
 bool GUI::Start()
 {
 	//LoadAnims
@@ -57,9 +62,18 @@ bool GUI::PostUpdate()
 
 	if (guiRect != nullptr)
 	{
-		std::cout << guiRect->x << ", " << guiRect->y << ", " << guiRect->w << ", " << guiRect->h << " | " << *frame_value << std::endl;
 		app->render->DrawTexture(tex, position.x, position.y, guiRect, 1.0F, SDL_FLIP_NONE, 0.0, 2147483647, 2147483647, texScale);
 	}
+
+	return true;
+}
+
+bool GUI::CleanUp()
+{
+	SDL_DestroyTexture(tex);
+	guiRect = nullptr;
+	frame_value = nullptr;
+
 
 	return true;
 }

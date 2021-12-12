@@ -330,8 +330,6 @@ bool GameScene::CleanUp()
 	delete froggy;
 	froggy = nullptr;
 
-
-
 	//Trophy
 	trophy->CleanUp();
 	delete trophy;
@@ -357,13 +355,17 @@ bool GameScene::CleanUp()
 	SDL_DestroyTexture(guiKey);
 	guiKey = nullptr;
 
+	healthBar->CleanUp();
+	delete healthBar;
+	healthBar = nullptr;
+
 	return true;
 }
 
 bool GameScene::ReloadLevel()
 {
-	app->map->UnLoadMapObjects();
-	app->map->LoadMapObjects();
+	app->map->UnLoadMapObjects(false);
+	app->map->LoadMapObjects(true);
 
 	//Fruits
 	ListItem<Coin*>* fruitItem;
@@ -380,26 +382,12 @@ bool GameScene::ReloadLevel()
 	delete fruitItem;
 	fruitItem = nullptr;
 
-	//Traps
-	ListItem<Trap*>* trapItem;
-	trapItem = app->map->mapData.trap.start;
-
-	while (trapItem != NULL)
-	{
-		if (trapItem->data != nullptr)
-		{
-			trapItem->data->Start();
-		}
-		trapItem = trapItem->next;
-	}
-	delete trapItem;
-	trapItem = nullptr;
-
 	//Door key
 	if (doorKey != nullptr)
 	{
 		doorKey->CleanUp();
 		delete doorKey;
+		doorKey = nullptr;
 	}
 	doorKey = new DoorKey(1520, 1056);
 	doorKey->Start();
@@ -408,6 +396,7 @@ bool GameScene::ReloadLevel()
 	//froggy
 	froggy->CleanUp();
 	delete froggy;
+	froggy = nullptr;
 	froggy = new Player();
 	froggy->Start();
 	healthBar->setFrameFollow(&froggy->health);
@@ -432,6 +421,7 @@ bool GameScene::ReloadLevel()
 	//Checkpoint
 	checkpoint->CleanUp();
 	delete checkpoint;
+	checkpoint = nullptr;
 	checkpoint = new Checkpoint(1712, 352);
 	checkpoint->Start();
 

@@ -6,7 +6,6 @@
 #include <iostream>
 #include <sstream>
 
-#define FPS 30
 #define INVALID_WALK_CODE 243 
 
 // Constructor
@@ -130,12 +129,13 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
-
 	bool ret = true;
 	globalTime.Update();
+
 	if (globalTime.getDeltaTime() >= 1.0f / FPS)
 	{
 		PrepareUpdate();
+		gameTime.Update();
 
 		if (input->GetWindowEvent(WE_QUIT) == true)
 			ret = false;
@@ -150,7 +150,13 @@ bool App::Update()
 			ret = PostUpdate();
 
 		FinishUpdate();
+		globalTime.Reset();
 	}
+	else
+	{
+		gameTime.Update();
+	}
+	
 	return ret;
 }
 

@@ -103,6 +103,15 @@ bool Checkpoint::PostUpdate()
 
 bool Checkpoint::CleanUp()
 {
+	SDL_DestroyTexture(tex);
+	tex = nullptr;
+
+	if (col != nullptr)
+	{
+		col->pendingToDelete = true;
+	}
+
+	rect = nullptr;
 
 	return true;
 }

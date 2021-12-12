@@ -219,7 +219,7 @@ bool FlyingEnemy::PostUpdate()
 bool FlyingEnemy::CleanUp()
 {
 	EnemyRect = nullptr;
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		SDL_DestroyTexture(enemytextures[i]);
 		enemytextures[i] = nullptr;

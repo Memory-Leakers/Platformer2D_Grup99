@@ -65,7 +65,7 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	gameScene->Update(app->globalTime.getDeltaTime());
+	gameScene->Update(app->gameTime.getDeltaTime());
 
     // LOAD AND SAVE
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -85,6 +85,22 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
 		gameScene->froggy->godMode = !gameScene->froggy->godMode;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (app->FPS == 60)
+		{
+			app->FPS = 30;
+		}
+		else if (app->FPS == 30)
+		{
+			app->FPS = 60;
+		}
+		else 
+		{
+			app->FPS = 60;
+		}
 	}
 
 	return true;

@@ -94,6 +94,8 @@ bool Coin::CleanUp()
 	SDL_DestroyTexture(this->tex);
 	tex = nullptr;
 
+	position.~Point();
+
 	return true;
 }
 

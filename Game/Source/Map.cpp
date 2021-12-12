@@ -512,11 +512,10 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-void Map::LoadMapObjects ()
+void Map::LoadMapObjects (bool gTrap)
 {
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
-
 
 	while (mapLayerItem != NULL)
 	{
@@ -527,6 +526,11 @@ void Map::LoadMapObjects ()
 				for (int y = 0; y < mapLayerItem->data->height; y++)
 				{
 					int gid = mapLayerItem->data->Get(x, y);
+
+					if ((gid == 250 || gid == 251 || gid == 252 || gid == 253) && gTrap)
+					{
+						break;
+					}
 
 					switch(gid) 
 					{
@@ -546,7 +550,7 @@ void Map::LoadMapObjects ()
 							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::LEFT));
 							break;
 						case 255: //WALKING ENEMY
-							mapData.enemies.add(new WalkingEnemy(x * 16, y*16));
+							mapData.enemies.add(new WalkingEnemy(x * 16, y*16 - 14));
 							break;
 						case 256: //FLYING ENEMY
 							mapData.enemies.add(new FlyingEnemy(x * 16, y * 16));

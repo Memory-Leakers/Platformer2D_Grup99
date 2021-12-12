@@ -73,9 +73,6 @@ public:
 	SDL_Rect bounds;
 	Collider* col = nullptr;
 	SDL_Texture* tex;
-	//SDL_Texture* texBase;
-	//SDL_Texture* texActivation;
-	//SDL_Texture* texActivated;
 	bool collided = false;
 
 public:

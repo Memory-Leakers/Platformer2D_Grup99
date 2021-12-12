@@ -88,6 +88,8 @@ bool Trophy::CleanUp()
 	SDL_DestroyTexture(tex);
 	tex = nullptr;
 	col->pendingToDelete = true;
+	rect = nullptr;
+
 	return true;
 }
 
