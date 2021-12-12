@@ -429,11 +429,6 @@ bool GameScene::ReloadLevel()
 	delete enemyItem;
 	enemyItem = nullptr;
 
-	//DONALD
-	/*donald->CleanUp();
-	delete donald;
-	donald = new FlyingEnemy();
-	donald->Start();*/
 	//Checkpoint
 	checkpoint->CleanUp();
 	delete checkpoint;

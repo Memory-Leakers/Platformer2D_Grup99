@@ -671,7 +671,7 @@ bool Map::LoadState(pugi::xml_node& data)
 			mapData.enemies.add(new WalkingEnemy(e.attribute("posX").as_int(), e.attribute("posY").as_int()));
 			break;
 		case 2:
-			//mapData.enemies.add(new FlyingEnemy(e.attribute("posX").as_int(), e.attribute("posY").as_int()));
+			mapData.enemies.add(new FlyingEnemy(e.attribute("posX").as_int(), e.attribute("posY").as_int()));
 			break;
 		}
 		e = e.next_sibling();
