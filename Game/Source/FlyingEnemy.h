@@ -1,10 +1,13 @@
 #pragma once
 #include "Enemy.h"
+
+#define flyingPathRange 16
+
 class FlyingEnemy :
     public Enemy
 {
 public:
-	FlyingEnemy();
+	FlyingEnemy(int x,int y);
 
 	~FlyingEnemy();
 

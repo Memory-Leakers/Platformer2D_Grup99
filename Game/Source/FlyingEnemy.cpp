@@ -1,7 +1,7 @@
 #include "App.h"
 #include "FlyingEnemy.h"
 
-FlyingEnemy::FlyingEnemy()
+FlyingEnemy::FlyingEnemy(int x,int y)
 {
 
 	enemy_id = 2;
@@ -10,11 +10,11 @@ FlyingEnemy::FlyingEnemy()
 
 	Flying_Enemy_node = FlyingEnemyfile.child("enemy_state").child("enemy_fly");
 
-	pos.x = Flying_Enemy_node.child("enemy_fly1").child("position").attribute("posX").as_int();
-	pos.y = Flying_Enemy_node.child("enemy_fly1").child("position").attribute("posY").as_int();
+	this->pos.x = x;
+	this->pos.y = y;
 
-	Enemybounds.x = pos.x;
-	Enemybounds.y = pos.y;
+	Enemybounds.x = this->pos.x;
+	Enemybounds.y = this->pos.y;
 	Enemybounds.w = 32;
 	Enemybounds.h = 28;
 
@@ -97,14 +97,14 @@ bool FlyingEnemy::PreUpdate()
 	{
 		return true;
 	}
-	pathFindingA(app->scene->gameScene->donald->pos, app->scene->gameScene->froggy->position);
+	pathFindingA(pos, app->scene->gameScene->froggy->position);
 
 	return true;
 }
 
 bool FlyingEnemy::Update(float dt)
 {
-	WillCollision();
+	//WillCollision();
 
 	
 
@@ -114,9 +114,9 @@ bool FlyingEnemy::Update(float dt)
 
 	int pathCount = path->Count();
 
-	if (cont < pathCount && pathCount <= walkingPathRange)
+	if (cont < pathCount && pathCount <= flyingPathRange)
 	{
-		if (app->scene->gameScene->froggy->isFlip == app->scene->gameScene->donald->isFlip)
+		if (app->scene->gameScene->froggy->isFlip == isFlip)
 		{
 			return true;
 		}
@@ -225,6 +225,12 @@ bool FlyingEnemy::CleanUp()
 		enemytextures[i] = nullptr;
 	}
 	Currentenemyanimation = nullptr;
+
+	if (col != nullptr)
+	{
+		col->pendingToDelete = true;
+	}
+	FlyingEnemyfile.~xml_document();
 
 	return false;
 }
