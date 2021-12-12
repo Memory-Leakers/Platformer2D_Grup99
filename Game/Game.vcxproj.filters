@@ -73,6 +73,9 @@
     <ClCompile Include="Source\WalkingEnemy.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\HealthPack.cpp">
+      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -173,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="Source\WalkingEnemy.h">
       <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HealthPack.h">
+      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

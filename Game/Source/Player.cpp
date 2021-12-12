@@ -141,9 +141,7 @@ bool Player::Update(float dt)
 		if (jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
 		{
 			position.y -= JUMPSPEED;
-			currentAnimation = &jumpAnim;
-			
-			
+			currentAnimation = &jumpAnim;			
 		}
 		else if (canMoveDir[DOWN])
 		{
