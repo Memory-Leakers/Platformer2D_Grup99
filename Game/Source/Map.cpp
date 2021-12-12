@@ -549,7 +549,7 @@ void Map::LoadMapObjects ()
 							mapData.enemies.add(new WalkingEnemy(x * 16, y*16));
 							break;
 						case 256: //FLYING ENEMY
-							app->scene->gameScene->enemies.add(new FlyingEnemy(x * 16, y * 16));
+							mapData.enemies.add(new FlyingEnemy(x * 16, y * 16));
 							break;
 					}
 				}
