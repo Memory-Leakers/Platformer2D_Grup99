@@ -3,6 +3,9 @@
 
 FlyingEnemy::FlyingEnemy()
 {
+
+	enemy_id = 2;
+
 	Flying_Enemy_node = app->LoadWalkingEnemy(FlyingEnemyfile);
 
 	Flying_Enemy_node = FlyingEnemyfile.child("enemy_state").child("enemy_fly");

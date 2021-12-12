@@ -7,7 +7,7 @@
 	<scene>
 		<player posX="64" posY="390" score="0" health="3" />
 		<startScene value="Level1" doorKey="false" />
-		<background value="Assets/Background/Brown.png" />
+		<background value="Assets/Background/Yellow.png" />
 		<checkpoint state="0" />
 	</scene>
 	<map>
