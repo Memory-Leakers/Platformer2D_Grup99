@@ -27,7 +27,7 @@ bool GameScene::Start()
 	froggy = new Player();
 	froggy->Start();
 	//Enemy
-	
+
 	ListItem<Enemy*>* enemyItem;
 	enemyItem = app->map->mapData.enemies.start;
 
@@ -40,13 +40,10 @@ bool GameScene::Start()
 
 	delete enemyItem;
 	enemyItem = nullptr;
-	
-	 
-	//enemies.add(new WalkingEnemy());
-	//enemies.At(enemies.count() - 1)->data->Start();
-	//peppa = new WalkingEnemy();
-	//peppa->Start();
-	
+
+	donald = new FlyingEnemy();
+	donald->Start();
+
   //Fruit
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
@@ -122,7 +119,7 @@ bool GameScene::PreUpdate()
 
 	//Checkpoint
 	checkpoint->PreUpdate();
-	
+
 	//ENEMIES
 	ListItem<Enemy*>* enemyItem;
 	enemyItem = app->map->mapData.enemies.start;
@@ -148,6 +145,8 @@ bool GameScene::PreUpdate()
 
 	delete enemyItem;
 	enemyItem = nullptr;
+
+	donald->PreUpdate();
 
 	//SET CAM ON FROGGY
 
@@ -186,7 +185,10 @@ bool GameScene::Update(float dt)
 	{
 		peppa->Update(dt);
 	}*/
-	
+
+	//ENEMY
+
+	donald->Update(dt);
 
 	ListItem<Coin*>* fruitItem;
 	//fruitItem = fruitPool->start;
@@ -245,6 +247,8 @@ bool GameScene::PostUpdate()
 
 	froggy->PostUpdate();
 
+
+
 	//Fruits
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
@@ -289,10 +293,7 @@ bool GameScene::PostUpdate()
 	delete enemyItem;
 	enemyItem = nullptr;
 
-	/*if (peppa != nullptr)
-	{
-		peppa->PostUpdate();
-	}*/
+	donald->PostUpdate();
 	//Trophy
 	trophy->PostUpdate();
 
@@ -331,6 +332,12 @@ bool GameScene::CleanUp()
 	froggy->CleanUp();
 	delete froggy;
 	froggy = nullptr;
+
+
+
+	donald->CleanUp();
+	delete donald;
+	donald = nullptr;
 
 	//Trophy
 	trophy->CleanUp();
@@ -429,6 +436,11 @@ bool GameScene::ReloadLevel()
 	delete enemyItem;
 	enemyItem = nullptr;
 
+	//DONALD
+	donald->CleanUp();
+	delete donald;
+	donald = new FlyingEnemy();
+	donald->Start();
 	//Checkpoint
 	checkpoint->CleanUp();
 	delete checkpoint;
@@ -523,7 +535,11 @@ void GameScene::WillCollision(Collider* c1, Collider* c2)
 		enemyItem = enemyItem->next;
 	}
 
+	if (donald != nullptr && donald->col == c1)
+	{
+		donald->WillCollision();
+	}
 	delete enemyItem;
 	enemyItem = nullptr;
-}
 
+}

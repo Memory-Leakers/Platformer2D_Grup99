@@ -79,6 +79,9 @@
     <ClCompile Include="Source\Trap.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FlyingEnemy.cpp">
+      <Filter>SourceFiles\GameObjects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -185,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="Source\Trap.h">
       <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FlyingEnemy.h">
+      <Filter>HeaderFiles\GameObjects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

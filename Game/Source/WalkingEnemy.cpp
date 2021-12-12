@@ -8,13 +8,13 @@ WalkingEnemy::WalkingEnemy(int x, int y)
 
 	Walking_Enemy_node = app->LoadWalkingEnemy(WalkingEnemyfile);
 
-	Walking_Enemy_node = WalkingEnemyfile.child("enemy_state");
+	Walking_Enemy_node = WalkingEnemyfile.child("enemy_state").child("enemy_walk");
 
 	this->pos.x = x;
 	this->pos.y = y - 14;
 
 	/*gravity = Walking_Enemy_node.child("gravity").attribute("value").as_int();*/
-	
+
 	Enemybounds.x = pos.x;
 	Enemybounds.y = pos.y;
 	Enemybounds.w = 32;
@@ -139,7 +139,7 @@ bool WalkingEnemy::Update(float dt)
 
 	///COLL
 	WillCollision();
-	
+
 	const DynArray<iPoint>* path = GetLastPath();
 
 
@@ -157,7 +157,7 @@ bool WalkingEnemy::Update(float dt)
 	if (cont < pathCount && pathCount <= walkingPathRange)
 	{
 		iPoint pos;
-		
+
 		pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
 
 		int posDifX = abs(pos.x+ 8 - this->pos.x);
@@ -168,18 +168,20 @@ bool WalkingEnemy::Update(float dt)
 			if (pos.x > this->pos.x && canMoveDir[RIGHT])
 			{
 				this->pos.x += speed;
-				
+
+				isFlip = true;
 			}
 			else if (pos.x < this->pos.x && canMoveDir[LEFT])
 			{
 				this->pos.x -= speed;
+				isFlip = false;
 			}
 		}
-		
+
  		int posDifY = abs(pos.y - this->pos.y);
 		//Jump
-		if (pos.y < this->pos.y && !jumping 
-			&& !canMoveDir[DOWN] && posDifY > 8 
+		if (pos.y < this->pos.y && !jumping
+			&& !canMoveDir[DOWN] && posDifY > 8
 			&& dt - startJump >= jumpDelayTime)
 		{
 			jumping = true;
@@ -189,7 +191,7 @@ bool WalkingEnemy::Update(float dt)
 
 		cont++;
 	}
-	else 
+	else
 	{
 		cont = 0;
 	}
@@ -221,7 +223,7 @@ bool WalkingEnemy::Update(float dt)
 	{
 		canMoveDir[i] = true;
 	}
-	
+
 
 	Currentenemyanimation->Update();
 
@@ -309,7 +311,15 @@ void WalkingEnemy::stateMachine()
 		damaged = false;
 	}
 
-	app->render->DrawTexture(enemytextures[(int) eState], tempPos.x, tempPos.y, EnemyRect);
+	if (isFlip)
+	{
+		app->render->DrawTexture(enemytextures[(int)eState], tempPos.x, tempPos.y, EnemyRect, 1.0f, SDL_FLIP_HORIZONTAL);
+		
+	}
+	else
+	{
+		app->render->DrawTexture(enemytextures[(int)eState], tempPos.x, tempPos.y, EnemyRect);
 
+	}
 
 }

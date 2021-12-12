@@ -9,6 +9,7 @@
 #include "DoorKey.h"
 #include "Checkpoint.h"
 #include "WalkingEnemy.h"
+#include "FlyingEnemy.h"
 #include "GUI.h"
 
 class GameScene
@@ -52,12 +53,14 @@ public:
 
 	Player* froggy = nullptr;
 
+	FlyingEnemy* donald = nullptr;
+
 	Trophy* trophy = nullptr;
 
 	Checkpoint* checkpoint = nullptr;
 
 	DoorKey* doorKey = nullptr;
-	
+
 	Timer jumptimer;
 
 	bool pendingtoReload = false;
@@ -76,8 +79,8 @@ public:
 	uint playerwalkSFX;
 
 private:
-	
-	
+
+
 };
 
 #endif // __GAMESCENE_H__
