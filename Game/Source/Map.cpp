@@ -250,6 +250,27 @@ bool Map::CleanUp()
 
 	mapData.fruits.clear();
 
+	//Enemy
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = app->map->mapData.enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->CleanUp();
+			delete enemyItem->data;
+			enemyItem->data = nullptr;
+		}
+		enemyItem = enemyItem->next;
+	}
+
+	mapData.enemies.clear();
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
+
 	//Remove all traps
 	ListItem<Trap*>* trapItem;
 	trapItem = mapData.trap.start;
@@ -525,7 +546,7 @@ void Map::LoadMapObjects ()
 							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::LEFT));
 							break;
 						case 255: //WALKING ENEMY
-							app->scene->gameScene->enemies.add(new WalkingEnemy(x * 16, y*16));
+							mapData.enemies.add(new WalkingEnemy(x * 16, y*16));
 							break;
 						case 256: //FLYING ENEMY
 							app->scene->gameScene->enemies.add(new FlyingEnemy(x * 16, y * 16));
@@ -567,6 +588,28 @@ void Map::UnLoadMapObjects(bool unloadAll)
 	delete fruitItem;
 	fruitItem = nullptr;
 
+	//Enemies
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = mapData.enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			enemyItem->data->CleanUp();
+		}
+		delete enemyItem->data;
+		enemyItem->data = nullptr;
+		enemyItem = enemyItem->next;
+	}
+
+	mapData.enemies.clear();
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
+
+
 	if (!unloadAll) return;
 
 	//Remove all traps
@@ -591,9 +634,9 @@ void Map::UnLoadMapObjects(bool unloadAll)
 
 bool Map::LoadState(pugi::xml_node& data)
 {
-
 	UnLoadMapObjects(false);
 
+	//LOAD FRUITS FROM SAVE_FILE
 	pugi::xml_node f = data.child("fruits").first_child();
 
 	while (f != NULL)
@@ -614,12 +657,46 @@ bool Map::LoadState(pugi::xml_node& data)
 	delete fruitItem;
 	fruitItem = nullptr;
 
+	//LOAD ENEMIES FROM SAVE_FILE
+	pugi::xml_node e = data.child("enemies").first_child();
+
+	while (e != NULL)
+	{
+		switch (e.attribute("id").as_int())
+		{
+		case 0 :
+
+			break;
+		case 1:
+			mapData.enemies.add(new WalkingEnemy(e.attribute("posX").as_int(), e.attribute("posY").as_int()));
+			break;
+		case 2:
+
+			break;
+		}
+		e = e.next_sibling();
+	}
+
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = mapData.enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		enemyItem->data->Start();
+
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
 	return true;
 }
 
 bool Map::SaveState(pugi::xml_node& data) const
 {
 
+	//SAVE FRUITS TO SAVE_FILE
 	ListItem<Coin*>* fruitItem;
 	fruitItem = mapData.fruits.start;
 
@@ -645,6 +722,32 @@ bool Map::SaveState(pugi::xml_node& data) const
 
 	delete fruitItem;
 	fruitItem = nullptr;
+
+	//SAVE ENEMIES TO SAVE_FILE
+
+	while (data.child("enemies").child("e"))
+	{
+		data.child("enemies").remove_child("e");
+	}
+
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = mapData.enemies.start;
+
+	while (enemyItem != NULL)
+	{
+		if (enemyItem->data != nullptr)
+		{
+			pugi::xml_node e = data.child("enemies").append_child("e");
+			e.append_attribute("posX") = enemyItem->data->pos.x;
+			e.append_attribute("posY") = enemyItem->data->pos.y;
+			e.append_attribute("id") = enemyItem->data->enemy_id;
+		}
+		enemyItem = enemyItem->next;
+	}
+
+	delete enemyItem;
+	enemyItem = nullptr;
+
 
 	return true;
 }

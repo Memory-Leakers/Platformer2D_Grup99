@@ -46,15 +46,12 @@ public:
 	void WillCollision(Collider* c1, Collider* c2);
 
 private:
-	void gameUI();
+
 
 public:
 	bool debugTiles = false;
 
 	Player* froggy = nullptr;
-
-	WalkingEnemy* peppa = nullptr;
-	List<Enemy*> enemies;
 
 	FlyingEnemy* donald = nullptr;
 
@@ -63,7 +60,7 @@ public:
 	Checkpoint* checkpoint = nullptr;
 
 	DoorKey* doorKey = nullptr;
-	
+
 	Timer jumptimer;
 
 	bool pendingtoReload = false;
@@ -82,8 +79,8 @@ public:
 	uint playerwalkSFX;
 
 private:
-	
-	
+
+
 };
 
 #endif // __GAMESCENE_H__

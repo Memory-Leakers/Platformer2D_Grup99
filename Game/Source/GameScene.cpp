@@ -29,7 +29,7 @@ bool GameScene::Start()
 	//Enemy
 
 	ListItem<Enemy*>* enemyItem;
-	enemyItem = enemies.start;
+	enemyItem = app->map->mapData.enemies.start;
 
 	while (enemyItem != NULL)
 	{
@@ -119,7 +119,7 @@ bool GameScene::PreUpdate()
 
 	//ENEMIES
 	ListItem<Enemy*>* enemyItem;
-	enemyItem = enemies.start;
+	enemyItem = app->map->mapData.enemies.start;
 
 	while (enemyItem != NULL)
 	{
@@ -165,7 +165,7 @@ bool GameScene::Update(float dt)
 	froggy->Update(dt);
 
 	ListItem<Enemy*>* enemyItem;
-	enemyItem = enemies.start;
+	enemyItem = app->map->mapData.enemies.start;
 
 	while (enemyItem != NULL)
 	{
@@ -277,7 +277,7 @@ bool GameScene::PostUpdate()
 
 	//Enemy
 	ListItem<Enemy*>* enemyItem;
-	enemyItem = enemies.start;
+	enemyItem = app->map->mapData.enemies.start;
 
 	while (enemyItem != NULL)
 	{
@@ -329,23 +329,8 @@ bool GameScene::CleanUp()
 	froggy->CleanUp();
 	delete froggy;
 	froggy = nullptr;
-	//Enemy
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = enemies.start;
 
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			enemyItem->data->CleanUp();
-			delete enemyItem->data;
-			enemyItem->data = nullptr;
-		}
-		enemyItem = enemyItem->next;
-	}
 
-	delete enemyItem;
-	enemyItem = nullptr;
 
 	//Trophy
 	trophy->CleanUp();
@@ -366,6 +351,7 @@ bool GameScene::CleanUp()
 
 	//Coinpool cleanup is done in map.cpp
 	//Trappool cleanup is done in map.cpp
+	//Enemypool cleanup is done in map.cpp
 
 	//GUI
 	SDL_DestroyTexture(guiKey);
@@ -376,23 +362,6 @@ bool GameScene::CleanUp()
 
 bool GameScene::ReloadLevel()
 {
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			enemyItem->data->CleanUp();
-			delete enemyItem->data;
-			enemyItem->data = nullptr;
-		}
-		enemyItem = enemyItem->next;
-	}
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
 	app->map->UnLoadMapObjects();
 	app->map->LoadMapObjects();
 
@@ -444,7 +413,9 @@ bool GameScene::ReloadLevel()
 	healthBar->setFrameFollow(&froggy->health);
 
 	//ENEMIES
-	enemyItem = enemies.start;
+
+	ListItem<Enemy*>* enemyItem;
+	enemyItem = app->map->mapData.enemies.start;
 
 	while (enemyItem != NULL)
 	{
@@ -497,7 +468,7 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 
 	//Enemy
 	ListItem<Enemy*>* enemyItem;
-	enemyItem = enemies.start;
+	enemyItem = app->map->mapData.enemies.start;
 
 	while (enemyItem != NULL)
 	{
@@ -512,11 +483,6 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 
 	delete enemyItem;
 	enemyItem = nullptr;
-
-	/*if (peppa != nullptr && peppa->col == c1)
-	{
-		peppa->OnCollision(c2);
-	}*/
 
 	//Rest
 	if (trophy != nullptr && trophy->col == c1)
@@ -549,7 +515,7 @@ void GameScene::WillCollision(Collider* c1, Collider* c2)
 
 	//Enemies
 	ListItem<Enemy*>* enemyItem;
-	enemyItem = enemies.start;
+	enemyItem = app->map->mapData.enemies.start;
 
 	while (enemyItem != NULL)
 	{
@@ -564,10 +530,5 @@ void GameScene::WillCollision(Collider* c1, Collider* c2)
 
 	delete enemyItem;
 	enemyItem = nullptr;
-
-	/*if (peppa != nullptr && peppa->col == c1)
-	{
-		peppa->WillCollision();
-	}*/
 
 }

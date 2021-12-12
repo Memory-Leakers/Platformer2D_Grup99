@@ -25,7 +25,7 @@ public:
 	bool CleanUp() override;
 
 	iPoint GetCenterEnemyPos();
-	
+
 private:
 	void stateMachine() override;
 
@@ -33,8 +33,6 @@ private:
 
 	bool isFlip = false;
 
-	const short enemy_id = 1;
-	
 	float speed = 2.0f;
 
 	int cont = 0;
@@ -65,4 +63,3 @@ private:
 	float jumpDelayTime = 1.65f; //Delay of jump after jump
 	bool jumping = false;
 };
-

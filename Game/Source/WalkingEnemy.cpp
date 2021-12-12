@@ -4,6 +4,8 @@
 WalkingEnemy::WalkingEnemy(int x, int y)
 {
 
+	enemy_id = 1;
+
 	Walking_Enemy_node = app->LoadWalkingEnemy(WalkingEnemyfile);
 
 	Walking_Enemy_node = WalkingEnemyfile.child("enemy_state").child("enemy_walk");
@@ -117,10 +119,9 @@ bool WalkingEnemy::PreUpdate()
 	{
 		return true;
 	}
-	//if ( app->scene->gameScene->froggy->position != lastPlayerPos)
-	//{
-		 pathFindingA(pos, app->scene->gameScene->froggy->position);
-	//}
+
+	pathFindingA(pos, app->scene->gameScene->froggy->position);
+
 	lastPlayerPos = app->scene->gameScene->froggy->position;
 
 	return true;
@@ -213,7 +214,10 @@ bool WalkingEnemy::Update(float dt)
 		this->pos.y += 4;
 	}
 
-	col->SetPos(pos);
+	if (this->col != nullptr)
+	{
+		col->SetPos(pos);
+	}
 
 	for (int i = 0; i < 4; i++)
 	{

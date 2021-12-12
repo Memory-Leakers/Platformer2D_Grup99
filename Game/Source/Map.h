@@ -116,6 +116,7 @@ struct MapData
 
 	List<Coin*> fruits;
 	List<Trap*> trap;
+	List<Enemy*> enemies;
 };
 
 class Map : public Module
