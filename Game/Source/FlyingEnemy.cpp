@@ -227,6 +227,7 @@ bool FlyingEnemy::CleanUp()
 	{
 		col->pendingToDelete = true;
 	}
+	FlyingEnemyfile.~xml_document();
 
 	return false;
 }

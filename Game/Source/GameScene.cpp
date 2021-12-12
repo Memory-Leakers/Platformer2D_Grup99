@@ -347,10 +347,6 @@ bool GameScene::CleanUp()
 	delete enemyItem;
 	enemyItem = nullptr;
 
-	donald->CleanUp();
-	delete donald;
-	donald = nullptr;
-
 	//Trophy
 	trophy->CleanUp();
 	delete trophy;
