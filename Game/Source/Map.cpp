@@ -527,6 +527,9 @@ void Map::LoadMapObjects ()
 						case 255: //WALKING ENEMY
 							app->scene->gameScene->enemies.add(new WalkingEnemy(x * 16, y*16));
 							break;
+						case 256: //FLYING ENEMY
+							app->scene->gameScene->enemies.add(new FlyingEnemy(x * 16, y * 16));
+							break;
 					}
 				}
 			}

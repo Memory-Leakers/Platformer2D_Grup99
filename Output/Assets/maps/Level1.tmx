@@ -15971,7 +15971,7 @@
    <tile gid="246"/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="256"/>
    <tile/>
    <tile/>
    <tile gid="253"/>
@@ -16356,7 +16356,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="256"/>
    <tile/>
    <tile/>
    <tile/>
@@ -16474,7 +16474,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="256"/>
    <tile/>
    <tile/>
    <tile/>
@@ -24122,7 +24122,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="255"/>
+   <tile gid="256"/>
    <tile/>
    <tile/>
    <tile/>

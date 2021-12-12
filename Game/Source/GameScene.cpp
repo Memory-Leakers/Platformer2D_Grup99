@@ -41,9 +41,6 @@ bool GameScene::Start()
 	delete enemyItem;
 	enemyItem = nullptr;
 
-	donald = new FlyingEnemy();
-	donald->Start();
-
   //Fruit
 	ListItem<Coin*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
@@ -146,7 +143,7 @@ bool GameScene::PreUpdate()
 	delete enemyItem;
 	enemyItem = nullptr;
 
-	donald->PreUpdate();
+	//donald->PreUpdate();
 
 	//SET CAM ON FROGGY
 
@@ -188,7 +185,7 @@ bool GameScene::Update(float dt)
 
 	//ENEMY
 
-	donald->Update(dt);
+	//donald->Update(dt);
 
 	ListItem<Coin*>* fruitItem;
 	//fruitItem = fruitPool->start;
@@ -293,7 +290,7 @@ bool GameScene::PostUpdate()
 	delete enemyItem;
 	enemyItem = nullptr;
 
-	donald->PostUpdate();
+	//donald->PostUpdate();
 	//Trophy
 	trophy->PostUpdate();
 
@@ -466,10 +463,10 @@ bool GameScene::ReloadLevel()
 	enemyItem = nullptr;
 
 	//DONALD
-	donald->CleanUp();
+	/*donald->CleanUp();
 	delete donald;
 	donald = new FlyingEnemy();
-	donald->Start();
+	donald->Start();*/
 	//Checkpoint
 	checkpoint->CleanUp();
 	delete checkpoint;
@@ -569,10 +566,6 @@ void GameScene::WillCollision(Collider* c1, Collider* c2)
 		enemyItem = enemyItem->next;
 	}
 
-	if (donald != nullptr && donald->col == c1)
-	{
-		donald->WillCollision();
-	}
 	delete enemyItem;
 	enemyItem = nullptr;
 
