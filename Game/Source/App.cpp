@@ -435,7 +435,6 @@ bool App::LoadGame()
 	loadGameRequested = false;
 
 	//Clean
-	doc->~xml_document();
 	delete doc;
 	doc = nullptr;
 	delete item;

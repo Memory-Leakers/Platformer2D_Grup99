@@ -5,15 +5,47 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1697" posY="368" score="5400" health="1" />
+		<player posX="1699" posY="353" score="2200" health="3" />
 		<startScene value="Level1" doorKey="false" />
-		<background value="Assets/Background/Pink.png" />
+		<background value="Assets/Background/Blue.png" />
 		<checkpoint state="2" />
 	</scene>
 	<map>
 		<fruits>
+			<f posX="664" posY="56" />
+			<f posX="664" posY="72" />
+			<f posX="664" posY="88" />
+			<f posX="680" posY="56" />
+			<f posX="680" posY="72" />
+			<f posX="680" posY="88" />
+			<f posX="696" posY="56" />
+			<f posX="696" posY="72" />
+			<f posX="696" posY="88" />
+			<f posX="1224" posY="8" />
+			<f posX="1224" posY="24" />
+			<f posX="1224" posY="40" />
+			<f posX="1224" posY="344" />
+			<f posX="1224" posY="360" />
+			<f posX="1224" posY="376" />
+			<f posX="1240" posY="8" />
+			<f posX="1240" posY="24" />
+			<f posX="1240" posY="40" />
+			<f posX="1240" posY="344" />
+			<f posX="1240" posY="360" />
+			<f posX="1240" posY="376" />
+			<f posX="1256" posY="8" />
+			<f posX="1256" posY="24" />
+			<f posX="1256" posY="40" />
+			<f posX="1256" posY="344" />
+			<f posX="1256" posY="360" />
+			<f posX="1256" posY="376" />
+			<f posX="1352" posY="56" />
+			<f posX="1368" posY="120" />
+			<f posX="1384" posY="360" />
 			<f posX="1384" posY="744" />
 			<f posX="1384" posY="760" />
+			<f posX="1432" posY="88" />
+			<f posX="1432" posY="328" />
 			<f posX="1448" posY="760" />
 			<f posX="1448" posY="776" />
 			<f posX="1464" posY="760" />

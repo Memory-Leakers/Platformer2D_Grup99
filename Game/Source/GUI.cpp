@@ -47,7 +47,7 @@ bool GUI::Update()
 
 bool GUI::PostUpdate()
 {
-	if (type == FRAME_FOLLOW)
+	if (type == FRAME_FOLLOW && frame_value != nullptr)
 	{
 		guiRect = &anim.getFrame(*frame_value);
 	}
@@ -57,7 +57,7 @@ bool GUI::PostUpdate()
 
 	if (guiRect != nullptr)
 	{
-		std::cout << guiRect->x << ", " << guiRect->y << ", " << guiRect->w << ", " << guiRect->h << std::endl;
+		std::cout << guiRect->x << ", " << guiRect->y << ", " << guiRect->w << ", " << guiRect->h << " | " << *frame_value << std::endl;
 		app->render->DrawTexture(tex, position.x, position.y, guiRect, 1.0F, SDL_FLIP_NONE, 0.0, 2147483647, 2147483647, texScale);
 	}
 

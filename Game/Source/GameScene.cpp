@@ -448,6 +448,7 @@ bool GameScene::ReloadLevel()
 	delete froggy;
 	froggy = new Player();
 	froggy->Start();
+	healthBar->setFrameFollow(&froggy->health);
 
 	//ENEMIES
 	enemyItem = enemies.start;
@@ -489,6 +490,8 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 		if (fruitItem->data != nullptr && fruitItem->data->col == c1)
 		{
 			fruitItem->data->OnCollision(c2);
+			delete fruitItem->data;
+			fruitItem->data = nullptr;
 		}
 		fruitItem = fruitItem->next;
 	}
