@@ -45,15 +45,12 @@ public:
 	void WillCollision(Collider* c1, Collider* c2);
 
 private:
-	void gameUI();
+
 
 public:
 	bool debugTiles = false;
 
 	Player* froggy = nullptr;
-
-	WalkingEnemy* peppa = nullptr;
-	List<Enemy*> enemies;
 
 	Trophy* trophy = nullptr;
 

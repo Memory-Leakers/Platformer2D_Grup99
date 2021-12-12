@@ -5,13 +5,21 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1699" posY="353" score="2200" health="3" />
+		<player posX="64" posY="390" score="0" health="3" />
 		<startScene value="Level1" doorKey="false" />
-		<background value="Assets/Background/Blue.png" />
-		<checkpoint state="2" />
+		<background value="Assets/Background/Brown.png" />
+		<checkpoint state="0" />
 	</scene>
 	<map>
 		<fruits>
+			<f posX="72" posY="232" />
+			<f posX="72" posY="248" />
+			<f posX="88" posY="232" />
+			<f posX="88" posY="248" />
+			<f posX="232" posY="216" />
+			<f posX="232" posY="232" />
+			<f posX="248" posY="216" />
+			<f posX="248" posY="232" />
 			<f posX="664" posY="56" />
 			<f posX="664" posY="72" />
 			<f posX="664" posY="88" />
@@ -21,6 +29,14 @@
 			<f posX="696" posY="56" />
 			<f posX="696" posY="72" />
 			<f posX="696" posY="88" />
+			<f posX="696" posY="216" />
+			<f posX="728" posY="184" />
+			<f posX="776" posY="168" />
+			<f posX="824" posY="184" />
+			<f posX="856" posY="200" />
+			<f posX="888" posY="104" />
+			<f posX="936" posY="136" />
+			<f posX="936" posY="152" />
 			<f posX="1224" posY="8" />
 			<f posX="1224" posY="24" />
 			<f posX="1224" posY="40" />
@@ -36,11 +52,17 @@
 			<f posX="1256" posY="8" />
 			<f posX="1256" posY="24" />
 			<f posX="1256" posY="40" />
+			<f posX="1256" posY="136" />
 			<f posX="1256" posY="344" />
 			<f posX="1256" posY="360" />
 			<f posX="1256" posY="376" />
+			<f posX="1288" posY="152" />
+			<f posX="1320" posY="200" />
+			<f posX="1336" posY="200" />
 			<f posX="1352" posY="56" />
+			<f posX="1352" posY="200" />
 			<f posX="1368" posY="120" />
+			<f posX="1368" posY="200" />
 			<f posX="1384" posY="360" />
 			<f posX="1384" posY="744" />
 			<f posX="1384" posY="760" />
@@ -129,5 +151,12 @@
 			<f posX="2040" posY="632" />
 			<f posX="2040" posY="648" />
 		</fruits>
+		<enemies>
+			<e posX="288" posY="354" id="1" />
+			<e posX="752" posY="82" id="1" />
+			<e posX="1520" posY="914" id="1" />
+			<e posX="1520" posY="962" id="1" />
+			<e posX="2224" posY="754" id="1" />
+		</enemies>
 	</map>
 </game_state>

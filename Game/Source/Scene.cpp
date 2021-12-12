@@ -5,7 +5,6 @@
 
 Scene::Scene() : Module()
 {
-	
 	name.Create("scene");
 	gameScene = new GameScene();
 }

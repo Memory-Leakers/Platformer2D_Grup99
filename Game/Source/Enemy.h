@@ -45,13 +45,18 @@ private:
 	virtual void stateMachine();
 
 public:
+
+	short enemy_id = 0;
+
+	iPoint pos;
+
 	// Collider
 	Collider* col = nullptr;
 	
 	bool death = false;
 private:
 
-	iPoint pos;
+	
 	// we store the created path here
 	DynArray<iPoint> lastPath;
 
