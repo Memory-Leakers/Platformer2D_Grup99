@@ -39,8 +39,6 @@ public:
 
 public:
 
-	iPoint position;
-
 	SDL_Rect bounds;
 
 	SDL_Rect* rect;

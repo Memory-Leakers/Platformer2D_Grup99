@@ -11,6 +11,13 @@ enum PickType
 	DOORKEY
 };
 
+enum class PickID
+{
+	NONE = 0,
+	FRUIT,
+	HEARTH
+};
+
 class Pickable
 {
 public:
@@ -33,6 +40,11 @@ public:
 	virtual void WillCollision();
 
 public:
+
+	PickID pickable_id = PickID::NONE;
+
+	iPoint position;
+
 	bool pendingToDelete = false;
 
 	Collider* col = nullptr;

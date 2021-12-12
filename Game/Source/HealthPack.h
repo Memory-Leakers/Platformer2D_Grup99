@@ -25,8 +25,6 @@ public:
 	void WillCollision() override;
 
 private:
-	iPoint position;
-
 	SDL_Rect bounds;
 
 	SDL_Rect* rect;

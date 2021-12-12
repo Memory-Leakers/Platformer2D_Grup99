@@ -233,7 +233,7 @@ bool Map::CleanUp()
 	mapData.tilesets.clear();
 
 	//Remove all fruits
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	fruitItem = mapData.fruits.start;
 
 	while (fruitItem != NULL)
@@ -529,12 +529,12 @@ void Map::LoadMapObjects (bool gTrap)
 
 					if ((gid == 250 || gid == 251 || gid == 252 || gid == 253) && gTrap)
 					{
-						break;
+						continue;
 					}
 
 					switch(gid) 
 					{
-						case 246:
+						case 246://FRUITS
 							mapData.fruits.add(new Coin(x*16-8, y*16-8));
 							break;
 						case 250: //SPIKE UP
@@ -555,6 +555,9 @@ void Map::LoadMapObjects (bool gTrap)
 						case 256: //FLYING ENEMY
 							mapData.enemies.add(new FlyingEnemy(x * 16, y * 16));
 							break;
+						case 257: //HEARTH
+							mapData.fruits.add(new HealthPack(x * 16, y * 16));
+							break;
 					}
 				}
 			}
@@ -570,7 +573,7 @@ void Map::LoadMapObjects (bool gTrap)
 void Map::UnLoadMapObjects(bool unloadAll)
 {
 	//Remove all fruits
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	fruitItem = mapData.fruits.start;
 
 	while (fruitItem != NULL)
@@ -645,11 +648,22 @@ bool Map::LoadState(pugi::xml_node& data)
 
 	while (f != NULL)
 	{
-		mapData.fruits.add(new Coin(f.attribute("posX").as_int(), f.attribute("posY").as_int()));
+		switch (f.attribute("id").as_int())
+		{
+		case 0:
+
+			break;
+		case 1:
+			mapData.fruits.add(new Coin(f.attribute("posX").as_int(), f.attribute("posY").as_int()));
+			break;
+		case 2:
+			mapData.fruits.add(new HealthPack(f.attribute("posX").as_int(), f.attribute("posY").as_int()));
+			break;
+		}
 		f = f.next_sibling();
 	}
 
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	fruitItem = mapData.fruits.start;
 
 	while (fruitItem != NULL) {
@@ -701,7 +715,7 @@ bool Map::SaveState(pugi::xml_node& data) const
 {
 
 	//SAVE FRUITS TO SAVE_FILE
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	fruitItem = mapData.fruits.start;
 
 	while (data.child("fruits").child("f"))
@@ -718,6 +732,7 @@ bool Map::SaveState(pugi::xml_node& data) const
 				pugi::xml_node f = data.child("fruits").append_child("f");
 				f.append_attribute("posX") = fruitItem->data->position.x;
 				f.append_attribute("posY") = fruitItem->data->position.y;
+				f.append_attribute("id") = (int) fruitItem->data->pickable_id;
 			}
 		}
 		

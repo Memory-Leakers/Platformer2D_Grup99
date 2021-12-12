@@ -42,7 +42,7 @@ bool GameScene::Start()
 	enemyItem = nullptr;
 
   //Fruit
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
 
 	while (fruitItem != NULL)
@@ -187,7 +187,7 @@ bool GameScene::Update(float dt)
 
 	//donald->Update(dt);
 
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	//fruitItem = fruitPool->start;
 	fruitItem = app->map->mapData.fruits.start;
 
@@ -247,7 +247,7 @@ bool GameScene::PostUpdate()
 
 
 	//Fruits
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
 
 	while (fruitItem != NULL)
@@ -368,7 +368,7 @@ bool GameScene::ReloadLevel()
 	app->map->LoadMapObjects(true);
 
 	//Fruits
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
 
 	while (fruitItem != NULL)
@@ -431,7 +431,7 @@ bool GameScene::ReloadLevel()
 void GameScene::OnCollision(Collider* c1, Collider* c2)
 {
 	//Fruits
-	ListItem<Coin*>* fruitItem;
+	ListItem<Pickable*>* fruitItem;
 	fruitItem = app->map->mapData.fruits.start;
 
 	while (fruitItem != NULL)

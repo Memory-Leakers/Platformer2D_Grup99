@@ -6,6 +6,7 @@
 #include "Point.h"
 #include "Collider.h"
 #include "Coin.h"
+#include "HealthPack.h"
 #include "Trap.h"
 
 #include "PugiXml\src\pugixml.hpp"
@@ -114,7 +115,7 @@ struct MapData
 
 	List<Collider*> col;
 
-	List<Coin*> fruits;
+	List<Pickable*> fruits;
 	List<Trap*> trap;
 	List<Enemy*> enemies;
 };

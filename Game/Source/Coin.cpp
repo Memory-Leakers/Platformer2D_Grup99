@@ -5,6 +5,9 @@
 
 Coin::Coin(int posX = 0, int posY = 0)
 {
+
+	pickable_id = PickID::FRUIT;
+
 	position.x = posX;
 	position.y = posY;
 
