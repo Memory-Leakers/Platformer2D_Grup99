@@ -24,8 +24,6 @@ public:
 
 	void WillCollision() override;
 
-	void textureSelector();
-
 private:
 	iPoint position;
 
