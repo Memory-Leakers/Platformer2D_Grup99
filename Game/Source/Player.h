@@ -136,6 +136,8 @@ public:
 
 	bool godMode = false;
 
-private:
 	bool leftpressed = false;
+
+private:
+
 };

@@ -107,7 +107,7 @@ bool FlyingEnemy::Update(float dt)
 	//WillCollision();
 
 	
-
+	
 
 	const DynArray<iPoint>* path = GetLastPath();
 
@@ -116,53 +116,60 @@ bool FlyingEnemy::Update(float dt)
 
 	if (cont < pathCount && pathCount <= flyingPathRange)
 	{
-		if (app->scene->gameScene->froggy->isFlip == isFlip)
+		playerflip = app->scene->gameScene->froggy->isFlip;
+		playerposX = app->scene->gameScene->froggy->position.x;
+		// FLIP = LEFT 
+		
+		if((playerflip && playerposX > pos.x) || (!playerflip && playerposX < pos.x))
 		{
 			return true;
 		}
-		
-		iPoint pos;
-
-		//Flickering prevention
-		//if (path->Count() != 2)
-		//{
-		pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
-		//}
-		//else {
-		//	 pos = app->map->MapToWorld(path->At(1)->x, path->At(1)->y);
-		//}
-
-		int posDifX = abs(pos.x + 8 - this->pos.x);
-
-		//Movement
-		if (posDifX >= 15)
+		else 
 		{
-			if (pos.x > this->pos.x && canMoveDir[RIGHT])
+
+			iPoint pos;
+
+			//Flickering prevention
+			//if (path->Count() != 2)
+			//{
+			pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
+			//}
+			//else {
+			//	 pos = app->map->MapToWorld(path->At(1)->x, path->At(1)->y);
+			//}
+
+			int posDifX = abs(pos.x + 8 - this->pos.x);
+
+			//Movement
+			if (posDifX >= 15)
 			{
-				this->pos.x += speed;
-				isFlip = true;
+				if (pos.x > this->pos.x && canMoveDir[RIGHT])
+				{
+					this->pos.x += speed;
+					isFlip = true;
+				}
+				else if (pos.x < this->pos.x && canMoveDir[LEFT])
+				{
+					this->pos.x -= speed;
+					isFlip = false;
+				}
 			}
-			else if (pos.x < this->pos.x && canMoveDir[LEFT])
+			int posDifY = abs(pos.y - this->pos.y);
+			if (posDifY >= 15)
 			{
-				this->pos.x -= speed;
-				isFlip = false;
+				if (pos.y < this->pos.y && canMoveDir[UP])
+				{
+					this->pos.y -= speed;
+				}
+				else if (pos.y >= this->pos.y && canMoveDir[DOWN])
+				{
+					this->pos.y += speed;
+				}
+
+
 			}
+			cont++;
 		}
-		int posDifY = abs(pos.y - this->pos.y);
-		if (posDifY >= 15)
-		{
-			if (pos.y < this->pos.y && canMoveDir[UP])
-			{
-				this->pos.y -= speed;
-			}
-			else if (pos.y >= this->pos.y && canMoveDir[DOWN])
-			{
- 				this->pos.y += speed;
-			}
-			
-			
-		}
-		cont++;
 	}
 	else
 	{

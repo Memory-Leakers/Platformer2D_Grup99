@@ -40,6 +40,10 @@ private:
 
 	bool isFlip = false;
 
+	bool playerflip;
+
+	int playerposX;
+
 	iPoint lastPlayerPos = { 0,0 };
 
 	SDL_Texture* enemytextures[4];
