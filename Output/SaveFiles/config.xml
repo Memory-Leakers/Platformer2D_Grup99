@@ -2,15 +2,13 @@
 <!-- L01: DONE 1: Create configuration file-->
 <config>
     <app>
-        <title>The Super Adventure of Ninja Froggy</title>
+        <title>Ninja Froggy's Super adventure</title>
         <organization>MemoryLeakers-Grup99</organization>
-        <version>0.1</version>
+        <version>0.2</version>
     </app>
-
     <renderer>
         <vsync value="true"/>
     </renderer>
-
     <window>
         <resolution width="1620" height="810" scale="3"/>
         <fullscreen value="false"/>
@@ -18,7 +16,6 @@
         <resizable value="false"/>
         <fullscreen_window value="false"/>
     </window>
-
     <scene>
 		<startScene value="Level1.tmx"/>
     </scene>

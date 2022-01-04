@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-#define walkingPathRange 10
+#define walkingPathRange 11
 
 class WalkingEnemy :
     public Enemy

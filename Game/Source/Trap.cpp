@@ -8,32 +8,32 @@ Trap::Trap(int x, int y, TrapDirection trapDirection)
     pos.y = y;
 
     direction = trapDirection;
-
+    int dif = 9;
     switch (trapDirection)
     {
         case TrapDirection::UP:
             bounds.x = x;
-            bounds.y = y + 8;
+            bounds.y = y + dif;
             bounds.w = 16;
-            bounds.h = 8;
+            bounds.h = dif;
             break;
         case TrapDirection::DOWN:
             bounds.x = x;
             bounds.y = y;
             bounds.w = 16;
-            bounds.h = 8;
+            bounds.h = dif;
             break;
         case TrapDirection::RIGHT:
             bounds.x = x;
             bounds.y = y;
             bounds.w = 8;
-            bounds.h = 16;
+            bounds.h = 15;
             break;
         case TrapDirection::LEFT:
-            bounds.x = x + 8;
+            bounds.x = x + dif;
             bounds.y = y;
-            bounds.w = 8;
-            bounds.h = 16;
+            bounds.w = dif;
+            bounds.h = 15;
             break;
 
     }

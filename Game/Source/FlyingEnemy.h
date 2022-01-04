@@ -32,7 +32,7 @@ private:
 
 	int ID = 0;
 
-	float speed = 2.0f;
+	float speed = 1.0f;
 
 	int cont = 0;
 

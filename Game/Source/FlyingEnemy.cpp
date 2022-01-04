@@ -129,14 +129,7 @@ bool FlyingEnemy::Update(float dt)
 
 			iPoint pos;
 
-			//Flickering prevention
-			//if (path->Count() != 2)
-			//{
 			pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
-			//}
-			//else {
-			//	 pos = app->map->MapToWorld(path->At(1)->x, path->At(1)->y);
-			//}
 
 			int posDifX = abs(pos.x + 8 - this->pos.x);
 
