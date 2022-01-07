@@ -4,15 +4,14 @@
 
 Enemy::Enemy()
 {
-
+    this->health = 2;
+    this->maxHealth = 2;
 }
 
 Enemy::~Enemy()
 {
     
 }
-
-
 
 bool Enemy::Start()
 {
@@ -54,31 +53,27 @@ void Enemy::OnCollision(Collider* col)
         pCol.y = (pCol.y + pCol.h );
         SDL_Rect eCol = this->col->rect;
 
-       // if (pCol.y < eCol.y && pCol.y >= eCol.y - 8 && pCol.x <= eCol.x && pCol.x >= (eCol.x - eCol.w))
         if(pCol.y >= eCol.y && pCol.y <= eCol.y + 10)
         {
-            if (damaged) return;
-
+            if (hurt) return;
 
             if (health <= 0)
             {
-                death = true;
+                Death();
             }
             else
             {
-                damaged = true;
+                hurt = true;
                 health--;
             }
         }
-
-
     }
 }
 
 void Enemy::WillCollision()
 {
-    int px = pos.x;
-    int py = pos.y;
+    int px = position.x;
+    int py = position.y;
 
     ListItem<MapLayer*>* mapLayerItem;
     mapLayerItem = app->map->mapData.layers.start;
@@ -100,58 +95,58 @@ void Enemy::WillCollision()
                     case 243: //Collisions
                     case 247:
                         //UP
-                        if (py <= by + 16 && py >= by && px + Enemybounds.w > bx && px < bx + 16)
+                        if (py <= by + 16 && py >= by && px + bounds.w > bx && px < bx + 16)
                         {
                             canMoveDir[UP] = false;
                         }
 
                         //DOWN
-                        if (py + Enemybounds.h >= by && py <= by && px + Enemybounds.w > bx && px < bx + 16)
+                        if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
                         {
                             canMoveDir[DOWN] = false;
                         }
 
                         //LEFT
-                        if (px <= bx + 16 && px >= bx && py + Enemybounds.h > by && py < by + 16)
+                        if (px <= bx + 16 && px >= bx && py + bounds.h > by && py < by + 16)
                         {
                             canMoveDir[LEFT] = false;
 
                         }
 
                         //RIGHT
-                        if (px + Enemybounds.w >= bx && px <= bx && py + (Enemybounds.h) > by && py < by + 16)
+                        if (px + bounds.w >= bx && px <= bx && py + (bounds.h) > by && py < by + 16)
                         {
                             canMoveDir[RIGHT] = false;
                         }
-                        while (py + Enemybounds.h > by && py < by && px + Enemybounds.w > bx && px < bx + 16 && !canMoveDir[DOWN] && canMoveDir[UP]) //DOWN
+                        while (py + bounds.h > by && py < by && px + bounds.w > bx && px < bx + 16 && !canMoveDir[DOWN] && canMoveDir[UP]) //DOWN
                         {
-                            pos.y -= 1;
+                            position.y -= 1;
                             py -= 1;
                             break;
                         }
-                        while (py <= by + 16 && py >= by && px + Enemybounds.w > bx && px < bx + 16 && canMoveDir[DOWN] && !canMoveDir[UP]) //DOWN
+                        while (py <= by + 16 && py >= by && px + bounds.w > bx && px < bx + 16 && canMoveDir[DOWN] && !canMoveDir[UP]) //DOWN
                         {
-                            pos.y += 1;
+                            position.y += 1;
                             py += 1;
                             break;
                         }
-                        while (px + Enemybounds.w > bx && px < bx && py + Enemybounds.h > by && py < by + 16 && canMoveDir[LEFT] && !canMoveDir[RIGHT] && !canMoveDir[DOWN])
+                        while (px + bounds.w > bx && px < bx && py + bounds.h > by && py < by + 16 && canMoveDir[LEFT] && !canMoveDir[RIGHT] && !canMoveDir[DOWN])
                         {
-                            pos.x -= 1;
+                            position.x -= 1;
                             px -= 1;
                             break;
                         }
-                        while (px < bx + 16 && px > bx && py + Enemybounds.h > by && py < by + 16 && !canMoveDir[LEFT] && canMoveDir[RIGHT] && !canMoveDir[DOWN])
+                        while (px < bx + 16 && px > bx && py + bounds.h > by && py < by + 16 && !canMoveDir[LEFT] && canMoveDir[RIGHT] && !canMoveDir[DOWN])
                         {
-                            pos.x += 1;
+                            position.x += 1;
                             px += 1;
                             break;
                         }
                         break;
                     case 244: //DETH AREA
-                        if (py + Enemybounds.h >= by && py <= by && px + Enemybounds.w > bx && px < bx + 16)
+                        if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
                         {
-                            death = true;
+                            Death();
                         }
                         break;
                     }
@@ -160,6 +155,12 @@ void Enemy::WillCollision()
         }
         mapLayerItem = mapLayerItem->next;
     }
+}
+
+bool Enemy::Death()
+{
+    dead = true;
+    return true;
 }
 
 int Enemy::pathFindingA(const iPoint& origin, const iPoint& destination)
@@ -333,8 +334,15 @@ ListItem<PathNode>* PathList::GetNodeLowestScore() const
     return ret;
 }
 
-
 void Enemy::stateMachine()
 {
 
+}
+
+void Enemy::Save(pugi::xml_node& data) const
+{
+    pugi::xml_node i = data.child("enemies").append_child("e");
+    i.append_attribute("posX") = position.x;
+    i.append_attribute("posY") = position.y;
+    i.append_attribute("id") = (int) enemy_id;
 }

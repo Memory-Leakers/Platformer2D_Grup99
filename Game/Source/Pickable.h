@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
 #include "Point.h"
@@ -15,40 +16,40 @@ enum class PickID
 {
 	NONE = 0,
 	FRUIT,
-	HEARTH
+	HEARTH,
+	KEY
 };
 
-class Pickable
+class Pickable : public Entity
 {
 public:
 	Pickable();
 
-	~Pickable();
+	virtual ~Pickable();
 
-	virtual bool Start();
+	virtual bool Start() override;
 
-	virtual bool PreUpdate();
+	virtual bool PreUpdate() override;
 
-	virtual bool Update(float dt);
+	virtual bool Update(float dt) override;
 
-	virtual bool PostUpdate();
+	virtual bool PostUpdate() override;
 
-	virtual bool CleanUp();
+	virtual bool CleanUp() override;
 
-	virtual void OnCollision(Collider* col);
+	virtual void OnCollision(Collider* col) override;
 
-	virtual void WillCollision();
+	virtual void WillCollision() override;
+
+	void Save(pugi::xml_node& data) const override;
 
 public:
 
 	PickID pickable_id = PickID::NONE;
 
-	iPoint position;
-
-	bool pendingToDelete = false;
-
-	Collider* col = nullptr;
-
 	int pickId = NONE;
+
+protected:
+	Animation anim;
 };
 

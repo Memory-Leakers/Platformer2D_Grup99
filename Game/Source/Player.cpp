@@ -86,7 +86,7 @@ Player::Player()
 	fallAnim.speed = 0.30;
 	fallAnim.hasIdle = true;
 
-	currentAnimation = &idleAnim;
+	currentAnim = &idleAnim;
 	// Init move direccion
 	for (int i = 0; i < 4; i++)
 	{
@@ -100,7 +100,7 @@ bool Player::Start()
 {
 
 	//Texture
-	player_tex = app->tex->Load("Assets/MainCharacters/Ninja_Frog_Sprites.png");
+	tex = app->tex->Load("Assets/MainCharacters/Ninja_Frog_Sprites.png");
 
 	//Collider
 	this->col = app->col->AddCollider(bounds, Type::PLAYER, app->scene);
@@ -207,13 +207,13 @@ bool Player::Update(float dt)
 		if (jumpTimer.getDeltaTime() < tempTime && canMoveDir[UP])
 		{
 			position.y -= JUMPSPEED;
-			currentAnimation = &jumpAnim;			
+			currentAnim = &jumpAnim;			
 		}
 		else if (canMoveDir[DOWN])
 		{
 			position.y += gravity;
 			previousJumpTime = -1;
-			currentAnimation = &fallAnim;
+			currentAnim = &fallAnim;
 		}
 		else
 		{
@@ -221,11 +221,11 @@ bool Player::Update(float dt)
 		}
 		if(!canMoveDir[DOWN])
 		{
-			currentAnimation = &idleAnim;
+			currentAnim = &idleAnim;
 		}
 		if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
 		{
-			currentAnimation = &doublejumpAnim;
+			currentAnim = &doublejumpAnim;
 		}
 
 
@@ -253,19 +253,19 @@ bool Player::Update(float dt)
 				app->audio->PlayFx(app->scene->gameScene->playerwalkSFX, 0);
 			}
 			position.x -= MOVESPEED;
-			currentAnimation = &leftAnim;
+			currentAnim = &leftAnim;
 			isFlip = true;
 			if(canMoveDir[DOWN])
 			{
-				currentAnimation = &jumpAnim;
+				currentAnim = &jumpAnim;
 				leftpressed = true;
 				if(jumpTimer.getDeltaTime() > tempTime)
 				{
-					currentAnimation = &fallAnim;
+					currentAnim = &fallAnim;
 				}
 				if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
 				{
-					currentAnimation = &doublejumpAnim;
+					currentAnim = &doublejumpAnim;
 				}
 			}
 
@@ -278,17 +278,17 @@ bool Player::Update(float dt)
 			}
 			leftpressed = false;
 			position.x += MOVESPEED;
-			currentAnimation = &rightAnim;
+			currentAnim = &rightAnim;
 			if (canMoveDir[DOWN])
 			{
-				currentAnimation = &jumpAnim;
+				currentAnim = &jumpAnim;
 				if (jumpTimer.getDeltaTime() > tempTime)
 				{
-					currentAnimation = &fallAnim;
+					currentAnim = &fallAnim;
 				}
 				if (jumpTimer.getDeltaTime() < tempTime && jumpcounter > 1)
 				{
-					currentAnimation = &doublejumpAnim;
+					currentAnim = &doublejumpAnim;
 				}
 			}
 		}
@@ -298,12 +298,12 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP && !canMoveDir[DOWN])
 		{
-			currentAnimation = &idleAnim;
+			currentAnim = &idleAnim;
 			leftpressed = false;
 		}
 		if(app->input->GetKey(SDL_SCANCODE_A) == KEY_UP && !canMoveDir[DOWN])
 		{
-			currentAnimation = &idleAnim;
+			currentAnim = &idleAnim;
 			isFlip = true;
 			leftpressed = true;
 		}
@@ -331,19 +331,19 @@ bool Player::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			position.x -= 4;
-			currentAnimation = &leftAnim;
+			currentAnim = &leftAnim;
 			isFlip = true;
 
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			position.x += 4;
-			currentAnimation = &rightAnim;
+			currentAnim = &rightAnim;
 		}
 	}
 	
 	// Animation update
-	currentAnimation->Update();
+	currentAnim->Update();
 	if (this->col != nullptr)
 	{
 		col->SetPos(position);
@@ -358,19 +358,19 @@ bool Player::PostUpdate()
 		return true;
 	}
 
-	playerRect = &currentAnimation->GetCurrentFrame();
+	rect = &currentAnim->GetCurrentFrame();
 
 	iPoint tempPos = position;
 
-	SDL_SetTextureAlphaMod(player_tex, texOpacity);
+	SDL_SetTextureAlphaMod(tex, texOpacity);
 
 	if (isFlip)
 	{
-		app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect, 1.0f, SDL_FLIP_HORIZONTAL);
+		app->render->DrawTexture(tex, tempPos.x, tempPos.y, rect, 1.0f, SDL_FLIP_HORIZONTAL);
 	}
 	else
 	{
-		app->render->DrawTexture(player_tex, tempPos.x, tempPos.y, playerRect);
+		app->render->DrawTexture(tex, tempPos.x, tempPos.y, rect);
 	}
 
 	//Debug
@@ -389,11 +389,11 @@ bool Player::PostUpdate()
 
 bool Player::CleanUp() {
 
-	playerRect = nullptr;
-	SDL_DestroyTexture(player_tex);
-	player_tex = nullptr;
-	currentAnimation = nullptr;
-	playerRect = nullptr;
+	rect = nullptr;
+	SDL_DestroyTexture(tex);
+	tex = nullptr;
+	currentAnim = nullptr;
+	rect = nullptr;
 
 	this->col->pendingToDelete = true;
 
@@ -412,7 +412,7 @@ bool Player::Death()
 {
 	app->scene->gameScene->pendingtoReload = true;
 
-	if (app->scene->gameScene->checkpoint->getCurrentState() == 2) //2 == Activated
+	if (app->scene->gameScene->checkPoint)
 	{
 		app->LoadGameRequest();
 	}

@@ -88,7 +88,6 @@ private:
 
 	int bgPivX = 0;
 	int bgPivY = -128;
-
 };
 
 #endif // __SCENE_H__

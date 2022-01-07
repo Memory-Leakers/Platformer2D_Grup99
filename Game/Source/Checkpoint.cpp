@@ -2,8 +2,16 @@
 #include "App.h"
 
 
-Checkpoint::Checkpoint(int posX, int posY)
+Checkpoint::Checkpoint(int posX, int posY, CHECKSTATE state)
 {
+	if (state != BASE)
+	{
+		currentState = state;
+		stateChanged = true;
+	}
+
+	id = InteractablesId::CHECKPOINT;
+
 	position.x = posX;
 	position.y = posY;
 
@@ -49,6 +57,7 @@ bool Checkpoint::Update(float dt)
 			if (savePetition == SAVEPETITION_SAVE)
 			{
 				app->SaveGameRequest();
+				app->scene->gameScene->checkPoint = true;
 
 				savePetition = SAVEPETITION_BLOCK;
 			}
@@ -75,6 +84,7 @@ bool Checkpoint::PostUpdate()
 			if (animActivation.getCurrentFrameI() == 0 && savePetition == SAVEPETITION_NONE)
 			{//On first frame, save the game
 				savePetition = SAVEPETITION_SAVE;
+
 			}
 			
 			if (animActivation.getCurrentFrameI() == animActivation.size()-1)
@@ -214,4 +224,13 @@ void Checkpoint::loadData(pugi::xml_node node)
 	
 	//dirAnimActivated = Walking_Enemy_textures_node.child("angryPigHit").attribute("path").as_string();
 
+}
+
+void Checkpoint::Save(pugi::xml_node& data) const 
+{
+	pugi::xml_node i = data.child("interactables").append_child("i");
+	i.append_attribute("posX") = position.x;
+	i.append_attribute("posY") = position.y;
+	i.append_attribute("id") = (int)id;
+	i.append_attribute("state") = currentState;
 }

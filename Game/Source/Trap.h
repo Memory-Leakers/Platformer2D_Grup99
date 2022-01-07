@@ -1,22 +1,12 @@
 #pragma once
-#include "Enemy.h"
+#include "Interactable.h"
 #include "SDL_image/include/SDL_image.h"
 
-enum class TrapDirection
-{
-	UP = 0,
-	DOWN,
-	RIGHT,
-	LEFT
-};
-
-class Trap :
-    public Enemy
+class Trap : public Interactable
 {
 public:
-    Trap(int x, int y, TrapDirection trapDirection = TrapDirection::UP);
+    Trap(int x, int y, InteractablesId trapDirection = InteractablesId::SPIKETRAP_TOP);
     ~Trap();
-
 
 	bool Start() override;
 
@@ -43,13 +33,5 @@ public:
 
 private:
 	int hitPoints = 1;
-	TrapDirection direction = TrapDirection::UP;
-public:
-	iPoint pos;
-	SDL_Texture* tex;
-	SDL_Rect bounds;
-	SDL_Rect* rect;
-	Collider* col;
-
 };
 

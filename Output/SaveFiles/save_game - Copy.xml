@@ -5,15 +5,14 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1699" posY="374" score="1300" health="3" />
+		<player posX="1697" posY="356" score="3000" health="2" />
 		<startScene value="Level1" doorKey="false" />
-		<background value="Assets/Background/Yellow.png" />
+		<background value="Assets/Background/Blue.png" />
+		<checkpoint state="2" />
+	</scene>
+	<map>
 		<pickables>
-			<p posX="1520" posY="1056" id="3" />
-			<p posX="72" posY="232" id="1" />
-			<p posX="72" posY="248" id="1" />
-			<p posX="88" posY="232" id="1" />
-			<p posX="88" posY="248" id="1" />
+			<p posX="232" posY="216" id="1" />
 			<p posX="248" posY="216" id="1" />
 			<p posX="664" posY="56" id="1" />
 			<p posX="664" posY="72" id="1" />
@@ -28,28 +27,14 @@
 			<p posX="1224" posY="8" id="1" />
 			<p posX="1224" posY="24" id="1" />
 			<p posX="1224" posY="40" id="1" />
-			<p posX="1224" posY="344" id="1" />
-			<p posX="1224" posY="360" id="1" />
-			<p posX="1224" posY="376" id="1" />
 			<p posX="1240" posY="8" id="1" />
 			<p posX="1248" posY="32" id="2" />
 			<p posX="1240" posY="40" id="1" />
-			<p posX="1240" posY="344" id="1" />
-			<p posX="1240" posY="360" id="1" />
-			<p posX="1240" posY="376" id="1" />
 			<p posX="1256" posY="8" id="1" />
 			<p posX="1256" posY="24" id="1" />
 			<p posX="1256" posY="40" id="1" />
-			<p posX="1256" posY="344" id="1" />
-			<p posX="1256" posY="360" id="1" />
-			<p posX="1256" posY="376" id="1" />
-			<p posX="1320" posY="200" id="1" />
-			<p posX="1336" posY="200" id="1" />
 			<p posX="1352" posY="56" id="1" />
-			<p posX="1352" posY="200" id="1" />
 			<p posX="1368" posY="120" id="1" />
-			<p posX="1368" posY="200" id="1" />
-			<p posX="1384" posY="360" id="1" />
 			<p posX="1384" posY="744" id="1" />
 			<p posX="1384" posY="760" id="1" />
 			<p posX="1432" posY="88" id="1" />
@@ -136,88 +121,21 @@
 			<p posX="2040" posY="616" id="1" />
 			<p posX="2040" posY="632" id="1" />
 			<p posX="2040" posY="648" id="1" />
-		</pickables>
-		<interactables>
-			<i posX="2640" posY="752" id="2" />
-			<i posX="1712" posY="352" id="1" state="1" />
-			<i posX="16" posY="400" id="5" />
-			<i posX="112" posY="400" id="5" />
-			<i posX="352" posY="384" id="5" />
-			<i posX="368" posY="384" id="5" />
-			<i posX="384" posY="384" id="5" />
-			<i posX="688" posY="128" id="6" />
-			<i posX="704" posY="128" id="6" />
-			<i posX="720" posY="64" id="6" />
-			<i posX="720" posY="128" id="6" />
-			<i posX="736" posY="64" id="6" />
-			<i posX="736" posY="128" id="6" />
-			<i posX="752" posY="64" id="6" />
-			<i posX="752" posY="128" id="6" />
-			<i posX="768" posY="128" id="6" />
-			<i posX="784" posY="128" id="6" />
-			<i posX="912" posY="240" id="5" />
-			<i posX="1232" posY="144" id="4" />
-			<i posX="1232" posY="160" id="4" />
-			<i posX="1232" posY="176" id="4" />
-			<i posX="1232" posY="192" id="4" />
-			<i posX="1232" posY="208" id="4" />
-			<i posX="1232" posY="224" id="4" />
-			<i posX="1232" posY="240" id="4" />
-			<i posX="1232" posY="256" id="4" />
-			<i posX="1232" posY="272" id="4" />
-			<i posX="1232" posY="288" id="4" />
-			<i posX="1232" posY="304" id="4" />
-			<i posX="1312" posY="352" id="5" />
-			<i posX="1328" posY="352" id="5" />
-			<i posX="1344" posY="352" id="5" />
-			<i posX="1360" posY="16" id="6" />
-			<i posX="1376" posY="16" id="6" />
-			<i posX="1392" posY="16" id="6" />
-			<i posX="1392" posY="864" id="4" />
-			<i posX="1392" posY="880" id="4" />
-			<i posX="1392" posY="896" id="4" />
-			<i posX="1392" posY="912" id="4" />
-			<i posX="1392" posY="928" id="4" />
-			<i posX="1392" posY="944" id="4" />
-			<i posX="1456" posY="832" id="6" />
-			<i posX="1472" posY="176" id="3" />
-			<i posX="1472" posY="192" id="3" />
-			<i posX="1472" posY="208" id="3" />
-			<i posX="1472" posY="224" id="3" />
-			<i posX="1472" posY="240" id="3" />
-			<i posX="1472" posY="256" id="3" />
-			<i posX="1472" posY="272" id="3" />
-			<i posX="1472" posY="832" id="6" />
-			<i posX="1568" posY="832" id="6" />
-			<i posX="1584" posY="832" id="6" />
-			<i posX="1648" posY="864" id="3" />
-			<i posX="1648" posY="880" id="3" />
-			<i posX="1648" posY="896" id="3" />
-			<i posX="1648" posY="912" id="3" />
-			<i posX="1648" posY="928" id="3" />
-			<i posX="1648" posY="944" id="3" />
-			<i posX="1920" posY="640" id="3" />
-			<i posX="1920" posY="656" id="3" />
-			<i posX="1936" posY="624" id="5" />
-			<i posX="1936" posY="672" id="6" />
-			<i posX="1952" posY="624" id="5" />
-			<i posX="1952" posY="672" id="6" />
-			<i posX="1968" posY="640" id="4" />
-			<i posX="1968" posY="656" id="4" />
-			<i posX="2144" posY="784" id="5" />
-			<i posX="2160" posY="784" id="5" />
-			<i posX="2176" posY="784" id="5" />
-		</interactables>
+		</fruits>
 		<enemies>
-			<e posX="252" posY="354" id="1" />
-			<e posX="786" posY="82" id="1" />
-			<e posX="1014" posY="197" id="2" />
-			<e posX="1296" posY="34" id="1" />
-			<e posX="1429" posY="243" id="2" />
+			<e posX="244" posY="354" id="1" />
+			<e posX="778" posY="82" id="1" />
+			<e posX="1007" posY="179" id="2" />
+			<e posX="1300" posY="34" id="1" />
+			<e posX="1423" posY="263" id="2" />
 			<e posX="1520" posY="962" id="1" />
 			<e posX="1520" posY="1120" id="2" />
 			<e posX="2224" posY="754" id="1" />
 		</enemies>
-	</scene>
-	<map />
+		<interactables>
+			<i posX="0" posY="0" id="1" />
+			<i posX="0" posY="0" id="1" />
+			<i posX="0" posY="0" id="1" />
+		</interactables>
+	</map>
 </game_state>

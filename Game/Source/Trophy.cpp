@@ -3,6 +3,7 @@
 
 Trophy::Trophy(int posX, int posY)
 {
+	id = InteractablesId::TROPHY;
 
 	position.x = posX;
 	position.y = posY;

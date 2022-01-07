@@ -3,6 +3,8 @@
 
 DoorKey::DoorKey(int posX = 0, int posY = 0)
 {
+	pickable_id = PickID::KEY;
+
 	position.x = posX;
 	position.y = posY;
 
@@ -68,7 +70,7 @@ bool DoorKey::PostUpdate()
 
 bool DoorKey::CleanUp()
 {
-	pendingToDelete = true;
+	dead = true;
 	this->col->pendingToDelete = true;
 	rect = nullptr;
 	SDL_DestroyTexture(tex);

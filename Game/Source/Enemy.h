@@ -1,4 +1,4 @@
-#include "Collider.h"
+#include "Entity.h"
 #include "DynArray.h"
 
 #pragma once
@@ -12,71 +12,65 @@ enum class EnemyState {
 	DEATH
 };
 
-class Enemy
+enum class EnemyId
+{
+	NONE = 0,
+	WALKING,
+	FLYING
+};
+
+class Enemy : public Entity
 {
 public:
 	Enemy();
 
-	~Enemy();
+	virtual ~Enemy();
 
-	virtual bool Start();
-
-	// Called each loop iteration
-	virtual bool PreUpdate();
+	virtual bool Start() override;
 
 	// Called each loop iteration
-	virtual bool Update(float dt);
+	virtual bool PreUpdate() override;
 
 	// Called each loop iteration
-	virtual bool PostUpdate();
+	virtual bool Update(float dt) override;
+
+	// Called each loop iteration
+	virtual bool PostUpdate() override;
 
 	// Called before quitting
-	virtual bool CleanUp();
+	virtual bool CleanUp() override;
 
-	virtual void OnCollision(Collider* col);
+	virtual void OnCollision(Collider* col) override;
 
-	virtual void WillCollision();
+	virtual void WillCollision() override;
+
+	virtual bool Death() override;
 
 	virtual int pathFindingA(const iPoint& origin, const iPoint& destination);
 
 	const DynArray<iPoint>* GetLastPath();
 
+	void Save(pugi::xml_node& data) const override;
+
 private:
 	virtual void stateMachine();
 
 public:
+	EnemyId enemy_id = EnemyId::NONE;
 
-	short enemy_id = 0;
-
-	iPoint pos;
-
-	// Collider
-	Collider* col = nullptr;
-
-	bool death = false;
 private:
 
-	
 	// we store the created path here
 	DynArray<iPoint> lastPath;
 
-	SDL_Rect Enemybounds;
-
 	bool canMoveDir[4];
 
-
-
 	EnemyState eState = EnemyState::IDLE;
-
-	int health = 2;
-	bool damaged = false;
 
 	friend class WalkingEnemy;
 	
 	friend class FlyingEnemy;
 };
-
-
 
 struct PathList;
 

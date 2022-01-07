@@ -18,7 +18,6 @@ Map::Map() : Module(), mapLoaded(false)
 Map::~Map()
 {}
 
-// L06: TODO 7: Ask for the value of a custom property
 int Properties::GetProperty(const char* value, int defaultValue) const
 {
 	ListItem<Property*>* item = list.start;
@@ -49,14 +48,12 @@ void Map::Draw()
 {
 	if (mapLoaded == false) return;
 
-	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
 
 	ListItem<Collider*>* colItem;
 	colItem = mapData.col.start;
 
-	// L06: TODO 4: Make sure we draw all the layers and not just the first one
 	while (mapLayerItem != NULL) {
 
 		if (mapLayerItem->data->properties.GetProperty("Draw") == 1) 
@@ -65,7 +62,6 @@ void Map::Draw()
 			{
 				for (int y = 0; y < mapLayerItem->data->height; y++)
 				{
-					// L04: DONE 9: Complete the draw function
 					int gid = mapLayerItem->data->Get(x, y);
 
 					if (gid > 0) {
@@ -110,17 +106,12 @@ void Map::Draw()
 
 		mapLayerItem = mapLayerItem->next;
 	}
-
-	//COLLISION
-
 }
 
-// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
 
-	// L05: DONE 1: Add isometric map to world coordinates
 	if (mapData.type == MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x * mapData.tileWidth;
@@ -140,12 +131,10 @@ iPoint Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
-// L05: DON 2: Add orthographic world to map coordinates
 iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
 
-	// L05: DONE 3: Add the case for isometric maps to WorldToMap
 	if (mapData.type == MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x / mapData.tileWidth;
@@ -168,7 +157,6 @@ iPoint Map::WorldToMap(int x, int y) const
 	return ret;
 }
 
-// L06: TODO 3: Pick the right Tileset based on a tile id
 TileSet* Map::GetTilesetFromTileId(int id) const
 {
 	ListItem<TileSet*>* item = mapData.tilesets.start;
@@ -193,7 +181,6 @@ SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = { 0 };
 
-	// L04: DONE 7: Get relative Tile rectangle
 	int relativeId = id - firstgid;
 	rect.w = tileWidth;
 	rect.h = tileHeight;
@@ -208,7 +195,6 @@ bool Map::CleanUp()
 {
     LOG("Unloading map");
 
-    // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     // Remove all tilesets
 	ListItem<TileSet*>* item;
 	item = mapData.tilesets.start;
@@ -219,7 +205,6 @@ bool Map::CleanUp()
 		item = item->next;
 	}
 
-	// L04: DONE 2: clean up all layer data
 	// Remove all layers
 	ListItem<MapLayer*>* item2;
 	item2 = mapData.layers.start;
@@ -232,65 +217,6 @@ bool Map::CleanUp()
 	mapData.layers.clear();
 	mapData.tilesets.clear();
 
-	//Remove all fruits
-	ListItem<Pickable*>* fruitItem;
-	fruitItem = mapData.fruits.start;
-
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr)
-		{
-			fruitItem->data->CleanUp();
-		}
-		delete fruitItem->data;
-		fruitItem->data = nullptr;
-
-		fruitItem = fruitItem->next;
-	}
-
-	mapData.fruits.clear();
-
-	//Enemy
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = app->map->mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			enemyItem->data->CleanUp();
-			delete enemyItem->data;
-			enemyItem->data = nullptr;
-		}
-		enemyItem = enemyItem->next;
-	}
-
-	mapData.enemies.clear();
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
-
-	//Remove all traps
-	ListItem<Trap*>* trapItem;
-	trapItem = mapData.trap.start;
-
-	while (trapItem != NULL)
-	{
-		trapItem->data->CleanUp();
-		delete trapItem->data;
-		trapItem->data = nullptr;
-
-		trapItem = trapItem->next;
-	}
-
-	mapData.trap.clear();
-
-	//Clean
-	delete fruitItem;
-	fruitItem = nullptr;
-	delete trapItem;
-	trapItem = nullptr;
 	delete item;
 	item = nullptr;
 	delete item2;
@@ -300,7 +226,6 @@ bool Map::CleanUp()
     return true;
 }
 
-// Load new map
 bool Map::Load(const char* filename)
 {
     bool ret = true;
@@ -318,18 +243,15 @@ bool Map::Load(const char* filename)
 	// Load general info
     if(ret == true)
     {
-        // L03: DONE 3: Create and call a private function to load and fill all your map data
 		ret = LoadMap(mapFile);
 	}
 
-    // L03: DONE 4: Create and call a private function to load a tileset
     // remember to support more any number of tilesets!
 	if (ret == true)
 	{
 		ret = LoadTileSets(mapFile.child("map"));
 	}
 
-	// L04: DONE 4: Iterate all layers and load each of them
 	// Load layer info
 	if (ret == true)
 	{
@@ -338,16 +260,8 @@ bool Map::Load(const char* filename)
 
 	if (ret == true)
 	{
-		LoadMapObjects();
+		LoadMapEntities();
 	}
-
-    
-    if(ret == true)
-    {
-        // L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
-
-		// L04: TODO 4: LOG the info for each loaded layer
-    }
 
     mapLoaded = ret;
 
@@ -512,7 +426,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-void Map::LoadMapObjects (bool gTrap)
+void Map::LoadMapEntities ()
 {
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
@@ -527,36 +441,31 @@ void Map::LoadMapObjects (bool gTrap)
 				{
 					int gid = mapLayerItem->data->Get(x, y);
 
-					if ((gid == 250 || gid == 251 || gid == 252 || gid == 253) && gTrap)
-					{
-						continue;
-					}
-
 					switch(gid) 
 					{
 						case 246://FRUITS
-							mapData.fruits.add(new Coin(x*16-8, y*16-8));
+							app->scene->gameScene->em.addEntity(new Coin(x * 16 - 8, y * 16 - 8));
 							break;
-						case 250: //SPIKE UP
-							mapData.trap.add(new Trap(x * 16, y * 16));
+						case 250: //SPIKE TOP
+							app->scene->gameScene->em.addEntity(new Trap(x * 16, y * 16));
 							break;
-						case 251: //SPIKE DOWN
-							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::DOWN));
+						case 251: //SPIKE BOTTOM
+							app->scene->gameScene->em.addEntity(new Trap(x * 16, y * 16, InteractablesId::SPIKETRAP_BOTTOM));
 							break;
 						case 252: //SPIKE RIGHT
-							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::RIGHT));
+							app->scene->gameScene->em.addEntity(new Trap(x * 16, y * 16, InteractablesId::SPIKETRAP_RIGHT));
 							break;
 						case 253: //SPIKE LEFT
-							mapData.trap.add(new Trap(x * 16, y * 16, TrapDirection::LEFT));
+							app->scene->gameScene->em.addEntity(new Trap(x * 16, y * 16, InteractablesId::SPIKETRAP_LEFT));
 							break;
 						case 255: //WALKING ENEMY
-							mapData.enemies.add(new WalkingEnemy(x * 16, y*16 - 14));
+							app->scene->gameScene->em.addEntity(new WalkingEnemy(x * 16, y * 16 - 14));
 							break;
 						case 256: //FLYING ENEMY
-							mapData.enemies.add(new FlyingEnemy(x * 16, y * 16));
+							app->scene->gameScene->em.addEntity(new FlyingEnemy(x * 16, y * 16));
 							break;
 						case 257: //HEARTH
-							mapData.fruits.add(new HealthPack(x * 16, y * 16));
+							app->scene->gameScene->em.addEntity(new HealthPack(x * 16, y * 16));
 							break;
 					}
 				}
@@ -570,202 +479,61 @@ void Map::LoadMapObjects (bool gTrap)
 	mapLayerItem = nullptr;
 }
 
-void Map::UnLoadMapObjects(bool unloadAll)
-{
-	//Remove all fruits
-	ListItem<Pickable*>* fruitItem;
-	fruitItem = mapData.fruits.start;
-
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr)
-		{
-			fruitItem->data->CleanUp();
-			
-		}
-		delete fruitItem->data;
-		fruitItem->data = nullptr;
-
-		fruitItem = fruitItem->next;
-	}
-
-	mapData.fruits.clear();
-
-	//Clean fruitItem
-	delete fruitItem;
-	fruitItem = nullptr;
-
-	//Enemies
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			enemyItem->data->CleanUp();
-		}
-		delete enemyItem->data;
-		enemyItem->data = nullptr;
-		enemyItem = enemyItem->next;
-	}
-
-	mapData.enemies.clear();
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
-
-
-	if (!unloadAll) return;
-
-	//Remove all traps
-	ListItem<Trap*>* trapItem;
-	trapItem = mapData.trap.start;
-
-	while (trapItem != NULL)
-	{
-		trapItem->data->CleanUp();
-		delete trapItem->data;
-		trapItem->data = nullptr;
-
-		trapItem = trapItem->next;
-	}
-
-	mapData.trap.clear();
-
-	//Clean trapItem
-	delete trapItem;
-	trapItem = nullptr;
-}
-
-bool Map::LoadState(pugi::xml_node& data)
-{
-	UnLoadMapObjects(false);
-
-	//LOAD FRUITS FROM SAVE_FILE
-	pugi::xml_node f = data.child("fruits").first_child();
-
-	while (f != NULL)
-	{
-		switch (f.attribute("id").as_int())
-		{
-		case 0:
-
-			break;
-		case 1:
-			mapData.fruits.add(new Coin(f.attribute("posX").as_int(), f.attribute("posY").as_int()));
-			break;
-		case 2:
-			mapData.fruits.add(new HealthPack(f.attribute("posX").as_int(), f.attribute("posY").as_int()));
-			break;
-		}
-		f = f.next_sibling();
-	}
-
-	ListItem<Pickable*>* fruitItem;
-	fruitItem = mapData.fruits.start;
-
-	while (fruitItem != NULL) {
-		fruitItem->data->Start();
-
-		fruitItem = fruitItem->next;
-	}
-
-	delete fruitItem;
-	fruitItem = nullptr;
-
-	//LOAD ENEMIES FROM SAVE_FILE
-	pugi::xml_node e = data.child("enemies").first_child();
-
-	while (e != NULL)
-	{
-		switch (e.attribute("id").as_int())
-		{
-		case 0 :
-
-			break;
-		case 1:
-			mapData.enemies.add(new WalkingEnemy(e.attribute("posX").as_int(), e.attribute("posY").as_int()));
-			break;
-		case 2:
-			mapData.enemies.add(new FlyingEnemy(e.attribute("posX").as_int(), e.attribute("posY").as_int()));
-			break;
-		}
-		e = e.next_sibling();
-	}
-
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		enemyItem->data->Start();
-
-		enemyItem = enemyItem->next;
-	}
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
-	return true;
-}
-
 bool Map::SaveState(pugi::xml_node& data) const
 {
 
 	//SAVE FRUITS TO SAVE_FILE
-	ListItem<Pickable*>* fruitItem;
-	fruitItem = mapData.fruits.start;
+	//ListItem<Pickable*>* fruitItem;
+	//fruitItem = mapData.fruits.start;
 
-	while (data.child("fruits").child("f"))
-	{
-		data.child("fruits").remove_child("f");
-	}
+	//while (data.child("fruits").child("f"))
+	//{
+	//	data.child("fruits").remove_child("f");
+	//}
 
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr)
-		{
-			if (!fruitItem->data->pendingToDelete)
-			{
-				pugi::xml_node f = data.child("fruits").append_child("f");
-				f.append_attribute("posX") = fruitItem->data->position.x;
-				f.append_attribute("posY") = fruitItem->data->position.y;
-				f.append_attribute("id") = (int) fruitItem->data->pickable_id;
-			}
-		}
-		
-		fruitItem = fruitItem->next;
-	}
+	//while (fruitItem != NULL)
+	//{
+	//	if (fruitItem->data != nullptr)
+	//	{
+	//		if (!fruitItem->data->dead)
+	//		{
+	//			pugi::xml_node f = data.child("fruits").append_child("f");
+	//			f.append_attribute("posX") = fruitItem->data->position.x;
+	//			f.append_attribute("posY") = fruitItem->data->position.y;
+	//			f.append_attribute("id") = (int) fruitItem->data->pickable_id;
+	//		}
+	//	}
+	//	
+	//	fruitItem = fruitItem->next;
+	//}
 
-	delete fruitItem;
-	fruitItem = nullptr;
+	//delete fruitItem;
+	//fruitItem = nullptr;
 
-	//SAVE ENEMIES TO SAVE_FILE
+	////SAVE ENEMIES TO SAVE_FILE
 
-	while (data.child("enemies").child("e"))
-	{
-		data.child("enemies").remove_child("e");
-	}
+	//while (data.child("enemies").child("e"))
+	//{
+	//	data.child("enemies").remove_child("e");
+	//}
 
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = mapData.enemies.start;
+	//ListItem<Enemy*>* enemyItem;
+	//enemyItem = mapData.enemies.start;
 
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			pugi::xml_node e = data.child("enemies").append_child("e");
-			e.append_attribute("posX") = enemyItem->data->pos.x;
-			e.append_attribute("posY") = enemyItem->data->pos.y;
-			e.append_attribute("id") = enemyItem->data->enemy_id;
-		}
-		enemyItem = enemyItem->next;
-	}
+	//while (enemyItem != NULL)
+	//{
+	//	if (enemyItem->data != nullptr)
+	//	{
+	//		pugi::xml_node e = data.child("enemies").append_child("e");
+	//		e.append_attribute("posX") = enemyItem->data->position.x;
+	//		e.append_attribute("posY") = enemyItem->data->position.y;
+	//		e.append_attribute("id") = enemyItem->data->enemy_id;
+	//	}
+	//	enemyItem = enemyItem->next;
+	//}
 
-	delete enemyItem;
-	enemyItem = nullptr;
+	//delete enemyItem;
+	//enemyItem = nullptr;
 
 
 	return true;

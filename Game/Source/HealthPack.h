@@ -10,27 +10,18 @@ public:
 
 	~HealthPack();
 
-	bool Start();
+	bool Start() override;
 
-	bool PreUpdate();
+	bool PreUpdate() override;
 
-	bool Update(float dt);
+	bool Update(float dt) override;
 
-	bool PostUpdate();
+	bool PostUpdate() override;
 
-	bool CleanUp();
+	bool CleanUp() override;
 
 	void OnCollision(Collider* col) override;
 
 	void WillCollision() override;
-
-private:
-	SDL_Rect bounds;
-
-	SDL_Rect* rect;
-
-	SDL_Texture* tex;
-private:
-	Animation anim;
 };
 

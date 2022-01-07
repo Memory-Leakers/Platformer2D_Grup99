@@ -1,8 +1,10 @@
 #ifndef __GAMESCENE_H__
 #define __GAMESCENE_H__
 
+#include "EntityManager.h"
 #include "Log.h"
 #include "List.h"
+#include "Entity.h"
 #include "Player.h"
 #include "Coin.h"
 #include "Trophy.h"
@@ -46,14 +48,11 @@ public:
 	void WillCollision(Collider* c1, Collider* c2);
 
 private:
-
+	
 
 public:
+	EntityManager em;
 	bool debugTiles = false;
-
-	Player* froggy = nullptr;
-
-	FlyingEnemy* donald = nullptr;
 
 	Trophy* trophy = nullptr;
 
@@ -66,6 +65,7 @@ public:
 	bool pendingtoReload = false;
 
 	bool key = false;
+	bool checkPoint = false;
 
 	SDL_Rect* guiKeyRect = nullptr;
 	SDL_Texture* guiKey = nullptr;

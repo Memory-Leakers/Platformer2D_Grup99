@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Interactable.h"
 #include "SDL/include/SDL.h"
 #include "Point.h"
 #include "Animation.h"
@@ -22,43 +23,44 @@ enum SAVEPETITION
 	SAVEPETITION_BLOCK
 };
 
-class Checkpoint
+class Checkpoint : public Interactable
 {
 public:
-	Checkpoint(int posX, int posY);
+	Checkpoint(int posX, int posY, CHECKSTATE state = BASE);
 
 	~Checkpoint();
 
-	bool Start();
+	bool Start() override;
 
-	bool PreUpdate();
+	bool PreUpdate() override;
 
-	bool Update(float dt);
+	bool Update(float dt) override;
 
-	bool PostUpdate();
+	bool PostUpdate() override;
 
-	bool CleanUp();
+	bool CleanUp() override;
 
-	void OnCollision(Collider* col);
+	void OnCollision(Collider* col) override;
 
-	void WillCollision();
+	void WillCollision() override;
 
 	void loadData(pugi::xml_node node);
+
+	void Save(pugi::xml_node& data) const override;
 
 private:
 	void loadAnimBase();
 	void loadAnimActivation();
 	void loadAnimActivated();
 	
-private:
+	void stateMachine() override;
 
+private:
 	Animation animBase;
 	Animation animActivation;
 	Animation animActivated;
 
 	CHECKSTATE currentState = BASE;
-	void stateMachine();
-	bool stateChanged = true;
 
 	int savePetition = SAVEPETITION_NONE;
 
@@ -68,30 +70,14 @@ private:
 
 public:
 
-	SDL_Rect* rect;
-	iPoint position;
-	SDL_Rect bounds;
-	Collider* col = nullptr;
-	SDL_Texture* tex;
-	bool collided = false;
-
-public:
-
-	int getCurrentState()
+	CHECKSTATE getCurrentState()
 	{
 		return currentState;
 	}
 
-	void setCurrentState(int newState)
+	void setCurrentState(int newState = true)
 	{
 		currentState = (CHECKSTATE) newState;
 	}
-
-	void setStateChanged(bool value)
-	{
-		stateChanged = value;
-	}
-
-
 };
 

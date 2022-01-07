@@ -40,9 +40,6 @@
     <ClCompile Include="Source\ModuleCollisions.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Collider.cpp">
       <Filter>SourceFiles\Utils\Other</Filter>
     </ClCompile>
@@ -50,40 +47,52 @@
       <Filter>Others</Filter>
     </ClCompile>
     <ClCompile Include="Source\Pickable.cpp">
-      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Pickable</Filter>
     </ClCompile>
     <ClCompile Include="Source\Coin.cpp">
-      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Pickable</Filter>
     </ClCompile>
     <ClCompile Include="Source\DoorKey.cpp">
-      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Pickable</Filter>
     </ClCompile>
     <ClCompile Include="Source\PerformanceTimer.cpp">
       <Filter>SourceFiles\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
-      <Filter>SourceFiles\GameObjects\Enemies</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Source\WalkingEnemy.cpp">
-      <Filter>SourceFiles\GameObjects\Enemies</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Source\Checkpoint.cpp">
-      <Filter>SourceFiles\GameObjects\Interactables</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Interactables</Filter>
     </ClCompile>
     <ClCompile Include="Source\Trophy.cpp">
-      <Filter>SourceFiles\GameObjects\Interactables</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GUI.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Trap.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Interactables</Filter>
     </ClCompile>
     <ClCompile Include="Source\HealthPack.cpp">
-      <Filter>SourceFiles\GameObjects\Pickable</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Pickable</Filter>
     </ClCompile>
     <ClCompile Include="Source\FlyingEnemy.cpp">
-      <Filter>SourceFiles\GameObjects\Enemies</Filter>
+      <Filter>SourceFiles\GameObjects\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity.cpp">
+      <Filter>SourceFiles\GameObjects\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>SourceFiles\GameObjects\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI.cpp">
+      <Filter>SourceFiles\GameObjects\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Interactable.cpp">
+      <Filter>SourceFiles\GameObjects\Entities\Interactables</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Trap.cpp">
+      <Filter>SourceFiles\GameObjects\Entities\Interactables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +138,6 @@
     <ClInclude Include="Source\ModuleCollisions.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Point.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
@@ -157,16 +163,16 @@
       <Filter>Others</Filter>
     </ClInclude>
     <ClInclude Include="Source\Pickable.h">
-      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Pickable</Filter>
     </ClInclude>
     <ClInclude Include="Source\Coin.h">
-      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Pickable</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\DoorKey.h">
-      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Pickable</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ResourceFiles</Filter>
@@ -175,28 +181,40 @@
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\WalkingEnemy.h">
-      <Filter>HeaderFiles\GameObjects\Enemies</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
-      <Filter>HeaderFiles\GameObjects\Enemies</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Source\Trophy.h">
-      <Filter>HeaderFiles\GameObjects\Interactables</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Interactables</Filter>
     </ClInclude>
     <ClInclude Include="Source\Checkpoint.h">
-      <Filter>HeaderFiles\GameObjects\Interactables</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GUI.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Trap.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Interactables</Filter>
     </ClInclude>
     <ClInclude Include="Source\HealthPack.h">
-      <Filter>HeaderFiles\GameObjects\Pickable</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Pickable</Filter>
     </ClInclude>
     <ClInclude Include="Source\FlyingEnemy.h">
-      <Filter>HeaderFiles\GameObjects\Enemies</Filter>
+      <Filter>HeaderFiles\GameObjects\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>HeaderFiles\GameObjects\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>HeaderFiles\GameObjects\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI.h">
+      <Filter>HeaderFiles\GameObjects\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Interactable.h">
+      <Filter>HeaderFiles\GameObjects\Entities\Interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Trap.h">
+      <Filter>HeaderFiles\GameObjects\Entities\Interactables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,26 +263,38 @@
     <Filter Include="SourceFiles\Utils\Other">
       <UniqueIdentifier>{de134f8c-057a-420c-a4f3-7f124b82fa7a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SourceFiles\GameObjects\Pickable">
-      <UniqueIdentifier>{80cab0ee-6e07-44aa-b2fb-a1e22df68a56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\GameObjects\Pickable">
-      <UniqueIdentifier>{0886099d-b249-4c1b-b2b8-7ea2123cc2d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ResourceFiles">
       <UniqueIdentifier>{1084d4e6-0264-4b3b-90fa-1931457b2e7c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SourceFiles\GameObjects\Enemies">
+    <Filter Include="SourceFiles\GameObjects\Entities">
+      <UniqueIdentifier>{621ad6a0-c916-4f78-a32b-9120537ef799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameObjects\Entities\Enemies">
       <UniqueIdentifier>{d7c064e8-df8d-40f3-8e5a-9385e1c19ca9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SourceFiles\GameObjects\Interactables">
+    <Filter Include="SourceFiles\GameObjects\Entities\Interactables">
       <UniqueIdentifier>{c2ad1a99-c2d3-466a-b5ac-c3f44ffb15a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HeaderFiles\GameObjects\Enemies">
+    <Filter Include="SourceFiles\GameObjects\Entities\Pickable">
+      <UniqueIdentifier>{80cab0ee-6e07-44aa-b2fb-a1e22df68a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameObjects\GUI">
+      <UniqueIdentifier>{c5f7079c-9a14-4285-a97f-ed1705e6ba7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects\Entities">
+      <UniqueIdentifier>{d4f30d20-7b6a-407f-8503-41246000330d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects\Entities\Enemies">
       <UniqueIdentifier>{3396c096-2e13-4d2e-bb66-c1c24009dd5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HeaderFiles\GameObjects\Interactables">
+    <Filter Include="HeaderFiles\GameObjects\Entities\Interactables">
       <UniqueIdentifier>{ea6bf134-a17b-4903-838a-6bf5732d7787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects\Entities\Pickable">
+      <UniqueIdentifier>{0886099d-b249-4c1b-b2b8-7ea2123cc2d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects\GUI">
+      <UniqueIdentifier>{d3da0558-097b-4a5a-9ecf-17702a43ada3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

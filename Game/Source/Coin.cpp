@@ -87,7 +87,7 @@ bool Coin::PostUpdate()
 
 bool Coin::CleanUp()
 {
-	pendingToDelete = true;
+	dead = true;
 
 	if (col != nullptr)
 	{
@@ -106,7 +106,7 @@ void Coin::OnCollision(Collider* col)
 {
 	if (col->type == Type::PLAYER)
 	{
-		app->scene->gameScene->froggy->playerScore += fruitPoints;
+		app->scene->gameScene->em.getPlayer()->playerScore += fruitPoints;
 		app->audio->PlayFx(app->scene->gameScene->pickupSFX, 0);
 		CleanUp();
 	}

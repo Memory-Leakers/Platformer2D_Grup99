@@ -71,7 +71,7 @@ bool HealthPack::PostUpdate()
 
 bool HealthPack::CleanUp()
 {
-	pendingToDelete = true;
+	dead = true;
 
 	if (col != nullptr)
 	{
@@ -91,9 +91,9 @@ void HealthPack::OnCollision(Collider* col)
 {
 	if (col->type == Type::PLAYER)
 	{
-		if (app->scene->gameScene->froggy->health < 3)
+		if (app->scene->gameScene->em.getPlayer()->health < 3)
 		{
-			app->scene->gameScene->froggy->health += 1;
+			app->scene->gameScene->em.getPlayer()->health += 1;
 		}
 		CleanUp();
 	}

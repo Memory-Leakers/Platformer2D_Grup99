@@ -1,45 +1,32 @@
 #pragma once
+#include "Interactable.h"
 #include "SDL/include/SDL.h"
 #include "Point.h"
 #include "Animation.h"
 #include "Collider.h"
 
-class Trophy
+class Trophy : public Interactable
 {
 public:
 	Trophy(int posX, int posY);
 
 	~Trophy();
 
-	bool Start();
+	bool Start() override;
 
-	bool PreUpdate();
+	bool PreUpdate() override;
 
-	bool Update(float dt);
+	bool Update(float dt) override;
 
-	bool PostUpdate();
+	bool PostUpdate() override;
 
-	bool CleanUp();
+	bool CleanUp() override;
 
-	void OnCollision(Collider* col);
+	void OnCollision(Collider* col) override;
 
-	void WillCollision();
+	void WillCollision() override;
 private:
 
 	Animation animPres;
-
-public:
-
-	SDL_Rect* rect;
-
-	iPoint position;
-
-	SDL_Rect bounds;
-
-	Collider* col = nullptr;
-
-	SDL_Texture* tex;
-
-	bool collided = false;
 };
 

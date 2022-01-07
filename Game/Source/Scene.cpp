@@ -82,9 +82,11 @@ bool Scene::Update(float dt)
 		gameScene->ReloadLevel();
 		bgSelector();
 	}
+
+	//GOD MODE ON/OFF
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
-		gameScene->froggy->godMode = !gameScene->froggy->godMode;
+		gameScene->em.getPlayer()->godMode = !gameScene->em.getPlayer()->godMode;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
@@ -132,32 +134,34 @@ bool Scene::PostUpdate()
 
 bool Scene::LoadState(pugi::xml_node& data)
 {
+	gameScene->em.LoadState(data);
+
 	//Player
-	gameScene->froggy->position.x = data.child("player").attribute("posX").as_int();
-	gameScene->froggy->position.y = data.child("player").attribute("posY").as_int();
-	gameScene->froggy->playerScore = data.child("player").attribute("score").as_int();
-	gameScene->froggy->health = data.child("player").attribute("health").as_int();
+	gameScene->em.getPlayer()->position.x = data.child("player").attribute("posX").as_int();
+	gameScene->em.getPlayer()->position.y = data.child("player").attribute("posY").as_int();
+	gameScene->em.getPlayer()->playerScore = data.child("player").attribute("score").as_int();
+	gameScene->em.getPlayer()->health = data.child("player").attribute("health").as_int();
+	gameScene->healthBar->setFrameFollow(&gameScene->em.getPlayer()->health);
 
 	//Level/Map related
 	bgTex = app->tex->Load(data.child("background").attribute("value").as_string());
-	gameScene->key = data.child("startScene").attribute("doorKey").as_bool();
-	gameScene->checkpoint->setCurrentState(data.child("checkpoint").attribute("state").as_int());
-	gameScene->checkpoint->setStateChanged(true);
-
+	gameScene->key = data.child("startScene").attribute("doorKey").as_bool(); //
+	
 	return true;
 }
 
 bool Scene::SaveState(pugi::xml_node& data) const
 {
-	data.child("player").attribute("posX") = gameScene->froggy->position.x;
-	data.child("player").attribute("posY") = gameScene->froggy->position.y;
-	data.child("player").attribute("score") = gameScene->froggy->playerScore;
-	data.child("player").attribute("health") = gameScene->froggy->health;
+	data.child("player").attribute("posX") = gameScene->em.getPlayer()->position.x;
+	data.child("player").attribute("posY") = gameScene->em.getPlayer()->position.y;
+	data.child("player").attribute("score") = gameScene->em.getPlayer()->playerScore;
+	data.child("player").attribute("health") = gameScene->em.getPlayer()->health;
 
 	//Level/Map related
 	data.child("background").attribute("value") = bg.GetString();
-	data.child("startScene").attribute("doorKey") = gameScene->key;
-	data.child("checkpoint").attribute("state") = gameScene->checkpoint->getCurrentState() == ACTIVATION ? ACTIVATED:BASE; //2 ACTIVE/ 0 UNACTIVE
+	data.child("startScene").attribute("doorKey") = gameScene->key; //
+
+	gameScene->em.SaveState(data);
 
 	return true;
 }

@@ -2,44 +2,43 @@
 #include "Trap.h"
 
 
-Trap::Trap(int x, int y, TrapDirection trapDirection)
+Trap::Trap(int x, int y, InteractablesId trapDirection)
 {
-    pos.x = x;
-    pos.y = y;
+    id = trapDirection;
+   
+    position.x = x;
+    position.y = y;
 
-    direction = trapDirection;
     int dif = 9;
-    switch (trapDirection)
+    switch (id)
     {
-        case TrapDirection::UP:
+        case InteractablesId::SPIKETRAP_TOP:
             bounds.x = x;
             bounds.y = y + dif;
             bounds.w = 16;
             bounds.h = dif;
             break;
-        case TrapDirection::DOWN:
+        case InteractablesId::SPIKETRAP_BOTTOM:
             bounds.x = x;
             bounds.y = y;
             bounds.w = 16;
             bounds.h = dif;
             break;
-        case TrapDirection::RIGHT:
+        case InteractablesId::SPIKETRAP_RIGHT:
             bounds.x = x;
             bounds.y = y;
             bounds.w = 8;
             bounds.h = 15;
             break;
-        case TrapDirection::LEFT:
+        case InteractablesId::SPIKETRAP_LEFT:
             bounds.x = x + dif;
             bounds.y = y;
             bounds.w = dif;
             bounds.h = 15;
             break;
-
     }
 
     rect = new SDL_Rect({ 0, 0, 16, 16 });
-
 }
 
 Trap::~Trap()
@@ -50,7 +49,7 @@ Trap::~Trap()
 
 bool Trap::Start()
 {
-    if (direction == TrapDirection::UP || direction == TrapDirection::DOWN)
+    if (id == InteractablesId::SPIKETRAP_TOP || id == InteractablesId::SPIKETRAP_BOTTOM)
     {
         tex = app->tex->Load("Assets/Traps/Spikes/Spike.png");
     }else
@@ -77,24 +76,23 @@ bool Trap::Update(float dt)
 
 bool Trap::PostUpdate()
 {
-    switch (direction)
+    switch (id)
     {
-    case TrapDirection::UP:
-        app->render->DrawTexture(tex, pos.x, pos.y, rect);
+    case InteractablesId::SPIKETRAP_TOP:
+        app->render->DrawTexture(tex, position.x, position.y, rect);
         break;
-    case TrapDirection::DOWN:
-        app->render->DrawTexture(tex, pos.x, pos.y, rect, 1.0F, SDL_FLIP_VERTICAL);
+    case InteractablesId::SPIKETRAP_BOTTOM:
+        app->render->DrawTexture(tex, position.x, position.y, rect, 1.0F, SDL_FLIP_VERTICAL);
         break;
-    case TrapDirection::RIGHT:
-        app->render->DrawTexture(tex, pos.x, pos.y, rect);
+    case InteractablesId::SPIKETRAP_RIGHT:
+        app->render->DrawTexture(tex, position.x, position.y, rect);
         break;
-    case TrapDirection::LEFT:
-        app->render->DrawTexture(tex, pos.x, pos.y, rect, 1.0f, SDL_FLIP_HORIZONTAL);
+    case InteractablesId::SPIKETRAP_LEFT:
+        app->render->DrawTexture(tex, position.x, position.y, rect, 1.0f, SDL_FLIP_HORIZONTAL);
         break;
 
     }
 
-   
 
     //Debug
     if (app->scene->gameScene->debugTiles)

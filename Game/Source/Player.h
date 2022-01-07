@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
 #include "Point.h"
@@ -25,8 +26,7 @@ enum Dir
 	RIGHT
 };
 
-
-class Player
+class Player : public Entity
 {
 public:
 	Player();
@@ -35,26 +35,26 @@ public:
 
 	// Called when the module is activated
 	// Loads the necessary textures for the player
-	bool Start();
+	bool Start() override;
 
 	bool PreUpdate();
 	// Called at the middle of the application loop
 	// Processes new input and handles player movement
-	bool Update(float dt);
+	bool Update(float dt) override;
 
 	// Called at the end of the application loop
 	// Performs the render call of the player sprite
-	bool PostUpdate();
+	bool PostUpdate() override;
 
-	bool CleanUp();
+	bool CleanUp() override;
 
 	// Collision callback, called when the player intersects with another
-	void OnCollision(Collider* col);
+	void OnCollision(Collider* col) override;
 
 	// Callback if will be collision, called when the player intersects with another
-	void WillCollision();
+	void WillCollision() override;
 
-	bool Death();
+	bool Death() override;
 
 	iPoint GetPlayerCenterPosition();	
 
@@ -64,7 +64,6 @@ private:
 	pugi::xml_node player_state_node;
 
 	// A set of animations
-
 	Animation idleAnim;
 
 	Animation upAnim;
@@ -81,13 +80,10 @@ private:
 
 	Animation doublejumpAnim;
 
-	Animation* currentAnimation = nullptr;
-
 	float hurtTimeJump = 0.20f;
 	float movementPrevention = 0.15f;
 	float hurtOpacityTime = 1.25f;
 	float hurtTime = 0.0f;
-	bool hurt = false;
 	bool hit = false;
 	bool startHurt = false;
 	int lastDirHorizontal = LEFT;
@@ -97,47 +93,27 @@ private:
 
 public:
 
-	//STATS
-	int maxHealht = 3;
-	int health = maxHealht;
-
 	//Physics
-
-	int gravity;
-
 	int jumpcounter = 0;
 
 	iPoint playercenter;
 	iPoint jumphigh;
 	iPoint resultvec;
 
-	iPoint position;
-
 	Timer jumpTimer;
 
 	float previousJumpTime = -1;
 
 	//Movement & textures
-
 	bool canMoveDir[4];
-
-	SDL_Rect bounds;
-
-	SDL_Rect* playerRect;
 
 	bool isFlip = false;
 
-	SDL_Texture* player_tex;
-
-	// Collider
-	Collider* col = nullptr;
-
+	//Others
 	int playerScore = 0;
 
 	bool godMode = false;
 
 	bool leftpressed = false;
-
-private:
 
 };

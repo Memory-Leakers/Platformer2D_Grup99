@@ -46,3 +46,11 @@ void Pickable::WillCollision()
 
 }
 
+void Pickable::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node i = data.child("pickables").append_child("p");
+	i.append_attribute("posX") = position.x;
+	i.append_attribute("posY") = position.y;
+	i.append_attribute("id") = (int)pickable_id;
+}
+

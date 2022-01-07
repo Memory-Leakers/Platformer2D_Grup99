@@ -30,15 +30,11 @@ public:
 
 private:
 
-	int ID = 0;
-
 	float speed = 1.0f;
 
 	int cont = 0;
 
 	int size;
-
-	bool isFlip = false;
 
 	bool playerflip;
 
@@ -56,13 +52,7 @@ private:
 
 	Animation ghostAppear;
 
-	Animation* Currentenemyanimation;
-
 	pugi::xml_document FlyingEnemyfile;
 	pugi::xml_node Flying_Enemy_node;
-
-
-
-	SDL_Rect* EnemyRect;
 };
 

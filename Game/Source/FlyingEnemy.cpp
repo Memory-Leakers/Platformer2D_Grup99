@@ -4,19 +4,19 @@
 FlyingEnemy::FlyingEnemy(int x,int y)
 {
 
-	enemy_id = 2;
+	enemy_id = EnemyId::FLYING;
 
 	Flying_Enemy_node = app->LoadWalkingEnemy(FlyingEnemyfile);
 
 	Flying_Enemy_node = FlyingEnemyfile.child("enemy_state").child("enemy_fly");
 
-	this->pos.x = x;
-	this->pos.y = y;
+	this->position.x = x;
+	this->position.y = y;
 
-	Enemybounds.x = this->pos.x;
-	Enemybounds.y = this->pos.y;
-	Enemybounds.w = 32;
-	Enemybounds.h = 28;
+	bounds.x = this->position.x;
+	bounds.y = this->position.y;
+	bounds.w = 32;
+	bounds.h = 28;
 
 
 	//SET OF ANIMATIONS
@@ -60,7 +60,7 @@ FlyingEnemy::FlyingEnemy(int x,int y)
 	ghostAppear.hasIdle = false;
 	ghostAppear.loop = false;
 
-	Currentenemyanimation = &ghostIdle;
+	currentAnim = &ghostIdle;
 
 
 }
@@ -82,45 +82,39 @@ bool FlyingEnemy::Start()
 	//Appear
 	enemytextures[3] = app->tex->Load(Flying_Enemy_textures_node.child("ghostAppear").attribute("path").as_string());
 
-	this->col = app->col->AddCollider(Enemybounds, Type::ENEMY, app->scene);
+	this->col = app->col->AddCollider(bounds, Type::ENEMY, app->scene);
 
 	return true;
 }
 
 bool FlyingEnemy::PreUpdate()
 {
-	int xx = (pos.x - app->scene->gameScene->froggy->position.x);
-	int yy = (pos.y - app->scene->gameScene->froggy->position.y);
+	int xx = (position.x - app->scene->gameScene->em.getPlayer()->position.x);
+	int yy = (position.y - app->scene->gameScene->em.getPlayer()->position.y);
 	int posPDif = sqrt(xx * xx + yy * yy);
 
 	if (posPDif > 200)
 	{
 		return true;
 	}
-	pathFindingA(pos, app->scene->gameScene->froggy->position);
+	pathFindingA(position, app->scene->gameScene->em.getPlayer()->position);
 
 	return true;
 }
 
 bool FlyingEnemy::Update(float dt)
 {
-	//WillCollision();
-
-	
-	
-
 	const DynArray<iPoint>* path = GetLastPath();
-
 
 	int pathCount = path->Count();
 
 	if (cont < pathCount && pathCount <= flyingPathRange)
 	{
-		playerflip = app->scene->gameScene->froggy->isFlip;
-		playerposX = app->scene->gameScene->froggy->position.x;
+		playerflip = app->scene->gameScene->em.getPlayer()->isFlip;
+		playerposX = app->scene->gameScene->em.getPlayer()->position.x;
 		// FLIP = LEFT 
 		
-		if((playerflip && playerposX > pos.x) || (!playerflip && playerposX < pos.x))
+		if((playerflip && playerposX > position.x) || (!playerflip && playerposX < position.x))
 		{
 			return true;
 		}
@@ -131,35 +125,33 @@ bool FlyingEnemy::Update(float dt)
 
 			pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
 
-			int posDifX = abs(pos.x + 8 - this->pos.x);
+			int posDifX = abs(pos.x + 8 - this->position.x);
 
 			//Movement
 			if (posDifX >= 15)
 			{
-				if (pos.x > this->pos.x && canMoveDir[RIGHT])
+				if (pos.x > this->position.x && canMoveDir[RIGHT])
 				{
-					this->pos.x += speed;
+					this->position.x += speed;
 					isFlip = true;
 				}
-				else if (pos.x < this->pos.x && canMoveDir[LEFT])
+				else if (pos.x < this->position.x && canMoveDir[LEFT])
 				{
-					this->pos.x -= speed;
+					this->position.x -= speed;
 					isFlip = false;
 				}
 			}
-			int posDifY = abs(pos.y - this->pos.y);
+			int posDifY = abs(pos.y - this->position.y);
 			if (posDifY >= 15)
 			{
-				if (pos.y < this->pos.y && canMoveDir[UP])
+				if (pos.y < this->position.y && canMoveDir[UP])
 				{
-					this->pos.y -= speed;
+					this->position.y -= speed;
 				}
-				else if (pos.y >= this->pos.y && canMoveDir[DOWN])
+				else if (pos.y >= this->position.y && canMoveDir[DOWN])
 				{
-					this->pos.y += speed;
+					this->position.y += speed;
 				}
-
-
 			}
 			cont++;
 		}
@@ -170,37 +162,37 @@ bool FlyingEnemy::Update(float dt)
 
 	}
 
-	col->SetPos(pos);
+	col->SetPos(position);
 
 	for (int i = 0; i < 4; i++)
 	{
 		canMoveDir[i] = true;
 	}
 
-	Currentenemyanimation->Update();
+	currentAnim->Update();
 
 	return false;
 }
 
 bool FlyingEnemy::PostUpdate()
 {
-	EnemyRect = &Currentenemyanimation->GetCurrentFrame();
+	rect = &currentAnim->GetCurrentFrame();
 
-	iPoint tempPos = pos;
+	iPoint tempPos = position;
 	if (isFlip)
 	{
-		app->render->DrawTexture(enemytextures[0], tempPos.x, tempPos.y, EnemyRect, 1.0f, SDL_FLIP_HORIZONTAL);
+		app->render->DrawTexture(enemytextures[0], tempPos.x, tempPos.y, rect, 1.0f, SDL_FLIP_HORIZONTAL);
 	}
 	else
 	{
-		app->render->DrawTexture(enemytextures[0], tempPos.x, tempPos.y, EnemyRect);
+		app->render->DrawTexture(enemytextures[0], tempPos.x, tempPos.y, rect);
 	}
 	if (app->scene->gameScene->debugTiles)
 	{
-		Enemybounds.x = pos.x;
-		Enemybounds.y = pos.y;
-		app->render->DrawRectangle(Enemybounds, 255, 200, 255, 80);
-		std::cout << " EnemyBounds:" << pos.x << "," << pos.y << endl;
+		bounds.x = position.x;
+		bounds.y = position.y;
+		app->render->DrawRectangle(bounds, 255, 200, 255, 80);
+		std::cout << " EnemyBounds:" << position.x << "," << position.y << endl;
 
 
 		//PATH
@@ -218,19 +210,18 @@ bool FlyingEnemy::PostUpdate()
 
 bool FlyingEnemy::CleanUp()
 {
-	EnemyRect = nullptr;
+	rect = nullptr;
 	for (int i = 0; i < 4; i++)
 	{
 		SDL_DestroyTexture(enemytextures[i]);
 		enemytextures[i] = nullptr;
 	}
-	Currentenemyanimation = nullptr;
+	currentAnim = nullptr;
 
 	if (col != nullptr)
 	{
 		col->pendingToDelete = true;
 	}
-	FlyingEnemyfile.~xml_document();
 
 	return false;
 }
@@ -242,7 +233,7 @@ void FlyingEnemy::OnCollision(Collider* col)
 iPoint FlyingEnemy::GetCenterEnemyPos()
 {
 	iPoint pos;
-	pos.x = this->pos.x + (Enemybounds.w / 2);
-	pos.y = this->pos.y + (Enemybounds.h / 2);
+	pos.x = this->position.x + (bounds.w / 2);
+	pos.y = this->position.y + (bounds.h / 2);
 	return pos;
 }

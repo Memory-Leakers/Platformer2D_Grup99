@@ -31,8 +31,6 @@ private:
 
 private:
 
-	bool isFlip = false;
-
 	float speed = 2.0f;
 
 	int cont = 0;
@@ -51,12 +49,8 @@ private:
 
 	Animation angrypigHit;
 
-	Animation* Currentenemyanimation;
-
 	pugi::xml_document WalkingEnemyfile;
 	pugi::xml_node Walking_Enemy_node;
-
-	SDL_Rect* EnemyRect;
 
 	float jumpTime = 0.35f;
 	float startJump = 0.0f;

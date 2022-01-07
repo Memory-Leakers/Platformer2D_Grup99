@@ -4,21 +4,21 @@
 WalkingEnemy::WalkingEnemy(int x, int y)
 {
 
-	enemy_id = 1;
+	enemy_id = EnemyId::WALKING;
 
 	Walking_Enemy_node = app->LoadWalkingEnemy(WalkingEnemyfile);
 
 	Walking_Enemy_node = WalkingEnemyfile.child("enemy_state").child("enemy_walk");
 
-	this->pos.x = x;
-	this->pos.y = y;
+	this->position.x = x;
+	this->position.y = y;
 
 	/*gravity = Walking_Enemy_node.child("gravity").attribute("value").as_int();*/
 
-	Enemybounds.x = pos.x;
-	Enemybounds.y = pos.y;
-	Enemybounds.w = 32;
-	Enemybounds.h = 30;
+	bounds.x = position.x;
+	bounds.y = position.y;
+	bounds.w = 32;
+	bounds.h = 30;
 
 	//SET OF ANIMATIONS
 
@@ -83,7 +83,7 @@ WalkingEnemy::WalkingEnemy(int x, int y)
 	angrypigHit.hasIdle = false;
 
 
-	Currentenemyanimation = &angrypigIdle;
+	currentAnim = &angrypigIdle;
 
 	//DELETES OPEN XML FILE
 }
@@ -104,15 +104,15 @@ bool WalkingEnemy::Start()
 	//HIT
 	enemytextures[3] = app->tex->Load(Walking_Enemy_textures_node.child("angryPigHit").attribute("path").as_string());
 
-	this->col = app->col->AddCollider(Enemybounds, Type::ENEMY, app->scene);
+	this->col = app->col->AddCollider(bounds, Type::ENEMY, app->scene);
 
 	return true;
 }
 
 bool WalkingEnemy::PreUpdate()
 {
-	int xx = (pos.x - app->scene->gameScene->froggy->position.x);
-	int yy = (pos.y - app->scene->gameScene->froggy->position.y);
+	int xx = (position.x - app->scene->gameScene->em.getPlayer()->position.x);
+	int yy = (position.y - app->scene->gameScene->em.getPlayer()->position.y);
 	int posPDif = sqrt(xx*xx + yy*yy);
 
 	if (posPDif > 200)
@@ -120,19 +120,18 @@ bool WalkingEnemy::PreUpdate()
 		return true;
 	}
 
-	pathFindingA(pos, app->scene->gameScene->froggy->position);
+	pathFindingA(position, app->scene->gameScene->em.getPlayer()->position);
 
-	lastPlayerPos = app->scene->gameScene->froggy->position;
+	lastPlayerPos = app->scene->gameScene->em.getPlayer()->position;
 
 	return true;
 }
 
 bool WalkingEnemy::Update(float dt)
 {
-
-	if (damaged)
+	if (hurt)
 	{
-		Currentenemyanimation->Update();
+		currentAnim->Update();
 		eState = EnemyState::HIT;
 		return true;
 	}
@@ -160,27 +159,27 @@ bool WalkingEnemy::Update(float dt)
 
 		pos = app->map->MapToWorld(path->At(cont)->x, path->At(cont)->y);
 
-		int posDifX = abs(pos.x+ 8 - this->pos.x);
+		int posDifX = abs(pos.x+ 8 - this->position.x);
 
 		//Movement
 		if (posDifX >= 15)
 		{
-			if (pos.x > this->pos.x && canMoveDir[RIGHT])
+			if (pos.x > this->position.x && canMoveDir[RIGHT])
 			{
-				this->pos.x += speed;
+				this->position.x += speed;
 
 				isFlip = true;
 			}
-			else if (pos.x < this->pos.x && canMoveDir[LEFT])
+			else if (pos.x < this->position.x && canMoveDir[LEFT])
 			{
-				this->pos.x -= speed;
+				this->position.x -= speed;
 				isFlip = false;
 			}
 		}
 
- 		int posDifY = abs(pos.y - this->pos.y);
+ 		int posDifY = abs(pos.y - this->position.y);
 		//Jump
-		if (pos.y < this->pos.y && !jumping
+		if (pos.y < this->position.y && !jumping
 			&& !canMoveDir[DOWN] && posDifY > 8
 			&& dt - startJump >= jumpDelayTime)
 		{
@@ -201,7 +200,7 @@ bool WalkingEnemy::Update(float dt)
 	{
 		if (dt - startJump <= jumpTime)
 		{
-			if (canMoveDir[UP]) this->pos.y -= 2;
+			if (canMoveDir[UP]) this->position.y -= 2;
 		}
 		else {
 			jumping = false;
@@ -211,12 +210,12 @@ bool WalkingEnemy::Update(float dt)
 	//Gravity
 	if (canMoveDir[DOWN] && !jumping)
 	{
-		this->pos.y += 4;
+		this->position.y += 4;
 	}
 
 	if (this->col != nullptr)
 	{
-		col->SetPos(pos);
+		col->SetPos(position);
 	}
 
 	for (int i = 0; i < 4; i++)
@@ -225,7 +224,7 @@ bool WalkingEnemy::Update(float dt)
 	}
 
 
-	Currentenemyanimation->Update();
+	currentAnim->Update();
 
 	return true;
 }
@@ -236,10 +235,10 @@ bool WalkingEnemy::PostUpdate()
 
 	if (app->scene->gameScene->debugTiles)
 	{
-		Enemybounds.x = pos.x;
-		Enemybounds.y = pos.y;
-		app->render->DrawRectangle(Enemybounds, 0, 200, 255, 80);
-		std::cout << " EnemyBounds:" << pos.x << "," << pos.y << endl;
+		bounds.x = position.x;
+		bounds.y = position.y;
+		app->render->DrawRectangle(bounds, 0, 200, 255, 80);
+		std::cout << " EnemyBounds:" << position.x << "," << position.y << endl;
 
 
 		//PATH
@@ -257,19 +256,19 @@ bool WalkingEnemy::PostUpdate()
 
 bool WalkingEnemy::CleanUp()
 {
-	EnemyRect = nullptr;
+	rect = nullptr;
 	for (int i = 0; i < 4; i++)
 	{
 		SDL_DestroyTexture(enemytextures[i]);
 		enemytextures[i] = nullptr;
 	}
-	Currentenemyanimation = nullptr;
+	currentAnim = nullptr;
 
 	if (col != nullptr)
 	{
 		col->pendingToDelete = true;
 	}
-	WalkingEnemyfile.~xml_document();
+	//WalkingEnemyfile.~xml_document();
 	return true;
 }
 
@@ -277,48 +276,48 @@ bool WalkingEnemy::CleanUp()
 iPoint WalkingEnemy::GetCenterEnemyPos()
 {
 	iPoint pos;
-	pos.x = this->pos.x + (Enemybounds.w / 2);
-	pos.y = this->pos.y + (Enemybounds.h / 2);
+	pos.x = this->position.x + (bounds.w / 2);
+	pos.y = this->position.y + (bounds.h / 2);
 	return pos;
 }
 
 void WalkingEnemy::stateMachine()
 {
-	iPoint tempPos = pos;
+	iPoint tempPos = position;
 
 	switch (eState)
 	{
 	case EnemyState::IDLE:
-		Currentenemyanimation = &angrypigIdle;
+		currentAnim = &angrypigIdle;
 		break;
 	case EnemyState::WALKING:
-		Currentenemyanimation = &angrypigWalk;
+		currentAnim = &angrypigWalk;
 		break;
 	case EnemyState::RUNNING:
-		Currentenemyanimation = &angrypigRun;
+		currentAnim = &angrypigRun;
 		break;
 	case EnemyState::HIT:
-		Currentenemyanimation = &angrypigHit;
+		currentAnim = &angrypigHit;
 		break;
 	case EnemyState::DEATH:
 		//app->render->DrawTexture(enemytextures[3], tempPos.x, tempPos.y, EnemyRect);
 		break;
 	}
-	EnemyRect = &Currentenemyanimation->GetCurrentFrame();
+	rect = &currentAnim->GetCurrentFrame();
 
-	if (Currentenemyanimation == &angrypigHit && Currentenemyanimation->getCurrentFrameI() == angrypigHit.size() - 1)
+	if (currentAnim == &angrypigHit && currentAnim->getCurrentFrameI() == angrypigHit.size() - 1)
 	{
-		damaged = false;
+		hurt = false;
 	}
 
 	if (isFlip)
 	{
-		app->render->DrawTexture(enemytextures[(int)eState], tempPos.x, tempPos.y, EnemyRect, 1.0f, SDL_FLIP_HORIZONTAL);
+		app->render->DrawTexture(enemytextures[(int)eState], tempPos.x, tempPos.y, rect, 1.0f, SDL_FLIP_HORIZONTAL);
 		
 	}
 	else
 	{
-		app->render->DrawTexture(enemytextures[(int)eState], tempPos.x, tempPos.y, EnemyRect);
+		app->render->DrawTexture(enemytextures[(int)eState], tempPos.x, tempPos.y, rect);
 
 	}
 

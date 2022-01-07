@@ -24,61 +24,13 @@ bool GameScene::Start()
 {
 	bool ret = true;
 
-	froggy = new Player();
-	froggy->Start();
-	//Enemy
+	//ENTITY MANAGER
+	em.setPlayer(new Player());
+	em.addEntity(new Trophy(2640, 752));
+	em.addEntity(new Checkpoint(1712, 352));
+	em.addEntity(new DoorKey(1520, 1056));
 
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = app->map->mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		enemyItem->data->Start();
-
-		enemyItem = enemyItem->next;
-	}
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
-  //Fruit
-	ListItem<Pickable*>* fruitItem;
-	fruitItem = app->map->mapData.fruits.start;
-
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr)
-		{
-			fruitItem->data->Start();
-		}
-		fruitItem = fruitItem->next;
-	}
-
-	//Traps
-	ListItem<Trap*>* trapItem;
-	trapItem = app->map->mapData.trap.start;
-
-	while (trapItem != NULL)
-	{
-		if (trapItem->data != nullptr)
-		{
-			trapItem->data->Start();
-		}
-		trapItem = trapItem->next;
-	}
-
-	//Trophy
-	trophy = new Trophy(2640, 752);
-	trophy->Start();
-
-	//Checkpoint
-	checkpoint = new Checkpoint(1712, 352);
-	checkpoint->Start();
-
-	//Key
-	doorKey = new DoorKey(1520, 1056);
-	doorKey->Start();
-
+	em.Start();
 
 	//GUI
 	guiKeyRect = new SDL_Rect({ 16, 0, 16, 16 });
@@ -87,7 +39,7 @@ bool GameScene::Start()
 	healthBar = new GUI("Assets/Menu/Ingame/healthBar.png", { 5, 5 }, 4, {0, 0, 58, 16 }, 16);
 	healthBar->texScale = 1.65f;
 	healthBar->frameOnX = false;
-	healthBar->setFrameFollow(&froggy->health);
+	healthBar->setFrameFollow(&em.getPlayer()->health);
 	healthBar->Start();
 
 
@@ -97,13 +49,6 @@ bool GameScene::Start()
 	playerjumpSFX = app->audio->LoadFx("Assets/audio/fx/8bit_jump.wav");
 	playerwalkSFX = app->audio->LoadFx("Assets/audio/fx/walk_barefoot.wav");
 
-	//Clean
-	delete fruitItem;
-	fruitItem = nullptr;
-
-	delete trapItem;
-	trapItem = nullptr;
-
 	return ret;
 }
 
@@ -111,48 +56,15 @@ bool GameScene::PreUpdate()
 {
 	bool ret = true;
 
-	//Player (Froggy)
-	froggy->PreUpdate();
-
-	//Checkpoint
-	checkpoint->PreUpdate();
-
-	//ENEMIES
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = app->map->mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			if (enemyItem->data->death)
-			{
-				enemyItem->data->CleanUp();
-				delete enemyItem->data;
-				enemyItem->data = nullptr;
-			}
-			else
-			{
-				enemyItem->data->PreUpdate();
-			}
-		}
-
-		enemyItem = enemyItem->next;
-	}
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
-	//donald->PreUpdate();
+	em.PreUpdate();
 
 	//SET CAM ON FROGGY
-
-	if (froggy != nullptr && app->input->GetKey(SDL_SCANCODE_C) != KEY_REPEAT)
+	if (em.getPlayer() != nullptr && app->input->GetKey(SDL_SCANCODE_C) != KEY_REPEAT)
 	{
 		int scale = app->win->GetScale();
 
-		app->render->camera.x = (froggy->position.x *  -scale) + app->render->camera.w / 2 - froggy->bounds.w;
-		app->render->camera.y = (froggy->position.y * -scale) + app->render->camera.h / 2 - froggy->bounds.h;
+		app->render->camera.x = (em.getPlayer()->position.x *  -scale) + app->render->camera.w / 2 - em.getPlayer()->bounds.w;
+		app->render->camera.y = (em.getPlayer()->position.y * -scale) + app->render->camera.h / 2 - em.getPlayer()->bounds.h;
 	}
 
 	return ret;
@@ -162,79 +74,17 @@ bool GameScene::Update(float dt)
 {
 	bool ret = true;
 
-	froggy->Update(dt);
-
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = app->map->mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			enemyItem->data->Update(dt);
-		}
-		enemyItem = enemyItem->next;
-	}
-
-	delete enemyItem;
-	enemyItem = nullptr;
-	/*if (peppa != nullptr)
-	{
-		peppa->Update(dt);
-	}*/
-
-	//ENEMY
-
-	//donald->Update(dt);
-
-	ListItem<Pickable*>* fruitItem;
-	//fruitItem = fruitPool->start;
-	fruitItem = app->map->mapData.fruits.start;
-
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr)
-		{
-			if (!fruitItem->data->pendingToDelete)
-			{
-				fruitItem->data->Update(dt);
-			}
-		}
-		fruitItem = fruitItem->next;
-	}
-
-	//DEBUG
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
-		debugTiles = !debugTiles;
-	}
-
-	//Trophy
-	trophy->Update(dt);
-
-	//Checkpoint
-	checkpoint->Update(dt);
-
-	//Key
-	if (key && doorKey != nullptr)
-	{
-		doorKey->CleanUp();
-		delete doorKey;
-		doorKey = nullptr;
-	}
-	else if (!key && doorKey != nullptr)
-	{
-		doorKey->Update(dt);
-	}
+	//Entities
+	em.Update(dt);
 
 	//GUI
 	healthBar->Update();
 
-
-	//Clean
-	delete fruitItem;
-	fruitItem = nullptr;
-
+	//DEBUG
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{ //Shows all the debug information
+		debugTiles = !debugTiles;
+	}
 	return ret;
 }
 
@@ -242,81 +92,14 @@ bool GameScene::PostUpdate()
 {
 	bool ret = true;
 
-	froggy->PostUpdate();
-
-
-
-	//Fruits
-	ListItem<Pickable*>* fruitItem;
-	fruitItem = app->map->mapData.fruits.start;
-
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr)
-		{
-			if (!fruitItem->data->pendingToDelete)
-			{
-				fruitItem->data->PostUpdate();
-			}
-		}
-		fruitItem = fruitItem->next;
-	}
-
-	//Traps
-	ListItem<Trap*>* trapItem;
-	trapItem = app->map->mapData.trap.start;
-
-	while (trapItem != NULL)
-	{
-		if (trapItem->data != nullptr)
-		{
-			trapItem->data->PostUpdate();
-		}
-		trapItem = trapItem->next;
-	}
-
-	//Enemy
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = app->map->mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			enemyItem->data->PostUpdate();
-		}
-		enemyItem = enemyItem->next;
-	}
-	delete enemyItem;
-	enemyItem = nullptr;
-
-	//donald->PostUpdate();
-	//Trophy
-	trophy->PostUpdate();
-
-	//Checkpoint
-	checkpoint->PostUpdate();
-
-	//Key
-	if (!key && doorKey != nullptr)
-	{
-		doorKey->PostUpdate();
-	}
+	em.PostUpdate();
 
 	//GUI
 	if (key)
 	{
-		app->render->DrawTexture(guiKey, froggy->position.x + 3 , froggy->position.y - 16, guiKeyRect);
+		app->render->DrawTexture(guiKey, em.getPlayer()->position.x + 3 , em.getPlayer()->position.y - 16, guiKeyRect);
 	}
-
 	healthBar->PostUpdate();
-
-	//Clean
-	delete fruitItem;
-	fruitItem = nullptr;
-
-	delete trapItem;
-	trapItem = nullptr;
 
 	return ret;
 }
@@ -324,32 +107,9 @@ bool GameScene::PostUpdate()
 bool GameScene::CleanUp()
 {
 	LOG("Freeing Game Scene");
-
-	//Player (Froggy)
-	froggy->CleanUp();
-	delete froggy;
-	froggy = nullptr;
-
-	//Trophy
-	trophy->CleanUp();
-	delete trophy;
-	trophy = nullptr;
-
-	//Checkpoint
-	checkpoint->CleanUp();
-	delete checkpoint;
-	checkpoint = nullptr;
-
-	if (doorKey != nullptr)
-	{
-		doorKey->CleanUp();
-		delete doorKey;
-		doorKey = nullptr;
-	}
-
-	//Coinpool cleanup is done in map.cpp
-	//Trappool cleanup is done in map.cpp
-	//Enemypool cleanup is done in map.cpp
+	
+	//Entities
+	em.CleanUp();
 
 	//GUI
 	SDL_DestroyTexture(guiKey);
@@ -364,156 +124,31 @@ bool GameScene::CleanUp()
 
 bool GameScene::ReloadLevel()
 {
-	app->map->UnLoadMapObjects(false);
-	app->map->LoadMapObjects(true);
-
-	//Fruits
-	ListItem<Pickable*>* fruitItem;
-	fruitItem = app->map->mapData.fruits.start;
-
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr)
-		{
-			fruitItem->data->Start();
-		}
-		fruitItem = fruitItem->next;
-	}
-	delete fruitItem;
-	fruitItem = nullptr;
-
-	//Door key
-	if (doorKey != nullptr)
-	{
-		doorKey->CleanUp();
-		delete doorKey;
-		doorKey = nullptr;
-	}
-	doorKey = new DoorKey(1520, 1056);
-	doorKey->Start();
+	//Cleaning
+	em.CleanUp();
 	key = false;
+	checkPoint = false;
 
-	//froggy
-	froggy->CleanUp();
-	delete froggy;
-	froggy = nullptr;
-	froggy = new Player();
-	froggy->Start();
-	healthBar->setFrameFollow(&froggy->health);
+	//Re-Setting
+	em.setPlayer(new Player());
+	em.addEntity(new Trophy(2640, 752));
+	em.addEntity(new Checkpoint(1712, 352));
+	em.addEntity(new DoorKey(1520, 1056));
+	app->map->LoadMapEntities();
 
-	//ENEMIES
+	healthBar->setFrameFollow(&em.getPlayer()->health);
 
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = app->map->mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-		if (enemyItem->data != nullptr)
-		{
-			enemyItem->data->Start();
-		}
-		enemyItem = enemyItem->next;
-	}
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
-	//Checkpoint
-	checkpoint->CleanUp();
-	delete checkpoint;
-	checkpoint = nullptr;
-	checkpoint = new Checkpoint(1712, 352);
-	checkpoint->Start();
+	//Starting
+	em.Start();
 
 	return true;
 }
 
 void GameScene::OnCollision(Collider* c1, Collider* c2)
 {
-	//Fruits
-	ListItem<Pickable*>* fruitItem;
-	fruitItem = app->map->mapData.fruits.start;
-
-	while (fruitItem != NULL)
-	{
-		if (fruitItem->data != nullptr && fruitItem->data->col == c1)
-		{
-			fruitItem->data->OnCollision(c2);
-			delete fruitItem->data;
-			fruitItem->data = nullptr;
-		}
-		fruitItem = fruitItem->next;
-	}
-
-	//Player/ Froggy
-	if (froggy != nullptr && froggy->col == c1)
-	{
-		froggy->OnCollision(c2);
-	}
-
-	//Enemy
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = app->map->mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-
-		if (enemyItem->data != nullptr && enemyItem->data->col == c1)
-		{
-			enemyItem->data->OnCollision(c2);
-		}
-
-		enemyItem = enemyItem->next;
-	}
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
-	//Rest
-	if (trophy != nullptr && trophy->col == c1)
-	{
-		trophy->OnCollision(c2);
-	}
-
-	if (checkpoint != nullptr && checkpoint->col == c2)
-	{
-		checkpoint->OnCollision(c1);
-	}
-
-	if (doorKey != nullptr && doorKey->col == c1)
-	{
-		doorKey->OnCollision(c2);
-	}
-
-	//Clean
-	delete fruitItem;
-	fruitItem = nullptr;
+	em.OnCollision(c1, c2);
 }
 
 void GameScene::WillCollision(Collider* c1, Collider* c2)
 {
-	//Player / Froggy
-	if (froggy != nullptr && froggy->col == c1)
-	{
-		froggy->WillCollision();
-	}
-
-	//Enemies
-	ListItem<Enemy*>* enemyItem;
-	enemyItem = app->map->mapData.enemies.start;
-
-	while (enemyItem != NULL)
-	{
-
-		if (enemyItem->data != nullptr && enemyItem->data->col == c1)
-		{
-			enemyItem->data->WillCollision();
-		}
-
-		enemyItem = enemyItem->next;
-	}
-
-	delete enemyItem;
-	enemyItem = nullptr;
-
 }
