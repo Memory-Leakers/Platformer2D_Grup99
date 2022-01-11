@@ -20,6 +20,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	col = new ModuleCollisions();
 	scene = new Scene();
+	font = new ModuleFonts();
 	
 	
 
@@ -35,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(col);
 	AddModule(scene);
 	AddModule(map);
+	AddModule(font);
 	
 	
 

@@ -78,6 +78,8 @@ public:
 	uint playerjumpSFX;
 	uint playerwalkSFX;
 
+	int titlefont = -1;
+
 private:
 
 

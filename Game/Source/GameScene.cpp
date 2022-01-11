@@ -49,6 +49,10 @@ bool GameScene::Start()
 	playerjumpSFX = app->audio->LoadFx("Assets/audio/fx/8bit_jump.wav");
 	playerwalkSFX = app->audio->LoadFx("Assets/audio/fx/walk_barefoot.wav");
 
+	//Fonts
+	char lookupTable[] = { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" };
+	titlefont = app->font->Load("Assets/Fonts/rtype_font3.png", lookupTable, 2);
+
 	return ret;
 }
 
@@ -100,6 +104,8 @@ bool GameScene::PostUpdate()
 		app->render->DrawTexture(guiKey, em.getPlayer()->position.x + 3 , em.getPlayer()->position.y - 16, guiKeyRect);
 	}
 	healthBar->PostUpdate();
+
+	app->font->BlitText(150, 248, titlefont, "");
 
 	return ret;
 }

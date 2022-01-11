@@ -13,6 +13,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "ModuleCollisions.h"
+#include "ModuleFonts.h"
 #include "Timer.h"
 #include "PerformanceTimer.h"
 
@@ -119,6 +120,8 @@ public:
 	//GameScene* gameScene;
 	Map* map;
 	ModuleCollisions* col;
+	ModuleFonts* font;
+
 
 	Timer globalTime;
 	Timer gameTime;

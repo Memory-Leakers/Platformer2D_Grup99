@@ -94,6 +94,9 @@
     <ClCompile Include="Source\Trap.cpp">
       <Filter>SourceFiles\GameObjects\Entities\Interactables</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleFonts.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -215,6 +218,9 @@
     </ClInclude>
     <ClInclude Include="Source\Trap.h">
       <Filter>HeaderFiles\GameObjects\Entities\Interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

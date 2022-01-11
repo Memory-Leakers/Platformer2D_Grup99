@@ -108,6 +108,7 @@
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\Module.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
+    <ClCompile Include="Source\ModuleFonts.cpp" />
     <ClCompile Include="Source\PerformanceTimer.cpp" />
     <ClCompile Include="Source\Pickable.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\MemLeaks.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
+    <ClInclude Include="Source\ModuleFonts.h" />
     <ClInclude Include="Source\PerformanceTimer.h" />
     <ClInclude Include="Source\Pickable.h" />
     <ClInclude Include="Source\Player.h" />
