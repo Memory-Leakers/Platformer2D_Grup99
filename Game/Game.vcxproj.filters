@@ -97,6 +97,12 @@
     <ClCompile Include="Source\ModuleFonts.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>SourceFiles\GameObjects\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -221,6 +227,15 @@
     </ClInclude>
     <ClInclude Include="Source\ModuleFonts.h">
       <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiControl.h">
+      <Filter>HeaderFiles\GameObjects\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>HeaderFiles\GameObjects\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

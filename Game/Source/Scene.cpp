@@ -185,6 +185,32 @@ bool Scene::CleanUp()
 	return true;
 }
 
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
+{
+
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		//Checks the GUI element ID
+		if (control->id == 1)
+		{
+			LOG("Click on button 1");
+		}
+
+		if (control->id == 2)
+		{
+			LOG("Click on button 2");
+		}
+
+	}
+	//Other cases here
+
+	default: break;
+	}
+
+	return true;
+}
 
 void Scene::drawBackground()
 {

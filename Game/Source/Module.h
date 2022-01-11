@@ -58,6 +58,11 @@ public:
 
 	virtual void WillCollision(Collider* c1, Collider* c2);
 
+	virtual bool OnGuiMouseClickEvent(GuiControl* control)
+	{
+		return true;
+	}
+
 public:
 
 	SString name;

@@ -16,6 +16,7 @@
 #include "ModuleFonts.h"
 #include "Timer.h"
 #include "PerformanceTimer.h"
+#include "GuiManager.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -121,6 +122,7 @@ public:
 	Map* map;
 	ModuleCollisions* col;
 	ModuleFonts* font;
+	GuiManager* guimanage;
 
 
 	Timer globalTime;
