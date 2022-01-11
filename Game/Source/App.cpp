@@ -21,7 +21,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	col = new ModuleCollisions();
 	scene = new Scene();
 	font = new ModuleFonts();
-	
+	guimanage = new GuiManager();
 	
 
 
@@ -36,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(col);
 	AddModule(scene);
 	AddModule(map);
+	AddModule(guimanage);
 	AddModule(font);
 	
 	

@@ -105,7 +105,7 @@ bool GameScene::PostUpdate()
 	}
 	healthBar->PostUpdate();
 
-	app->font->BlitText(150, 248, titlefont, "");
+	app->font->BlitText(150, 248, titlefont, "hiiii");
 
 	return ret;
 }
@@ -124,6 +124,8 @@ bool GameScene::CleanUp()
 	healthBar->CleanUp();
 	delete healthBar;
 	healthBar = nullptr;
+
+	app->font->UnLoad(titlefont);
 
 	return true;
 }

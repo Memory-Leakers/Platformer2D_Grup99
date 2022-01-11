@@ -69,6 +69,8 @@ public:
 	bool LoadState(pugi::xml_node&) override;
 
 	bool SaveState(pugi::xml_node&) const override;
+
+	bool OnGuiMouseClickEvent(GuiControl* control)override;
 	
 private:
 	void bgSelector();
