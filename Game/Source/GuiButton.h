@@ -2,7 +2,6 @@
 #define __GUIBUTTON_H__
 
 #include "GuiControl.h"
-
 #include "Point.h"
 #include "SString.h"
 
@@ -10,11 +9,11 @@ class GuiButton : public GuiControl
 {
 public:
 
-	GuiButton(uint32 id, SDL_Rect bounds, const char* text);
+	GuiButton(uint32 id, SDL_Rect bounds, const char* text, int font);
 	virtual ~GuiButton();
 
-	bool Update(float dt);
-	bool Draw(Render* render);
+	bool Update(float dt) override;
+	bool Draw(Render* render) override;
 
 	int mouseX, mouseY;
 	unsigned int click;

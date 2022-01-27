@@ -23,6 +23,7 @@ bool GameScene::Awake()
 bool GameScene::Start()
 {
 	bool ret = true;
+	sceneStarted = true;
 
 	//ENTITY MANAGER
 	em.setPlayer(new Player());
@@ -126,6 +127,9 @@ bool GameScene::CleanUp()
 	healthBar = nullptr;
 
 	app->font->UnLoad(titlefont);
+
+
+	sceneStarted = false;
 
 	return true;
 }

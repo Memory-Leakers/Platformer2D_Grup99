@@ -97,10 +97,19 @@
     <ClCompile Include="Source\ModuleFonts.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiManager.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>SourceFiles\GameObjects\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuScene.cpp">
+      <Filter>SourceFiles\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiLabel.cpp">
+      <Filter>SourceFiles\GameObjects\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiCheckbox.cpp">
       <Filter>SourceFiles\GameObjects\GUI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -231,10 +240,19 @@
     <ClInclude Include="Source\GuiControl.h">
       <Filter>HeaderFiles\GameObjects\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiManager.h">
-      <Filter>HeaderFiles\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GuiButton.h">
+      <Filter>HeaderFiles\GameObjects\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuScene.h">
+      <Filter>HeaderFiles\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiLabel.h">
+      <Filter>HeaderFiles\GameObjects\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheckbox.h">
       <Filter>HeaderFiles\GameObjects\GUI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,7 @@
 Scene::Scene() : Module()
 {
 	name.Create("scene");
+	menuScene = new MenuScene();
 	gameScene = new GameScene();
 }
 
@@ -18,34 +19,40 @@ bool Scene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
 	return ret;
 }
 
 // Called before the first frame
 bool Scene::Start()
 {
-	levelList.add(new Level(1, "Level1.tmx"));
-	levelList[0]->camX = 209;
-	levelList[0]->camY = -2401;
-
-	if (app->map->Load(levelList[0]->file.GetString()) == true)
+	//Scene managemenet
+	switch (cScene)
 	{
-		int w, h;
-		uchar* data = NULL;
+	case CScene::MENUSCENE:
+		menuScene->Start();
+		break;
+	case CScene::GAMESCENE:
+		levelList.add(new Level(1, "Level1.tmx"));
+		levelList[0]->camX = 209;
+		levelList[0]->camY = -2401;
 
-		if (app->map->CreateWalkabilityMap(w, h, &data)) app->SetMap(w, h, data);
+		if (app->map->Load(levelList[0]->file.GetString()) == true)
+		{
+			int w, h;
+			uchar* data = NULL;
 
-		RELEASE_ARRAY(data);
+			if (app->map->CreateWalkabilityMap(w, h, &data)) app->SetMap(w, h, data);
+
+			RELEASE_ARRAY(data);
+		}
+
+		gameScene->Start();
+
+		// Load music
+		app->audio->PlayMusic("Assets/audio/music/papaya.ogg");
+		bgSelector();
+		break;
 	}
-
-	gameScene->Start();
-
-	// Load music
-	app->audio->PlayMusic("Assets/audio/music/papaya.ogg");
-
-
-	bgSelector();
 
 	return true;
 }
@@ -53,8 +60,24 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+	switch (cScene)
+	{
+		case CScene::MENUSCENE:
 
-	gameScene->PreUpdate();
+			if (!menuScene->sceneStarted) Start();
+
+			menuScene->PreUpdate();
+			break;
+		case CScene::GAMESCENE:
+
+			if (!gameScene->sceneStarted)
+			{
+				Start();
+			}
+			gameScene->PreUpdate();
+			break;
+	}
+	
 	return true;
 }
 
@@ -65,7 +88,16 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	gameScene->Update(app->gameTime.getDeltaTime());
+	//Scene management
+	switch (cScene)
+	{
+	case CScene::MENUSCENE:
+		menuScene->Update(app->gameTime.getDeltaTime());
+		break;
+	case CScene::GAMESCENE:
+		gameScene->Update(app->gameTime.getDeltaTime());
+		break;
+	}
 
     // LOAD AND SAVE
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -118,15 +150,29 @@ void Scene::WillCollision(Collider* c1, Collider* c2)
 	gameScene->WillCollision(c1, c2);
 }
 
-
 // Called each loop iteration
 bool Scene::PostUpdate()
 {
 	bool ret = true;
-	gameScene->PostUpdate();
+
+	//Scene management
+	switch (cScene)
+	{
+	case CScene::MENUSCENE:
+		menuScene->PostUpdate();
+		break;
+	case CScene::GAMESCENE:
+		gameScene->PostUpdate();
+		break;
+	}
+	
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+
+	//ChangesScene if there is a petition
+	changeScene();
 
 	return ret;
 }
@@ -172,15 +218,28 @@ bool Scene::SaveState(pugi::xml_node& data) const
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	levelList.At(0)->data->file.Clear();
-	levelList.clear();
+	
+	if (levelList.count() != 0)
+	{
+		levelList.At(0)->data->file.Clear();
+		levelList.clear();
+	}
 
-
-	gameScene->CleanUp();
+	if (gameScene->sceneStarted)
+	{
+		gameScene->CleanUp();
+	}
 	delete gameScene;
 	gameScene = nullptr;
 
-	bg.~SString();
+	if (menuScene->sceneStarted)
+	{
+		menuScene->CleanUp();
+	}
+	delete menuScene;
+	menuScene = nullptr;
+
+	bg.~SString();	
 
 	return true;
 }
@@ -277,4 +336,29 @@ void Scene::bgSelector()
 		bg = "Assets/Background/Yellow.png";
 	}
 	bgTex = app->tex->Load(bg.GetString());
+}
+
+void Scene::changeScene(CScene scene)
+{
+	
+	if (!changeScenePetition && scene != CScene::NONE)
+	{
+		changeScenePetition = true;
+		nextScene = scene;
+	}
+	else if(changeScenePetition && scene == CScene::NONE)
+	{
+		switch (cScene)
+		{
+		case CScene::MENUSCENE:
+			menuScene->CleanUp();
+			break;
+		case CScene::GAMESCENE:
+			gameScene->CleanUp();
+			break;
+		}
+
+		cScene = nextScene;
+		changeScenePetition = false;
+	}
 }

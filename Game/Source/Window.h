@@ -42,6 +42,12 @@ private:
 	uint width;
 	uint height;
 	uint scale;
+
+public:
+	int GetWidth()
+	{
+		return width;
+	}
 };
 
 #endif // __WINDOW_H__

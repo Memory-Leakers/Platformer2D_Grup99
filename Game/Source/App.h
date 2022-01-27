@@ -122,13 +122,13 @@ public:
 	Map* map;
 	ModuleCollisions* col;
 	ModuleFonts* font;
-	GuiManager* guimanage;
+	GuiManager* guiManager;
 
 
 	Timer globalTime;
 	Timer gameTime;
 	
-	uchar* mapo;
+	uchar* mapo = nullptr;
 
 	int FPS = 60;
 

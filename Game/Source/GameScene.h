@@ -80,9 +80,7 @@ public:
 
 	int titlefont = -1;
 
-private:
-
-
+	bool sceneStarted = false;
 };
 
 #endif // __GAMESCENE_H__

@@ -12,6 +12,7 @@
 
 enum class GuiControlType
 {
+	LABEL = 0,
 	BUTTON,
 	TOGGLE,
 	CHECKBOX,
@@ -39,7 +40,7 @@ public:
 
 	GuiControl(GuiControlType type, uint32 id) : type(type), id(id), state(GuiControlState::NORMAL) {}
 
-	GuiControl(GuiControlType type, SDL_Rect bounds, const char* text) :
+	GuiControl(GuiControlType type, SDL_Rect bounds, const char* text, int font) :
 		type(type),
 		state(GuiControlState::NORMAL),
 		bounds(bounds),
@@ -56,6 +57,12 @@ public:
 
 	virtual bool Draw(Render* render)
 	{
+		return true;
+	}
+
+	virtual bool CleanUp()
+	{
+
 		return true;
 	}
 
@@ -88,7 +95,7 @@ public:
 	SDL_Texture* texture;   // Texture atlas reference
 	SDL_Rect section;       // Texture atlas base section
 
-	//Font font;              // Text font
+	int font;              // Text font
 
 	Module* observer;        // Observer module (it should probably be an array/list)
 };

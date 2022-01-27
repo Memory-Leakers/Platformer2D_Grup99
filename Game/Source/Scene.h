@@ -4,6 +4,8 @@
 
 #include "App.h"
 #include "GameScene.h"
+#include "MenuScene.h"
+#include "GuiControl.h"
 
 struct SDL_Texture;
 
@@ -15,6 +17,13 @@ enum background {
 	Pink,
 	Purple,
 	Yellow
+};
+
+enum class CScene
+{
+	NONE = 0, 
+	GAMESCENE,
+	MENUSCENE
 };
 
 struct Level
@@ -70,7 +79,9 @@ public:
 
 	bool SaveState(pugi::xml_node&) const override;
 
-	bool OnGuiMouseClickEvent(GuiControl* control)override;
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
+	void changeScene(CScene scene = CScene::NONE);
 	
 private:
 	void bgSelector();
@@ -79,6 +90,11 @@ private:
 
 public:
 	GameScene* gameScene = nullptr;
+	MenuScene* menuScene = nullptr;
+
+	CScene cScene = CScene::MENUSCENE;
+	bool changeScenePetition = false;
+	CScene nextScene;
 
 private:
 	SDL_Texture* img;

@@ -21,7 +21,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	col = new ModuleCollisions();
 	scene = new Scene();
 	font = new ModuleFonts();
-	guimanage = new GuiManager();
+	guiManager = new GuiManager();
 	
 
 
@@ -36,7 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(col);
 	AddModule(scene);
 	AddModule(map);
-	AddModule(guimanage);
+	AddModule(guiManager);
 	AddModule(font);
 	
 	
@@ -364,7 +364,11 @@ bool App::CleanUp()
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
-	RELEASE_ARRAY(mapo);
+	if (mapo != nullptr)
+	{
+		RELEASE_ARRAY(mapo);
+	}
+	
 
 	return ret;
 }

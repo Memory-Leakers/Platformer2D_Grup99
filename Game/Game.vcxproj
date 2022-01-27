@@ -99,6 +99,8 @@
     <ClCompile Include="Source\FlyingEnemy.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
     <ClCompile Include="Source\GuiButton.cpp" />
+    <ClCompile Include="Source\GuiCheckbox.cpp" />
+    <ClCompile Include="Source\GuiLabel.cpp" />
     <ClCompile Include="Source\GuiManager.cpp" />
     <ClCompile Include="Source\HealthPack.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
@@ -108,6 +110,7 @@
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\MenuScene.cpp" />
     <ClCompile Include="Source\Module.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
     <ClCompile Include="Source\ModuleFonts.cpp" />
@@ -133,13 +136,16 @@
     <ClInclude Include="Source\FlyingEnemy.h" />
     <ClInclude Include="Source\GameScene.h" />
     <ClInclude Include="Source\GuiButton.h" />
+    <ClInclude Include="Source\GuiCheckbox.h" />
     <ClInclude Include="Source\GuiControl.h" />
+    <ClInclude Include="Source\GuiLabel.h" />
     <ClInclude Include="Source\GuiManager.h" />
     <ClInclude Include="Source\HealthPack.h" />
     <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\Interactable.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\MemLeaks.h" />
+    <ClInclude Include="Source\MenuScene.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
     <ClInclude Include="Source\ModuleFonts.h" />
     <ClInclude Include="Source\PerformanceTimer.h" />
