@@ -106,7 +106,7 @@ bool GameScene::PostUpdate()
 	}
 	healthBar->PostUpdate();
 
-	app->font->BlitText(150, 248, titlefont, "hiiii");
+	
 
 	return ret;
 }
