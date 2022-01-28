@@ -28,11 +28,11 @@ bool MenuScene::Start()
 
 	btn1 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 0, "play", msFont, { 230,160, 80, 20 }, this);
 
-	btn2 = (GuiButton*)gm.guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "", msFont, { 230,190, 80, 20 }, this);
+	btn2 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 1, "", msFont, { 230,190, 80, 20 }, this);
 
-	btn3 = (GuiButton*)gm.guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "", msFont, { 230,220, 80, 20 }, this);
+	btn3 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 2, "", msFont, { 230,220, 80, 20 }, this);
 
-	cbx1 = (GuiCheckbox*)gm.guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 3, "fullscreen", msFont, { 10, 120, 20, 20 }, this);
+	cbx1 = (GuiCheckbox*)gm.CreateGuiControl(GuiControlType::CHECKBOX, 3, "fullscreen", msFont, { 10, 120, 20, 20 }, this);
 
 	char lookupTable[] = { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" };
 	titlefont2 = app->font->Load("Assets/Fonts/rtype_font3.png", lookupTable, 2);
