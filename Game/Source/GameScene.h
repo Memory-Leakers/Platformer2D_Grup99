@@ -1,9 +1,11 @@
 #ifndef __GAMESCENE_H__
 #define __GAMESCENE_H__
 
+
+#include "GuiManager.h"
+#include "GuiButton.h"
 #include "EntityManager.h"
 #include "Log.h"
-#include "List.h"
 #include "Entity.h"
 #include "Player.h"
 #include "Coin.h"
@@ -14,7 +16,7 @@
 #include "FlyingEnemy.h"
 #include "GUI.h"
 
-class GameScene
+class GameScene : public Module
 {
 public:
 
@@ -47,8 +49,18 @@ public:
 
 	void WillCollision(Collider* c1, Collider* c2);
 
+	// Define multiple Gui Event methods
+	//bool OnGuiMouseClickEvent(GuiControl* control);
+
 private:
-	
+	bool pause = false;
+
+	GuiManager gm;
+	GuiButton* btn_resume;
+	GuiButton* btn_settings;
+	GuiButton* btn_title;
+	GuiButton* btn_exit;
+
 
 public:
 	EntityManager em;

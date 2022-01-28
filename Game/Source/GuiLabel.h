@@ -13,6 +13,7 @@ public:
 
 	bool Update(float dt) override;
 	bool Draw(Render* render) override;
+	bool CleanUp() override;
 
 
 };

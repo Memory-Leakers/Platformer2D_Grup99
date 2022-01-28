@@ -54,6 +54,9 @@ bool GameScene::Start()
 	char lookupTable[] = { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" };
 	titlefont = app->font->Load("Assets/Fonts/rtype_font3.png", lookupTable, 2);
 
+	//Settings
+	btn_resume = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "play", titlefont, { 10, 10, 80, 20 }, this);
+
 	return ret;
 }
 
@@ -61,6 +64,16 @@ bool GameScene::PreUpdate()
 {
 	bool ret = true;
 
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		pause = !pause;
+	}
+
+	if (pause)
+	{
+		gm.PreUpdate();
+		return true;
+	}
 	em.PreUpdate();
 
 	//SET CAM ON FROGGY
@@ -79,6 +92,11 @@ bool GameScene::Update(float dt)
 {
 	bool ret = true;
 
+	if (pause)
+	{
+		app->guiManager->Update(dt);
+		return true;
+	}
 	//Entities
 	em.Update(dt);
 
@@ -106,7 +124,27 @@ bool GameScene::PostUpdate()
 	}
 	healthBar->PostUpdate();
 
-	app->font->BlitText(150, 248, titlefont, "hiiii");
+
+	std::string s = std::to_string(em.getPlayer()->playerScore);
+	std::string ss;
+	for (int i = 5; i != s.size(); i--){
+		ss += "0";
+	}
+	ss += s;
+	char const* value = ss.c_str();
+
+	app->font->BlitText(110, 20, titlefont, value);
+
+
+	if (pause)
+	{
+		app->guiManager->Draw();
+		app->render->DrawRectangle({ -200, 0, app->win->screenSurface->w,  app->win->screenSurface->h }, 0, 0, 0, 100);
+	
+	
+	
+	}
+
 
 	return ret;
 }
@@ -115,6 +153,9 @@ bool GameScene::CleanUp()
 {
 	LOG("Freeing Game Scene");
 	
+	//Menu 
+	gm.CleanUp();
+
 	//Entities
 	em.CleanUp();
 

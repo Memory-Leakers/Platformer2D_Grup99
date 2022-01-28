@@ -112,6 +112,9 @@
     <ClCompile Include="Source\GuiCheckbox.cpp">
       <Filter>SourceFiles\GameObjects\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>SourceFiles\GameObjects\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -253,6 +256,9 @@
       <Filter>HeaderFiles\GameObjects\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiCheckbox.h">
+      <Filter>HeaderFiles\GameObjects\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlider.h">
       <Filter>HeaderFiles\GameObjects\GUI</Filter>
     </ClInclude>
   </ItemGroup>

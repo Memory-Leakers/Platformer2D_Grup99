@@ -48,6 +48,11 @@ public:
 	{
 		return width;
 	}
+
+	int GetHeight()
+	{
+		return height;
+	}
 };
 
 #endif // __WINDOW_H__

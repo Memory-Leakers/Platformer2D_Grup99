@@ -26,12 +26,13 @@ bool MenuScene::Start()
 	msFont = app->font->Load("Assets/Fonts/rtype_font3.png", { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" }, 2);
 
 
-	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "play", msFont, { 10, 10, 80, 20 }, this);
+	btn1 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 0, "play", msFont, { 10, 10, 80, 20 }, this);
 
-	lbl1 = (GuiLabel*)app->guiManager->CreateGuiControl(GuiControlType::LABEL, 1, "bon dia", msFont, { 10, 10, 80, 80 }, this);
+	lbl1 = (GuiLabel*)gm.CreateGuiControl(GuiControlType::LABEL, 1, "bon dia", msFont, { 10, 10, 80, 80 }, this);
 	
-	cbx1 = (GuiCheckbox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 2, "musica", msFont, { 10, 120, 20, 20 }, this);
+	cbx1 = (GuiCheckbox*)gm.CreateGuiControl(GuiControlType::CHECKBOX, 2, "musica", msFont, { 10, 120, 20, 20 }, this);
 
+	sld1 = (GuiSlider*)gm.CreateGuiControl(GuiControlType::SLIDER, 3, "sound", msFont, { 10, 160, 20, 20 }, this);
 
 	return true;
 }
@@ -45,20 +46,21 @@ bool MenuScene::PreUpdate()
 bool MenuScene::Update(float dt)
 {
 
-	app->guiManager->Update(dt);
+	gm.Update(dt);
 	
 	return true;
 }
 
 bool MenuScene::PostUpdate()
 {
-	app->guiManager->Draw();
+	gm.Draw();
 	return true;
 }
 
 bool MenuScene::CleanUp()
 {
 	gm.CleanUp();
+	app->font->UnLoad(msFont);
 
 	sceneStarted = false;
 	return true;

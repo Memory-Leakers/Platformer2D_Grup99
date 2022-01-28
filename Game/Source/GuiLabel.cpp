@@ -27,3 +27,12 @@ bool GuiLabel::Draw(Render* render)
 	app->font->BlitText(bounds.x + (bounds.w / 4), bounds.y + (bounds.h / 4), font, text.GetString());
 	return true;
 }
+
+bool GuiLabel::CleanUp()
+{
+	//rect = nullptr;
+	//SDL_DestroyTexture(tex);
+
+
+	return true;
+}

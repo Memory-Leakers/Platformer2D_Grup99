@@ -167,9 +167,6 @@ bool Scene::PostUpdate()
 	}
 	
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
 
 	//ChangesScene if there is a petition
 	changeScene();

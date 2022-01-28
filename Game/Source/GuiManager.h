@@ -2,12 +2,11 @@
 #define __GUIMANAGER_H__
 
 #include "Module.h"
-#include "GuiControl.h"
 #include "List.h"
-
 #include "GuiButton.h"
 #include "GuiLabel.h"
 #include "GuiCheckbox.h"
+#include "GuiControl.h"
 
 class GuiManager : public Module
 {

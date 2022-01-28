@@ -35,6 +35,9 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 		case GuiControlType::CHECKBOX:
 			control = new GuiCheckbox(id, bounds, text, font);
 			break;
+		case GuiControlType::SLIDER:
+			control = new GuiSlider(id, bounds, text, font);
+			break;
 	// More Gui Controls can go here
 
 	default:
@@ -110,15 +113,13 @@ bool GuiManager::CleanUp()
 	{
 		control->data->CleanUp();
 		RELEASE(control->data);
-		
+
 
 		control = control->next;
 	}
 	RELEASE(control);
 
 	return true;
-
-	return false;
 }
 
 

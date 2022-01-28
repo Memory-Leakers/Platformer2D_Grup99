@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Module.h"
+#include "Animation.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -81,6 +82,13 @@ public:
 	{
 		observer->OnGuiMouseClickEvent(this);
 	}
+
+protected:
+	SDL_Texture* tex = nullptr;
+	Animation anim;
+
+	SDL_Rect* rect = nullptr;
+
 
 public:
 

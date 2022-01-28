@@ -5,16 +5,11 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1699" posY="374" score="1300" health="3" />
+		<player posX="1699" posY="374" score="1800" health="3" />
 		<startScene value="Level1" doorKey="false" />
 		<background value="Assets/Background/Yellow.png" />
 		<pickables>
 			<p posX="1520" posY="1056" id="3" />
-			<p posX="72" posY="232" id="1" />
-			<p posX="72" posY="248" id="1" />
-			<p posX="88" posY="232" id="1" />
-			<p posX="88" posY="248" id="1" />
-			<p posX="248" posY="216" id="1" />
 			<p posX="664" posY="56" id="1" />
 			<p posX="664" posY="72" id="1" />
 			<p posX="664" posY="88" id="1" />
@@ -209,11 +204,11 @@
 			<i posX="2176" posY="784" id="5" />
 		</interactables>
 		<enemies>
-			<e posX="252" posY="354" id="1" />
-			<e posX="786" posY="82" id="1" />
+			<e posX="296" posY="354" id="1" />
+			<e posX="778" posY="82" id="1" />
 			<e posX="1014" posY="197" id="2" />
 			<e posX="1296" posY="34" id="1" />
-			<e posX="1429" posY="243" id="2" />
+			<e posX="1439" posY="246" id="2" />
 			<e posX="1520" posY="962" id="1" />
 			<e posX="1520" posY="1120" id="2" />
 			<e posX="2224" posY="754" id="1" />
