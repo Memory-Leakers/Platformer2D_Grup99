@@ -32,6 +32,7 @@ bool Scene::Start()
 		menuScene->Start();
 		break;
 	case CScene::GAMESCENE:
+	case CScene::GAMESCENELOAD:
 		levelList.add(new Level(1, "Level1.tmx"));
 		levelList[0]->camX = 209;
 		levelList[0]->camY = -2401;
@@ -73,6 +74,17 @@ bool Scene::PreUpdate()
 			if (!gameScene->sceneStarted)
 			{
 				Start();
+
+			}
+			gameScene->PreUpdate();
+			break;
+
+		case CScene::GAMESCENELOAD:
+			
+			if (!gameScene->sceneStarted)
+			{
+				Start();
+				app->LoadGameRequest();
 			}
 			gameScene->PreUpdate();
 			break;
@@ -95,6 +107,7 @@ bool Scene::Update(float dt)
 		menuScene->Update(app->gameTime.getDeltaTime());
 		break;
 	case CScene::GAMESCENE:
+	case CScene::GAMESCENELOAD:
 		gameScene->Update(app->gameTime.getDeltaTime());
 		break;
 	}
@@ -162,6 +175,7 @@ bool Scene::PostUpdate()
 		menuScene->PostUpdate();
 		break;
 	case CScene::GAMESCENE:
+	case CScene::GAMESCENELOAD:
 		gameScene->PostUpdate();
 		break;
 	}
@@ -351,8 +365,10 @@ void Scene::changeScene(CScene scene)
 			menuScene->CleanUp();
 			break;
 		case CScene::GAMESCENE:
+		case CScene::GAMESCENELOAD:
 			gameScene->CleanUp();
 			break;
+		
 		}
 
 		cScene = nextScene;

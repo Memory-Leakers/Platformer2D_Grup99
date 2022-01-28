@@ -140,9 +140,9 @@ bool GameScene::PostUpdate()
 	{
 		app->guiManager->Draw();
 		app->render->DrawRectangle({ -200, 0, app->win->screenSurface->w,  app->win->screenSurface->h }, 0, 0, 0, 100);
-	
-	
-	
+
+
+
 	}
 
 
@@ -152,8 +152,8 @@ bool GameScene::PostUpdate()
 bool GameScene::CleanUp()
 {
 	LOG("Freeing Game Scene");
-	
-	//Menu 
+
+	//Menu
 	gm.CleanUp();
 
 	//Entities
@@ -205,5 +205,3 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 void GameScene::WillCollision(Collider* c1, Collider* c2)
 {
 }
-
-

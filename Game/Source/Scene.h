@@ -23,7 +23,8 @@ enum class CScene
 {
 	NONE = 0, 
 	GAMESCENE,
-	MENUSCENE
+	MENUSCENE,
+	GAMESCENELOAD
 };
 
 struct Level

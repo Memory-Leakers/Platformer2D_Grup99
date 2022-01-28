@@ -28,9 +28,19 @@ public:
 public:
 	GuiManager gm;
 	GuiButton* btn1;
+	GuiButton* btn2;
+	GuiButton* btn3;
 	GuiLabel* lbl1;
 	GuiCheckbox* cbx1;
 	GuiSlider* sld1;
+
+	SDL_Rect rect;
+
+	int titlefont2;
+
+	bool savefiled = false;
+
+	bool settingsopened = false;
 
 	bool sceneStarted = false;
 

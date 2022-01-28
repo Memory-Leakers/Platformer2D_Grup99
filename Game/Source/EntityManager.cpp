@@ -34,10 +34,12 @@ bool EntityManager::Start()
 
 bool EntityManager::CleanUp()
 {
-	froggy->CleanUp();
-	delete froggy;
-	froggy = nullptr;
-
+	if (froggy != nullptr)
+	{
+		froggy->CleanUp();
+		delete froggy;
+		froggy = nullptr;
+	}
 	ListItem<Entity*>* item;
 	item = Entities.start;
 

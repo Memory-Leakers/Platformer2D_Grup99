@@ -33,8 +33,8 @@ public:
 
 	void setFrameFollow(int* value)
 	{
-		frame_value = nullptr;
-
+		//frame_value = nullptr;
+		
 		frame_value = value;
 		type = FRAME_FOLLOW;
 	}
