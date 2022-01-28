@@ -95,6 +95,21 @@ bool MenuScene::Update(float dt)
 bool MenuScene::PostUpdate()
 {
 	gm.Draw();
+
+	app->guiManager->Draw();
+
+	app->font->BlitText(170, 50, titlefont2, "ninja froggy's super adventure");
+	if (savefiled == true)
+	{
+		app->font->BlitText(238, 196, titlefont2, "continue");
+	}
+
+	app->font->BlitText(238, 226, titlefont2, "settings");
+
+	if (settingsopened)
+	{
+		app->render->DrawRectangle(rect, 0, 125, 255, 80);
+	}
 	return true;
 }
 
