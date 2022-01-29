@@ -67,25 +67,40 @@ bool GuiSlider::Update(float dt)
 
 bool GuiSlider::Draw(Render* render)
 {
+
+	if (app->scene->debugTiles)
+	{
+		switch (state)
+		{
+			case GuiControlState::DISABLED:
+				render->DrawRectangle(bounds, 0, 0, 0, 0, true, false);
+				break;
+			case GuiControlState::NORMAL:
+				render->DrawRectangle(bounds, 255, 0, 0, 255, true, false);
+				break;
+			case GuiControlState::FOCUSED:
+				render->DrawRectangle(bounds, 255, 0, 0, 100, true, false);
+				break;
+			case GuiControlState::PRESSED:
+				render->DrawRectangle(bounds, 255, 255, 255, 255, true, false);
+				break;
+			case GuiControlState::SELECTED:
+				render->DrawRectangle(bounds, 0, 255, 0, 255, true, false);
+				break;
+		}
+	}
+
 	switch (state)
 	{
-	case GuiControlState::DISABLED:
-		render->DrawRectangle(bounds, 0, 0, 0, 0);
-		break;
-	case GuiControlState::NORMAL:
-		//render->DrawRectangle(bounds, 255, 0, 0, 255);
-		rect = &anim2.getFrame(0);
-		break;
-	case GuiControlState::FOCUSED:
-		//render->DrawRectangle(bounds, 255, 0, 0, 100);
-		rect = &anim2.getFrame(1);
-		break;
-	case GuiControlState::PRESSED:
-		//render->DrawRectangle(bounds, 255, 255, 255, 255);
-		break;
-	case GuiControlState::SELECTED:
-		//render->DrawRectangle(bounds, 0, 255, 0, 255);
-		break;
+		case GuiControlState::DISABLED:
+			//render->DrawRectangle(bounds, 0, 0, 0, 0, true, false);
+			break;
+		case GuiControlState::NORMAL:
+			rect = &anim2.getFrame(0);
+			break;
+		case GuiControlState::FOCUSED:
+			rect = &anim2.getFrame(1);
+			break;
 	}
 
 	//Draw Bar
@@ -110,6 +125,6 @@ bool GuiSlider::CleanUp()
 	rect = nullptr;
 	bar_rect = nullptr;
 	SDL_DestroyTexture(tex);
-
+	app->font->UnLoad(font);
 	return true;
 }

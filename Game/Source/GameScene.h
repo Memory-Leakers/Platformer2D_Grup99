@@ -16,6 +16,15 @@
 #include "FlyingEnemy.h"
 #include "GUI.h"
 
+
+enum GameMenu
+{
+	RESUME = 0,
+	SETTINGS,
+	BACK,
+	QUIT
+};
+
 class GameScene : public Module
 {
 public:
@@ -50,21 +59,16 @@ public:
 	void WillCollision(Collider* c1, Collider* c2);
 
 	// Define multiple Gui Event methods
-	//bool OnGuiMouseClickEvent(GuiControl* control);
+	bool OnGuiMouseClickEvent(GuiControl* control);
 
 private:
 	bool pause = false;
 
 	GuiManager gm;
-	GuiButton* btn_resume;
-	GuiButton* btn_settings;
-	GuiButton* btn_title;
-	GuiButton* btn_exit;
 
 
 public:
 	EntityManager em;
-	bool debugTiles = false;
 
 	Trophy* trophy = nullptr;
 

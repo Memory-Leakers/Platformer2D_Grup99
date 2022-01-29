@@ -68,6 +68,12 @@ private:
 	SString dirAnimActivation;
 	SString dirAnimActivated;
 
+	SDL_Texture* btn_tex;
+	Animation btn;
+	SDL_Rect* btn_rect;
+
+	bool btn_Switch = false;
+
 public:
 
 	CHECKSTATE getCurrentState()

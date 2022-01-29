@@ -30,9 +30,9 @@ bool GuiLabel::Draw(Render* render)
 
 bool GuiLabel::CleanUp()
 {
-	//rect = nullptr;
-	//SDL_DestroyTexture(tex);
-
+	rect = nullptr;
+	SDL_DestroyTexture(tex);
+	app->font->UnLoad(font);
 
 	return true;
 }

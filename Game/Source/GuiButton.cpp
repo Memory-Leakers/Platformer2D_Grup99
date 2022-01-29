@@ -65,28 +65,41 @@ bool GuiButton::Update(float dt)
 bool GuiButton::Draw(Render* render)
 {
 	
-	// Draw the right button depending on state
-	switch (state)
+	// Draw DEBUG
+	if (app->scene->debugTiles)
 	{
+		switch (state)
+		{
 		case GuiControlState::DISABLED:
-			render->DrawRectangle(bounds, 0, 0, 0, 50);
+			render->DrawRectangle(bounds, 0, 0, 0, 50, true, false);
 			break;
 		case GuiControlState::NORMAL:
-			render->DrawRectangle(bounds, 255, 0, 0, 255);
+			render->DrawRectangle(bounds, 255, 0, 0, 255, true, false);
 			break;
 		case GuiControlState::FOCUSED:
-			render->DrawRectangle(bounds, 255, 255, 255, 160);
+			render->DrawRectangle(bounds, 255, 255, 255, 160, true, false);
 			break;
 		case GuiControlState::PRESSED:
-			render->DrawRectangle(bounds, 255, 255, 255, 255);
+			render->DrawRectangle(bounds, 255, 255, 255, 255, true, false);
 			break;
-		case GuiControlState::SELECTED: 
-			render->DrawRectangle(bounds, 0, 255, 0, 255);
+		case GuiControlState::SELECTED:
+			render->DrawRectangle(bounds, 0, 255, 0, 255, true, false);
 			break;
+		}
 	}
+	
 
 	//TEXT
 	app->font->BlitText(bounds.x + (bounds.w/4), bounds.y + (bounds.h/4), font, text.GetString());
 
 	return false;
+}
+
+bool GuiButton::CleanUp()
+{
+	rect = nullptr;
+	SDL_DestroyTexture(tex);
+	app->font->UnLoad(font);
+
+	return true;
 }

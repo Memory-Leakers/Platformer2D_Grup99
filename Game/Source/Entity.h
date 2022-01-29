@@ -67,6 +67,8 @@ public:
 	virtual void Save(pugi::xml_node& data) const;
 
 public:
+	int id_type = 0;
+
 	//Stats
 	int maxHealth = 3;
 	int health = maxHealth;

@@ -28,6 +28,7 @@ bool GameScene::Start()
 	//ENTITY MANAGER
 	em.setPlayer(new Player());
 	em.addEntity(new Trophy(2640, 752));
+	em.addEntity(new Checkpoint(944, 144));
 	em.addEntity(new Checkpoint(1712, 352));
 	em.addEntity(new DoorKey(1520, 1056));
 
@@ -55,7 +56,10 @@ bool GameScene::Start()
 	titlefont = app->font->Load("Assets/Fonts/rtype_font3.png", lookupTable, 2);
 
 	//Settings
-	btn_resume = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "play", titlefont, { 10, 10, 80, 20 }, this);
+	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::RESUME, "resume", titlefont, { 10, 50, 80, 20 }, this);
+	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::SETTINGS, "settings", titlefont, { 10, 80, 80, 20 }, this);
+	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::BACK, "back to title", titlefont, {10, 110, 80, 20}, this);
+	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::QUIT, "exit", titlefont, {10, 140, 80, 20}, this);
 
 	return ret;
 }
@@ -94,7 +98,7 @@ bool GameScene::Update(float dt)
 
 	if (pause)
 	{
-		app->guiManager->Update(dt);
+		gm.Update(dt);
 		return true;
 	}
 	//Entities
@@ -103,11 +107,6 @@ bool GameScene::Update(float dt)
 	//GUI
 	healthBar->Update();
 
-	//DEBUG
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{ //Shows all the debug information
-		debugTiles = !debugTiles;
-	}
 	return ret;
 }
 
@@ -138,9 +137,8 @@ bool GameScene::PostUpdate()
 
 	if (pause)
 	{
-		app->guiManager->Draw();
-		app->render->DrawRectangle({ -200, 0, app->win->screenSurface->w,  app->win->screenSurface->h }, 0, 0, 0, 100);
-
+		app->render->DrawRectangle({ -200, 0, app->win->screenSurface->w,  app->win->screenSurface->h }, 0, 0, 0, 100, true, false);
+		gm.Draw();
 
 
 	}
@@ -155,9 +153,12 @@ bool GameScene::CleanUp()
 
 	//Menu
 	gm.CleanUp();
+	//gm = GuiManager();
+	app->font->UnLoad(titlefont);
 
 	//Entities
 	em.CleanUp();
+	//em = EntityManager();
 
 	//GUI
 	SDL_DestroyTexture(guiKey);
@@ -167,10 +168,10 @@ bool GameScene::CleanUp()
 	delete healthBar;
 	healthBar = nullptr;
 
-	app->font->UnLoad(titlefont);
-
-
 	sceneStarted = false;
+	pause = false;
+
+
 
 	return true;
 }
@@ -204,4 +205,41 @@ void GameScene::OnCollision(Collider* c1, Collider* c2)
 
 void GameScene::WillCollision(Collider* c1, Collider* c2)
 {
+}
+
+bool GameScene::OnGuiMouseClickEvent(GuiControl* control)
+{
+
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		//Checks the GUI element ID
+		if (control->id == GameMenu::RESUME)
+		{
+			pause = false;
+		}
+
+		if (control->id == GameMenu::SETTINGS)
+		{
+
+		}
+
+		if (control->id == GameMenu::BACK)
+		{
+			app->scene->changeScene(CScene::MENUSCENE);
+		}
+
+		if (control->id == GameMenu::QUIT)
+		{
+			app->scene->exitPetition = true;
+		}
+
+	}
+	//Other cases here
+
+	default: break;
+	}
+
+	return true;
 }

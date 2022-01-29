@@ -374,7 +374,7 @@ bool Player::PostUpdate()
 	}
 
 	//Debug
-	if (app->scene->gameScene->debugTiles)
+	if (app->scene->debugTiles)
 	{
 
 		bounds.x = position.x;

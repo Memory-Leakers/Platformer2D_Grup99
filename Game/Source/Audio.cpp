@@ -84,6 +84,13 @@ bool Audio::CleanUp()
 	return true;
 }
 
+bool Audio::StopMusic()
+{
+	Mix_HaltMusic();
+	
+	return true;
+}
+
 // Play a music file
 bool Audio::PlayMusic(const char* path, float fade_time)
 {

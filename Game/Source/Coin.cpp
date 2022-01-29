@@ -77,7 +77,7 @@ bool Coin::PostUpdate()
 	app->render->DrawTexture(tex, position.x, position.y, rect);
 
 	//Debug
-	if (app->scene->gameScene->debugTiles && col != NULL)
+	if (app->scene->debugTiles && col != NULL)
 	{
 		app->render->DrawRectangle(bounds, 113, 85, 84, 127);
 	}

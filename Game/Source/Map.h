@@ -148,6 +148,7 @@ private:
 
 public:
 	MapData mapData;
+	bool generated = false;
 
 private:
 

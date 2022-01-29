@@ -61,43 +61,72 @@ bool GuiCheckbox::Draw(Render* render)
 	bounds.w = 8;
 	bounds.h = 8;
 
+	//Draw DEBUG
+	if (app->scene->debugTiles)
+	{
+		switch (state)
+		{
+			case GuiControlState::DISABLED:
+				render->DrawRectangle(bounds, 0, 0, 0, 0, true, false);
+				break;
+			case GuiControlState::NORMAL:
+				if (active)
+				{
+					render->DrawRectangle(bounds, 0, 255, 0, 255, true, false);
+				}
+				else
+				{
+					render->DrawRectangle(bounds, 255, 0, 0, 255, true, false);
+				}
+
+				break;
+			case GuiControlState::FOCUSED:
+				if (active)
+				{
+					render->DrawRectangle(bounds, 0, 255, 0, 100, true, false);
+				}
+				else
+				{
+					render->DrawRectangle(bounds, 255, 0, 0, 100, true, false);
+				}
+				break;
+			case GuiControlState::PRESSED:
+				render->DrawRectangle(bounds, 255, 255, 255, 255, true, false);
+				break;
+			case GuiControlState::SELECTED:
+				render->DrawRectangle(bounds, 0, 255, 0, 255, true, false);
+				break;
+		}
+	}
+
 	switch (state)
 	{
 		case GuiControlState::DISABLED:
-			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			//render->DrawRectangle(bounds, 0, 0, 0, 0, true, false);
 			break;
 		case GuiControlState::NORMAL:
 			if (active)
 			{
-				//render->DrawRectangle(bounds, 0, 255, 0, 255);
 				rect = &anim.getFrame(2);
 			}
 			else
 			{
-				//render->DrawRectangle(bounds, 255, 0, 0, 255);
 				rect = &anim.getFrame(0);
 			}
-			
+
 			break;
 		case GuiControlState::FOCUSED:
 			if (active)
 			{
-				//render->DrawRectangle(bounds, 0, 255, 0, 100);
 				rect = &anim.getFrame(3);
 			}
 			else
 			{
-				//render->DrawRectangle(bounds, 255, 0, 0, 100);
 				rect = &anim.getFrame(1);
 			}
 			break;
-		case GuiControlState::PRESSED:
-			//render->DrawRectangle(bounds, 255, 255, 255, 255);
-			break;
-		case GuiControlState::SELECTED:
-			//render->DrawRectangle(bounds, 0, 255, 0, 255);
-			break;
 	}
+	
 
 	app->render->DrawTexture(tex, bounds.x - (bounds.w/2), bounds.y - (bounds.h/2), rect, 1.0f, SDL_FLIP_HORIZONTAL);
 
@@ -111,6 +140,7 @@ bool GuiCheckbox::CleanUp()
 {
 	rect = nullptr;
 	SDL_DestroyTexture(tex);
+	app->font->UnLoad(font);
 
 	return true;
 }

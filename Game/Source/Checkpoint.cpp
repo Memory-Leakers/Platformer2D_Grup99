@@ -11,6 +11,7 @@ Checkpoint::Checkpoint(int posX, int posY, CHECKSTATE state)
 	}
 
 	id = InteractablesId::CHECKPOINT;
+	id_type = 10;
 
 	position.x = posX;
 	position.y = posY;
@@ -34,6 +35,10 @@ bool Checkpoint::Start()
 {
 	stateMachine();
 	this->col = app->col->AddCollider(bounds, Type::AREA, app->scene);
+
+	btn_tex = app->tex->Load("Assets/Menu/GUI/E.png");
+	btn.PushBack({0, 0, 16, 16 });
+	btn.loop = false;
 
 	return true;
 }
@@ -68,6 +73,15 @@ bool Checkpoint::Update(float dt)
 			break;
 	}
 
+	if (btn_Switch)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		{
+			app->scene->gameScene->em.getOtherCheckpoint(this);
+		}
+	}
+
+
 	return true;
 }
 
@@ -99,14 +113,23 @@ bool Checkpoint::PostUpdate()
 			break;
 	}
 
+
+	if (btn_Switch)
+	{
+		btn_rect = &btn.getFrame(0);
+		app->render->DrawTexture(btn_tex, position.x, position.y-20, btn_rect);
+	}
+
 	//DRAW
 	app->render->DrawTexture(tex, position.x, position.y, rect);
 
 	//Debug
-	if (app->scene->gameScene->debugTiles)
+	if (app->scene->debugTiles)
 	{
 		app->render->DrawRectangle(bounds, 255, 255, 255, 80);
 	}
+
+	btn_Switch = false;
 
 	return true;
 }
@@ -114,6 +137,7 @@ bool Checkpoint::PostUpdate()
 bool Checkpoint::CleanUp()
 {
 	SDL_DestroyTexture(tex);
+	SDL_DestroyTexture(btn_tex);
 	tex = nullptr;
 
 	if (col != nullptr)
@@ -132,6 +156,11 @@ void Checkpoint::OnCollision(Collider* col)
 	{
 		currentState = ACTIVATION;
 		stateChanged = true;
+	}
+
+	if (currentState == ACTIVATED)
+	{
+		btn_Switch = true;
 	}
 }
 

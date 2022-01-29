@@ -60,7 +60,7 @@ bool DoorKey::PostUpdate()
 	app->render->DrawTexture(tex, position.x, position.y, rect);
 
 	//Debug
-	if (app->scene->gameScene->debugTiles)
+	if (app->scene->debugTiles)
 	{
 		app->render->DrawRectangle(bounds, 113, 85, 84, 127);
 	}

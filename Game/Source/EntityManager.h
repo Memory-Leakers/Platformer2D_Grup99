@@ -48,6 +48,35 @@ public:
 		return froggy;
 	}
 
+	void getOtherCheckpoint(Checkpoint* check)
+	{
+		ListItem<Entity*>* item;
+		item = Entities.start;
+
+		while (item != nullptr)
+		{
+			if (item->data != nullptr)
+			{
+				if (item->data->id_type == 10)
+				{
+					if (item->data != check)
+					{
+						Checkpoint* aux = (Checkpoint*) item->data;
+						if (aux->getCurrentState() == ACTIVATED)
+						{
+							froggy->position.x = item->data->position.x;
+							froggy->position.y = item->data->position.y + 16;
+						}
+					}
+				}
+			}
+			item = item->next;
+		}
+
+		delete item;
+		item = nullptr;
+	}
+
 	void setPlayer(Player* froggy)
 	{
 		this->froggy = froggy;

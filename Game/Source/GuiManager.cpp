@@ -53,7 +53,11 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	//control->SetTexture(texture);
 
 	// Created GuiControls are added to the list of controls
-	if (control != nullptr) controls.add(control);
+		if (control != nullptr)
+		{
+			controls.add(control);
+		}
+
 
 	return control;
 }
@@ -86,6 +90,9 @@ bool GuiManager::UpdateAll(float dt, bool doLogic) {
 			control = control->next;
 		}
 
+		delete control;
+		control = nullptr;
+
 	}
 	return true; 
 
@@ -101,6 +108,9 @@ bool GuiManager::Draw() {
 		control = control->next;
 	}
 
+	delete control;
+	control = nullptr;
+
 	return true;
 
 }
@@ -108,16 +118,19 @@ bool GuiManager::Draw() {
 bool GuiManager::CleanUp()
 {
 	ListItem<GuiControl*>* control = controls.start;
-
+;
 	while (control != NULL)
 	{
 		control->data->CleanUp();
-		RELEASE(control->data);
-
+		delete control->data;
+		control->data = nullptr;
 
 		control = control->next;
+		
 	}
-	RELEASE(control);
+
+	delete control;
+	control = nullptr;
 
 	return true;
 }

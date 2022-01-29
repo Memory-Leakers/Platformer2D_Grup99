@@ -76,7 +76,7 @@ bool Trophy::PostUpdate()
 	
 
 	//Debug
-	if (app->scene->gameScene->debugTiles)
+	if (app->scene->debugTiles)
 	{
 		app->render->DrawRectangle(bounds, 255, 255, 255, 80);
 	}

@@ -29,22 +29,34 @@ bool Scene::Start()
 	switch (cScene)
 	{
 	case CScene::MENUSCENE:
+		app->audio->StopMusic();
+		delete menuScene;
+		menuScene = nullptr;
+		menuScene = new MenuScene();
 		menuScene->Start();
 		break;
 	case CScene::GAMESCENE:
 	case CScene::GAMESCENELOAD:
-		levelList.add(new Level(1, "Level1.tmx"));
-		levelList[0]->camX = 209;
-		levelList[0]->camY = -2401;
 
-		if (app->map->Load(levelList[0]->file.GetString()) == true)
+		delete gameScene;
+		gameScene = nullptr;
+		gameScene = new GameScene();
+		if (!app->map->generated)
 		{
-			int w, h;
-			uchar* data = NULL;
+			levelList.add(new Level(1, "Level1.tmx"));
+			levelList[0]->camX = 209;
+			levelList[0]->camY = -2401;
+			//Generates map
+			if (app->map->Load(levelList[0]->file.GetString()) == true)
+			{
 
-			if (app->map->CreateWalkabilityMap(w, h, &data)) app->SetMap(w, h, data);
+				int w, h;
+				uchar* data = NULL;
 
-			RELEASE_ARRAY(data);
+				if (app->map->CreateWalkabilityMap(w, h, &data)) app->SetMap(w, h, data);
+				app->map->generated = true;
+				RELEASE_ARRAY(data);
+			}
 		}
 
 		gameScene->Start();
@@ -96,10 +108,6 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	drawBackground();
-	// Draw map
-	app->map->Draw();
-
 	//Scene management
 	switch (cScene)
 	{
@@ -108,32 +116,35 @@ bool Scene::Update(float dt)
 		break;
 	case CScene::GAMESCENE:
 	case CScene::GAMESCENELOAD:
+		drawBackground();
+		// Draw map
+		app->map->Draw();
 		gameScene->Update(app->gameTime.getDeltaTime());
-		break;
-	}
+	
 
-    // LOAD AND SAVE
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-	{
-		app->LoadGameRequest();
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-		app->SaveGameRequest();
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || gameScene->pendingtoReload)
-	{
-		gameScene->pendingtoReload = false;
-		gameScene->ReloadLevel();
-		bgSelector();
-	}
+		// LOAD AND SAVE
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		{
+			app->LoadGameRequest();
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		{
+			app->SaveGameRequest();
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || gameScene->pendingtoReload)
+		{
+			gameScene->pendingtoReload = false;
+			gameScene->ReloadLevel();
+			bgSelector();
+		}
 
-	//GOD MODE ON/OFF
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-		gameScene->em.getPlayer()->godMode = !gameScene->em.getPlayer()->godMode;
+		//GOD MODE ON/OFF
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		{
+			gameScene->em.getPlayer()->godMode = !gameScene->em.getPlayer()->godMode;
+		}
+	break;
 	}
-
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{
 		if (app->FPS == 60)
@@ -150,6 +161,11 @@ bool Scene::Update(float dt)
 		}
 	}
 
+	//DEBUG
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{ //Shows all the debug information
+		debugTiles = !debugTiles;
+	}
 	return true;
 }
 
@@ -179,11 +195,11 @@ bool Scene::PostUpdate()
 		gameScene->PostUpdate();
 		break;
 	}
-	
-
 
 	//ChangesScene if there is a petition
 	changeScene();
+
+	ret = !exitPetition;
 
 	return ret;
 }

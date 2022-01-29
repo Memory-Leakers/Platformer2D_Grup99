@@ -187,7 +187,7 @@ bool FlyingEnemy::PostUpdate()
 	{
 		app->render->DrawTexture(enemytextures[0], tempPos.x, tempPos.y, rect);
 	}
-	if (app->scene->gameScene->debugTiles)
+	if (app->scene->debugTiles)
 	{
 		bounds.x = position.x;
 		bounds.y = position.y;

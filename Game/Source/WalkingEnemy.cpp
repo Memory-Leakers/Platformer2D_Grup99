@@ -233,7 +233,7 @@ bool WalkingEnemy::PostUpdate()
 {
 	stateMachine();
 
-	if (app->scene->gameScene->debugTiles)
+	if (app->scene->debugTiles)
 	{
 		bounds.x = position.x;
 		bounds.y = position.y;

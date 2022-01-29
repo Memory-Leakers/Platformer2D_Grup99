@@ -95,7 +95,7 @@ bool Trap::PostUpdate()
 
 
     //Debug
-    if (app->scene->gameScene->debugTiles)
+    if (app->scene->debugTiles)
     {
         app->render->DrawRectangle(bounds, 0, 0, 0, 80);
     }

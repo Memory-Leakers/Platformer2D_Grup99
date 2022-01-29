@@ -97,6 +97,10 @@ public:
 	bool changeScenePetition = false;
 	CScene nextScene;
 
+	bool exitPetition = false;
+
+	bool debugTiles = false;
+
 private:
 	SDL_Texture* img;
 

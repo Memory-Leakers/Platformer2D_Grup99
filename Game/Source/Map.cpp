@@ -81,7 +81,7 @@ void Map::Draw()
 			}
 		}
 
-		if (mapLayerItem->data->properties.GetProperty("Navigation") == 1 && app->scene->gameScene->debugTiles)
+		if (mapLayerItem->data->properties.GetProperty("Navigation") == 1 && app->scene->debugTiles)
 		{
 			for (int x = 0; x < mapLayerItem->data->width; x++)
 			{

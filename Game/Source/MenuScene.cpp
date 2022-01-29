@@ -26,13 +26,13 @@ bool MenuScene::Start()
 	msFont = app->font->Load("Assets/Fonts/rtype_font3.png", { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" }, 2);
 
 
-	btn1 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 0, "play", msFont, { 230,160, 80, 20 }, this);
+	gm.CreateGuiControl(GuiControlType::BUTTON, 0, "play", msFont, { 230,160, 80, 20 }, this);
 
-	btn2 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 1, "", msFont, { 230,190, 80, 20 }, this);
+	gm.CreateGuiControl(GuiControlType::BUTTON, 1, "", msFont, { 230,190, 80, 20 }, this);
 
-	btn3 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 2, "", msFont, { 230,220, 80, 20 }, this);
+	gm.CreateGuiControl(GuiControlType::BUTTON, 2, "", msFont, { 230,220, 80, 20 }, this);
 
-	cbx1 = (GuiCheckbox*)gm.CreateGuiControl(GuiControlType::CHECKBOX, 3, "fullscreen", msFont, { 10, 120, 20, 20 }, this);
+	gm.CreateGuiControl(GuiControlType::CHECKBOX, 3, "fullscreen", msFont, { 10, 120, 20, 20 }, this);
 
 	char lookupTable[] = { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" };
 	titlefont2 = app->font->Load("Assets/Fonts/rtype_font3.png", lookupTable, 2);
@@ -55,7 +55,7 @@ bool MenuScene::Start()
 	 rect = { 100,50,250,250 };
 
 
-sld1 = (GuiSlider*)gm.CreateGuiControl(GuiControlType::SLIDER, 3, "sound", msFont, { 10, 160, 20, 20 }, this);
+	gm.CreateGuiControl(GuiControlType::SLIDER, 3, "sound", msFont, { 10, 160, 20, 20 }, this);
 
 
 	return true;
@@ -86,7 +86,6 @@ bool MenuScene::PreUpdate()
 
 bool MenuScene::Update(float dt)
 {
-
 	gm.Update(dt);
 
 	return true;
@@ -95,8 +94,6 @@ bool MenuScene::Update(float dt)
 bool MenuScene::PostUpdate()
 {
 	gm.Draw();
-
-	app->guiManager->Draw();
 
 	app->font->BlitText(170, 50, titlefont2, "ninja froggy's super adventure");
 	if (savefiled == true)
@@ -116,8 +113,9 @@ bool MenuScene::PostUpdate()
 bool MenuScene::CleanUp()
 {
 	gm.CleanUp();
-	app->font->UnLoad(msFont);
+	//gm = GuiManager();
 
+	app->font->UnLoad(msFont);
 	app->font->UnLoad(titlefont2);
 
 	sceneStarted = false;
