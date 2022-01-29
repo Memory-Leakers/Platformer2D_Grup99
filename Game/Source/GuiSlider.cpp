@@ -62,7 +62,7 @@ bool GuiSlider::Update(float dt)
 		else state = GuiControlState::NORMAL;
 	}
 
-	return false;
+	return true;
 }
 
 bool GuiSlider::Draw(Render* render)
@@ -116,7 +116,7 @@ bool GuiSlider::Draw(Render* render)
 	app->font->BlitText(bounds.x, bounds.y - 20, font, text.GetString());
 	app->font->BlitText(bounds.x+110, bounds.y-5, font, value);
 
-	return false;
+	return true;
 }
 
 

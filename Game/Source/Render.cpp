@@ -30,7 +30,7 @@ bool Render::Awake(pugi::xml_node& config)
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	VSync = config.child("vsync").attribute("value").as_bool(true);
+	VSync = config.child("vsync").attribute("value").as_bool(false);
 
 	if(VSync == true)
 	{

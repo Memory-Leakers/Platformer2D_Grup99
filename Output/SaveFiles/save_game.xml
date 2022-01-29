@@ -139,9 +139,10 @@
 			<p posX="2040" posY="616" id="1" />
 			<p posX="2040" posY="632" id="1" />
 			<p posX="2040" posY="648" id="1" />
-			<p posX="1520" posY="1056" id="3" />
 		</pickables>
 		<interactables>
+			<i posX="2640" posY="752" id="2" />
+			<i posX="1712" posY="352" id="1" state="0" />
 			<i posX="16" posY="400" id="5" />
 			<i posX="112" posY="400" id="5" />
 			<i posX="352" posY="384" id="5" />

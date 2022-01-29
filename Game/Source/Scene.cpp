@@ -92,7 +92,7 @@ bool Scene::PreUpdate()
 			break;
 
 		case CScene::GAMESCENELOAD:
-			
+
 			if (!gameScene->sceneStarted)
 			{
 				Start();
@@ -101,13 +101,14 @@ bool Scene::PreUpdate()
 			gameScene->PreUpdate();
 			break;
 	}
-	
+
 	return true;
 }
 
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
 	//Scene management
 	switch (cScene)
 	{
@@ -120,7 +121,6 @@ bool Scene::Update(float dt)
 		// Draw map
 		app->map->Draw();
 		gameScene->Update(app->gameTime.getDeltaTime());
-	
 
 		// LOAD AND SAVE
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -155,7 +155,7 @@ bool Scene::Update(float dt)
 		{
 			app->FPS = 60;
 		}
-		else 
+		else
 		{
 			app->FPS = 60;
 		}
@@ -219,7 +219,7 @@ bool Scene::LoadState(pugi::xml_node& data)
 	//Level/Map related
 	bgTex = app->tex->Load(data.child("background").attribute("value").as_string());
 	gameScene->key = data.child("startScene").attribute("doorKey").as_bool(); //
-	
+
 	return true;
 }
 
@@ -245,7 +245,7 @@ bool Scene::SaveState(pugi::xml_node& data) const
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	
+
 	if (levelList.count() != 0)
 	{
 		levelList.At(0)->data->file.Clear();
@@ -266,7 +266,7 @@ bool Scene::CleanUp()
 	delete menuScene;
 	menuScene = nullptr;
 
-	bg.~SString();	
+	bg.~SString();
 
 	return true;
 }
@@ -367,7 +367,7 @@ void Scene::bgSelector()
 
 void Scene::changeScene(CScene scene)
 {
-	
+
 	if (!changeScenePetition && scene != CScene::NONE)
 	{
 		changeScenePetition = true;
@@ -384,7 +384,7 @@ void Scene::changeScene(CScene scene)
 		case CScene::GAMESCENELOAD:
 			gameScene->CleanUp();
 			break;
-		
+
 		}
 
 		cScene = nextScene;
