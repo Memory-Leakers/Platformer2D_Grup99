@@ -52,7 +52,7 @@ bool GuiCheckbox::Update(float dt)
 		}
 		else state = GuiControlState::NORMAL;
 	}
-	return false;
+	return true;
 }
 
 bool GuiCheckbox::Draw(Render* render)
@@ -104,7 +104,7 @@ bool GuiCheckbox::Draw(Render* render)
 	//TEXT
 	app->font->BlitText(bounds.x + bounds.w+ 5 , bounds.y, font, text.GetString());
 
-	return false;
+	return true;
 }
 
 bool GuiCheckbox::CleanUp()

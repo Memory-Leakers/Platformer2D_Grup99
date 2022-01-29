@@ -97,8 +97,10 @@ bool GuiManager::Draw() {
 
 	while (control != nullptr)
 	{
+		
 		control->data->Draw(app->render);
 		control = control->next;
+		
 	}
 
 	return true;

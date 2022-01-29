@@ -80,7 +80,7 @@ bool GameScene::PreUpdate()
 	if (em.getPlayer() != nullptr && app->input->GetKey(SDL_SCANCODE_C) != KEY_REPEAT)
 	{
 		int scale = app->win->GetScale();
-
+		
 		app->render->camera.x = (em.getPlayer()->position.x *  -scale) + app->render->camera.w / 2 - em.getPlayer()->bounds.w;
 		app->render->camera.y = (em.getPlayer()->position.y * -scale) + app->render->camera.h / 2 - em.getPlayer()->bounds.h;
 	}

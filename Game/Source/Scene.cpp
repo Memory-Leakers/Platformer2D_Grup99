@@ -96,9 +96,6 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	drawBackground();
-	// Draw map
-	app->map->Draw();
 
 	//Scene management
 	switch (cScene)
@@ -109,6 +106,9 @@ bool Scene::Update(float dt)
 	case CScene::GAMESCENE:
 	case CScene::GAMESCENELOAD:
 		gameScene->Update(app->gameTime.getDeltaTime());
+		drawBackground();
+		// Draw map
+		app->map->Draw();
 		break;
 	}
 
