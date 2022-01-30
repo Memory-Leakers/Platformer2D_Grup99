@@ -3,7 +3,7 @@
 	<app>
 		<title>Ninja Froggy's Super adventure</title>
 		<organization>MemoryLeakers-Grup99</organization>
-		<version>0.2</version>
+		<version>0.3</version>
 	</app>
 	<renderer>
 		<vsync value="true" />

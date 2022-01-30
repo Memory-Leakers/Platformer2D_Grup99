@@ -46,8 +46,8 @@ bool GuiSlider::Update(float dt)
 				&&
 				state != GuiControlState::SELECTED)
 			{
-				NotifyObserver();
 				app->audio->PlayFx(app->scene->buttonSFX, 0);
+				NotifyObserver();
 				state = GuiControlState::SELECTED; //Prevents double entry
 			}
 			else
@@ -69,7 +69,7 @@ bool GuiSlider::Update(float dt)
 bool GuiSlider::Draw(Render* render)
 {
 
-	if (app->scene->debugTiles)
+	if (app->scene->guiDebugTiles)
 	{
 		switch (state)
 		{

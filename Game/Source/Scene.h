@@ -102,10 +102,11 @@ public:
 	bool exitPetition = false;
 
 	bool debugTiles = false;
+	bool guiDebugTiles = false;
 
 	int highScoreI = 0;
 
-	uint buttonSFX;
+	uint buttonSFX = NULL;
 
 	int soundL = 100;
 	int musicL = 100;

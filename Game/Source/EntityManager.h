@@ -48,7 +48,7 @@ public:
 		return froggy;
 	}
 
-	void getOtherCheckpoint(Checkpoint* check)
+	void getOtherCheckpoint(Checkpoint* check = nullptr)
 	{
 		ListItem<Entity*>* item;
 		item = Entities.start;
@@ -59,13 +59,16 @@ public:
 			{
 				if (item->data->id_type == 10)
 				{
-					if (item->data != check)
+					if (check != nullptr)
 					{
-						Checkpoint* aux = (Checkpoint*) item->data;
-						if (aux->getCurrentState() == ACTIVATED)
+						if (item->data != check)
 						{
-							froggy->position.x = item->data->position.x;
-							froggy->position.y = item->data->position.y + 16;
+							Checkpoint* aux = (Checkpoint*)item->data;
+							if (aux->getCurrentState() == ACTIVATED)
+							{
+								froggy->position.x = item->data->position.x;
+								froggy->position.y = item->data->position.y + 16;
+							}
 						}
 					}
 				}

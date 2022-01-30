@@ -207,7 +207,6 @@ bool MenuScene::CleanUp()
 
 bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 {
-
 	switch (control->type)
 	{
 	case GuiControlType::BUTTON:

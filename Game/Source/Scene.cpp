@@ -147,7 +147,11 @@ bool Scene::Update(float dt)
 			gameScene->ReloadLevel();
 			bgSelector();
 		}
-
+		//DEBUG
+		if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		{ //Shows all the debug information
+			debugTiles = !debugTiles;
+		}
 		//GOD MODE ON/OFF
 		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
@@ -171,10 +175,9 @@ bool Scene::Update(float dt)
 		}
 	}
 
-	//DEBUG
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{ //Shows all the debug information
-		debugTiles = !debugTiles;
+		guiDebugTiles = !guiDebugTiles;
 	}
 	return true;
 }

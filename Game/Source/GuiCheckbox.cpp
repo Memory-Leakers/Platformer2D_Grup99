@@ -41,8 +41,9 @@ bool GuiCheckbox::Update(float dt)
 				&&
 				state != GuiControlState::SELECTED)
 			{
-				NotifyObserver();
 				app->audio->PlayFx(app->scene->buttonSFX, 0);
+				NotifyObserver();
+				
 				state = GuiControlState::SELECTED; //Prevents double entry
 				active = !active;
 			}
@@ -63,7 +64,7 @@ bool GuiCheckbox::Draw(Render* render)
 	bounds.h = 8;
 
 	//Draw DEBUG
-	if (app->scene->debugTiles)
+	if (app->scene->guiDebugTiles)
 	{
 		switch (state)
 		{

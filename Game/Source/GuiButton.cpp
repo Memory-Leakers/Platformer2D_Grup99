@@ -58,8 +58,11 @@ bool GuiButton::Update(float dt)
 			else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP &&
 				state != GuiControlState::SELECTED)
 			{// If mouse button pressed -> Generate event!
-				NotifyObserver();
+
 				app->audio->PlayFx(app->scene->buttonSFX, 0);
+
+				NotifyObserver();
+				
 				state = GuiControlState::SELECTED; //Prevents double entry
 			}
 			else
@@ -105,7 +108,7 @@ bool GuiButton::Draw(Render* render)
 
 
 	// Draw DEBUG
-	if (app->scene->debugTiles)
+	if (app->scene->guiDebugTiles)
 	{
 		switch (state)
 		{

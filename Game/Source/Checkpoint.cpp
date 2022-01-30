@@ -75,7 +75,7 @@ bool Checkpoint::Update(float dt)
 
 	if (btn_Switch)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 		{
 			app->scene->gameScene->em.getOtherCheckpoint(this);
 		}
