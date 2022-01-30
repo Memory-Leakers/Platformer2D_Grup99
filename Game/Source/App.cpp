@@ -48,6 +48,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	//TIMERS APP
 	ptimer = new PerformanceTimer();
 	frameDuration = new PerformanceTimer();
+
+	//Genearate savefiles
+	GenerateSaveFile();
+
 }
 
 // Destructor
@@ -503,7 +507,6 @@ bool App::SaveGame() const
 
 	ListItem<Module*>* item;
 	item = modules.start;
-	cout << "First->" << doc->child("game_state").child("scene").child("player").attribute("posX").as_int() << endl;
 	while (item != NULL && ret == true)
 	{
 		if (item->data->SaveState(doc->child("game_state").child(item->data->name.GetString())))
@@ -517,7 +520,6 @@ bool App::SaveGame() const
 		item = item->next;
 	}
 	doc->save_file(SAVE_STATE_FILENAME);
-	cout << "Second->" << doc->child("game_state").child("scene").child("player").attribute("posX").as_int() << endl;
 
 	saveGameRequested = false;
 
@@ -530,5 +532,52 @@ bool App::SaveGame() const
 	return ret;
 }
 
+void App::GenerateSaveFile()
+{
+	bool ret = true;
+
+	pugi::xml_document* doc = new pugi::xml_document();
+	doc->load_file(SAVE_STATE_FILENAME);
+
+	pugi::xml_parse_result result = doc->load_file(SAVE_STATE_FILENAME);
+
+	if (result == NULL)
+	{
+		LOG("Generating a new raw save file");
+		pugi::xml_node node = doc->append_child("game_state");
+		node.append_child("input");
+		node.append_child("window");
+		node.append_child("textures");
+		node.append_child("audio");
+		pugi::xml_node s_node = node.append_child("scene");
+		node.append_child("map");
+
+		s_node.append_child("raw").append_attribute("value") = true;
+
+
+		pugi::xml_node p_node = s_node.append_child("player");
+		p_node.append_attribute("posX");
+		p_node.append_attribute("posY");
+		p_node.append_attribute("score");
+		p_node.append_attribute("high_score");
+		p_node.append_attribute("health");
+
+		s_node.append_child("playtime").append_attribute("value");
+
+		pugi::xml_node ss_node = s_node.append_child("startScene");
+		ss_node.append_attribute("value");
+		ss_node.append_attribute("doorKey");
+
+		s_node.append_child("background").append_attribute("value");
+		s_node.append_child("pickables");
+		s_node.append_child("interactables");
+		s_node.append_child("enemies");
+
+		doc->save_file(SAVE_STATE_FILENAME);
+	}
+	
+	delete doc;
+	doc = nullptr;
+}
 
 

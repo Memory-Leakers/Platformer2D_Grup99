@@ -587,6 +587,9 @@ void Player::WillCollision()
 							{
 								app->scene->highScoreI = app->scene->gameScene->em.getPlayer()->playerScore;
 							}
+
+							app->scene->gameScene->timeSave = 0;
+
 							app->scene->gameScene->pendingtoReload = true;
 						}
 						break;

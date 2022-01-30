@@ -27,15 +27,15 @@ bool MenuScene::Start()
 	msFont = app->font->Load("Assets/Fonts/rtype_font3.png", { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" }, 2);
 
 
-	btn1 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 0, "play", msFont, { 230,100, 80, 20 }, this);
+	btn1 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 0, "play", msFont, { 20,100, 80, 20 }, this);
 
-	btn2 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 1, "", msFont, { 230,130, 80, 20 }, this);
+	btn2 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 1, "continue", msFont, { 20,130, 80, 20 }, this);
 
-	btn3 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 2, "", msFont, { 230,160, 80, 20 }, this);
+	btn3 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 2, "settings", msFont, { 20,160, 80, 20 }, this);
 
-	btn4 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 7, "", msFont, { 230,190, 80, 20 }, this);
+	btn4 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 7, "credits", msFont, { 20,190, 80, 20 }, this);
 
-	btn5 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 8, "exit", msFont, { 230, 220, 80, 20 }, this);
+	btn5 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 8, "exit", msFont, { 20, 220, 80, 20 }, this);
 
 	cbx1 = (GuiCheckbox*)gmsettings.CreateGuiControl(GuiControlType::CHECKBOX, 3, "fullscreen", msFont, { 210, 160, 20, 20 }, this);
 
@@ -60,7 +60,14 @@ bool MenuScene::Start()
 	else
 	{
 		std::cout << "Se ha encontrado un archivo de partida guardada" << endl;
-		savefiled = true;
+		if (doc.child("game_state").child("scene").child("raw").attribute("value").as_bool())
+		{
+			savefiled = false;
+		}
+		else
+		{
+			savefiled = true;
+		}
 	}
 
 	 rect = { 150,10,250,250 };
@@ -136,10 +143,17 @@ bool MenuScene::PreUpdate()
 
 bool MenuScene::Update(float dt)
 {
+	if (savefiled == true)
+	{
+		btn2->disable = false;
+	}
+	else
+	{
+		btn2->disable = true;
+	}
+
 	gm.Update(dt);
 	gmsettings.Update(dt);
-
-
 
 	return true;
 }
@@ -148,15 +162,7 @@ bool MenuScene::PostUpdate()
 {
 	gm.Draw();
 
-	app->font->BlitText(160, 50, titlefont2, "ninja froggy's super adventure");
-	if (savefiled == true)
-	{
-		app->font->BlitText(238, 136, titlefont2, "continue");
-	}
-
-	app->font->BlitText(238, 166, titlefont2, "settings");
-
-	app->font->BlitText(238, 196, titlefont2, "credits");
+	app->font->BlitText(20, 50, titlefont2, "ninja froggy's super adventure");
 
 	if (creditsopened)
 	{
