@@ -29,7 +29,12 @@ private:
 	SDL_Texture* tex2 = nullptr;
 	Animation anim2;
 
-	
+public:
+
+	void setSliderPos(int pos)
+	{
+		sliderPos = bounds.x + pos;
+	}
 
 	
 

@@ -110,7 +110,7 @@ bool GuiSlider::Draw(Render* render)
 	//DrawSliderButton
 	app->render->DrawTexture(tex2, sliderPos, bounds.y-5, rect, 1.0f, SDL_FLIP_HORIZONTAL, (0.0), 2147483647, 214783647, 1.0F, false);
 
-	if (app->scene->menuScene->settingsopened)
+	if (app->scene->menuScene->settingsopened || app->scene->gameScene->settingopen)
 	{
 		aux = bounds.x;
 	}

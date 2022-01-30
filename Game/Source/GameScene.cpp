@@ -58,7 +58,7 @@ bool GameScene::Start()
 	//Settings
 	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::RESUME, "resume", titlefont, { 10, 50, 80, 20 }, this);
 	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::SETTINGS, "settings", titlefont, { 10, 80, 80, 20 }, this);
-	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::BACK, "back to title", titlefont, {10, 110, 80, 20}, this);
+	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::BACK, "title", titlefont, {10, 110, 80, 20}, this);
 	gm.CreateGuiControl(GuiControlType::BUTTON, GameMenu::QUIT, "exit", titlefont, {10, 140, 80, 20}, this);
 
 	cbx3 = (GuiCheckbox*)gmsetting.CreateGuiControl(GuiControlType::CHECKBOX, 3, "fullscreen", titlefont, { 200, 160, 20, 20 }, this);
@@ -73,6 +73,14 @@ bool GameScene::Start()
 	cbx4->active = app->render->VSync;
 
 	rec = { 150,10,250,250 };
+
+	sld5->setSliderPos(app->scene->musicL);
+	sld6->setSliderPos(app->scene->soundL);
+
+	Mix_VolumeMusic(app->scene->musicL);
+
+	Mix_Volume(-1, app->scene->soundL);
+
 
 	return ret;
 }
@@ -367,7 +375,7 @@ bool GameScene::OnGuiMouseClickEvent(GuiControl* control)
 			{
 
 				test = Mix_VolumeMusic(sld5->sliderPos - sld5->aux);
-
+				app->scene->musicL = sld5->sliderPos - sld5->aux;
 				std::cout << test << " previous volume" << std::endl;
 
 				lastposX = sld5->sliderPos;
@@ -383,7 +391,7 @@ bool GameScene::OnGuiMouseClickEvent(GuiControl* control)
 			{
 
 				test = Mix_Volume(-1, sld6->sliderPos - sld6->aux);
-
+				app->scene->soundL = sld6->sliderPos - sld6->aux;
 				std::cout << test << " previous fx" << std::endl;
 
 				lastposX2 = sld6->sliderPos;

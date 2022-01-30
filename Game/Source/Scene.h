@@ -107,6 +107,9 @@ public:
 
 	uint buttonSFX;
 
+	int soundL = 100;
+	int musicL = 100;
+
 private:
 	SDL_Texture* img;
 

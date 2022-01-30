@@ -76,9 +76,12 @@ bool MenuScene::Start()
 	 cbx1->active = app->win->fullscreen_window;
 	 cbx2->active = app->render->VSync;
 
-	 Mix_VolumeMusic(sld1->sliderPos);
+	 sld1->setSliderPos(app->scene->musicL);
+	 sld2->setSliderPos(app->scene->soundL);
 
-	 Mix_Volume(-1, sld2->sliderPos);
+	 Mix_VolumeMusic(app->scene->musicL);
+
+	 Mix_Volume(-1, app->scene->soundL);
 
 	return true;
 }
@@ -296,6 +299,7 @@ bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 			{
 
 				test = Mix_VolumeMusic(sld1->sliderPos - sld1->aux);
+				app->scene->musicL = sld1->sliderPos - sld1->aux;
 
 				std::cout << test << " previous volume"<<std::endl;
 
@@ -312,7 +316,7 @@ bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 			{
 
 				test = Mix_Volume(-1,sld2->sliderPos - sld2->aux);
-
+				app->scene->soundL = sld2->sliderPos - sld2->aux;
 				std::cout << test << " previous fx" << std::endl;
 
 				lastposX2 = sld1->sliderPos;
