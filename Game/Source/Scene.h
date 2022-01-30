@@ -105,6 +105,8 @@ public:
 
 	int highScoreI = 0;
 
+	uint buttonSFX;
+
 private:
 	SDL_Texture* img;
 

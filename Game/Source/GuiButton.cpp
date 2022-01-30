@@ -59,6 +59,7 @@ bool GuiButton::Update(float dt)
 				state != GuiControlState::SELECTED)
 			{// If mouse button pressed -> Generate event!
 				NotifyObserver();
+				app->audio->PlayFx(app->scene->buttonSFX, 0);
 				state = GuiControlState::SELECTED; //Prevents double entry
 			}
 			else

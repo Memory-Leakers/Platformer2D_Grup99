@@ -73,9 +73,9 @@ bool MenuScene::Start()
 	 rect = { 150,10,250,250 };
 	 rect2 = { 200,67,150,150 };
 
-	 Mix_VolumeMusic(0);
+	 Mix_VolumeMusic(sld1->sliderPos);
 
-	 Mix_Volume(-1, 0);
+	 Mix_Volume(-1, sld2->sliderPos);
 
 	return true;
 }

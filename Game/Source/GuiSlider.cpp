@@ -25,7 +25,7 @@ GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text, int font) : G
 	anim.loop = false;
 
 	bar_rect = &anim.getFrame(0);
-	sliderPos = bounds.x;
+	sliderPos = this->bounds.x+this->bounds.w-1;
 }
 
 GuiSlider::~GuiSlider()
@@ -47,7 +47,7 @@ bool GuiSlider::Update(float dt)
 				state != GuiControlState::SELECTED)
 			{
 				NotifyObserver();
-
+				app->audio->PlayFx(app->scene->buttonSFX, 0);
 				state = GuiControlState::SELECTED; //Prevents double entry
 			}
 			else
@@ -112,7 +112,7 @@ bool GuiSlider::Draw(Render* render)
 
 	if (app->scene->menuScene->settingsopened)
 	{
-		aux = 210;
+		aux = bounds.x;
 	}
 	else
 	{

@@ -69,6 +69,10 @@ bool Scene::Start()
 	}
 
 	bgSelector();
+	if (buttonSFX == NULL)
+	{
+		buttonSFX = app->audio->LoadFx("Assets/audio/fx/button.wav");
+	}
 
 	return true;
 }

@@ -42,6 +42,7 @@ bool GuiCheckbox::Update(float dt)
 				state != GuiControlState::SELECTED)
 			{
 				NotifyObserver();
+				app->audio->PlayFx(app->scene->buttonSFX, 0);
 				state = GuiControlState::SELECTED; //Prevents double entry
 				active = !active;
 			}
