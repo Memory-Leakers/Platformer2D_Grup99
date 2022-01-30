@@ -6,7 +6,7 @@
 GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text, int font) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
-	
+
 	this->bounds.h = 4;
 	this->bounds.w = 101;
 	this->text = text;
@@ -47,7 +47,7 @@ bool GuiSlider::Update(float dt)
 				state != GuiControlState::SELECTED)
 			{
 				NotifyObserver();
-				
+
 				state = GuiControlState::SELECTED; //Prevents double entry
 			}
 			else
@@ -56,7 +56,8 @@ bool GuiSlider::Update(float dt)
 			}
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
-				sliderPos = mouseX;
+				sliderPos =mouseX - bounds.x;
+				sliderPos += bounds.x;
 			}
 		}
 		else state = GuiControlState::NORMAL;
@@ -109,9 +110,17 @@ bool GuiSlider::Draw(Render* render)
 	//DrawSliderButton
 	app->render->DrawTexture(tex2, sliderPos, bounds.y-5, rect, 1.0f, SDL_FLIP_HORIZONTAL, (0.0), 2147483647, 214783647, 1.0F, false);
 
+	if (app->scene->menuScene->settingsopened)
+	{
+		aux = 210;
+	}
+	else
+	{
+		aux = 10;
+	}
 
-	std::string s = std::to_string(sliderPos-10);
-	char const* value = s.c_str();  
+	std::string s = std::to_string(sliderPos-aux);
+	char const* value = s.c_str();
 	//TEXT
 	app->font->BlitText(bounds.x, bounds.y - 20, font, text.GetString());
 	app->font->BlitText(bounds.x+110, bounds.y-5, font, value);

@@ -18,6 +18,8 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
+	bool PreUpdate()override;
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -30,6 +32,8 @@ public:
 	// Retrieve window scale
 	uint GetScale() const;
 
+	bool SaveSettings(pugi::xml_node& config) override;
+
 public:
 	// The window we'll be rendering to
 	SDL_Window* window;
@@ -37,11 +41,14 @@ public:
 	// The surface contained by the window
 	SDL_Surface* screenSurface;
 
+	bool fullscreen_window;
+
 private:
 	SString title;
 	uint width;
 	uint height;
 	uint scale;
+	
 
 public:
 	int GetWidth()

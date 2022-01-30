@@ -46,6 +46,7 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 	
+	bool SaveSettings(pugi::xml_node& config) override;
 
 public:
 

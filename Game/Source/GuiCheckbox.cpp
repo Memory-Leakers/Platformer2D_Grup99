@@ -126,7 +126,7 @@ bool GuiCheckbox::Draw(Render* render)
 			}
 			break;
 	}
-	
+
 
 	app->render->DrawTexture(tex, bounds.x - (bounds.w/2), bounds.y - (bounds.h/2), rect, 1.0f, SDL_FLIP_HORIZONTAL, (0.0), 2147483647, 214783647, 1.0F, false);
 

@@ -4,6 +4,8 @@
 
 #include "GuiManager.h"
 #include "GuiButton.h"
+#include "GuiSlider.h"
+#include "GuiCheckbox.h"
 #include "EntityManager.h"
 #include "Log.h"
 #include "Entity.h"
@@ -65,6 +67,15 @@ private:
 	bool pause = false;
 
 	GuiManager gm;
+	GuiManager gmsetting;
+	GuiCheckbox* cbx3;
+	GuiCheckbox* cbx4;
+	GuiSlider* sld5;
+	GuiSlider* sld6;
+	int test;
+
+	int lastposX = 0;
+	int lastposX2 = 0;
 
 public:
 	EntityManager em;
@@ -99,6 +110,9 @@ public:
 	int titlefont = -1;
 
 	bool sceneStarted = false;
+	bool settingopen = false;
+
+	SDL_Rect rec;
 };
 
 #endif // __GAMESCENE_H__

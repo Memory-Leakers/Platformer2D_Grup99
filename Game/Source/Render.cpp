@@ -32,11 +32,11 @@ bool Render::Awake(pugi::xml_node& config)
 
 	VSync = config.child("vsync").attribute("value").as_bool(false);
 
-	if(VSync == true)
+	/*if(VSync == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");
-	}
+	}*/
 
 	renderer = SDL_CreateRenderer(app->win->window, -1, flags);
 
@@ -63,7 +63,11 @@ bool Render::Start()
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
 
-	
+	if (VSync == true)
+	{
+		app->scene->menuScene->cbx2->active = true;
+	}
+
 
 	return true;
 }
@@ -78,7 +82,7 @@ bool Render::PreUpdate()
 	//std::cout << worldpos.x << "|" << worldpos.y <<std::endl;
 
 	SDL_RenderClear(renderer);
-	
+
 	return true;
 }
 
@@ -108,6 +112,14 @@ void Render::SetBackgroundColor(SDL_Color color)
 	background = color;
 }
 
+bool Render::SaveSettings(pugi::xml_node& config)
+{
+
+	config.child("vsync").attribute("value") = app->render->VSync;
+
+	return true;
+}
+
 void Render::SetViewPort(const SDL_Rect& rect)
 {
 	SDL_RenderSetViewport(renderer, &rect);
@@ -135,7 +147,7 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 		rect.x = (int) x * scale;
 		rect.y = (int) y * scale;
 	}
-	
+
 
 	if(section != NULL)
 	{
@@ -183,7 +195,7 @@ bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint
 	{
 		rec.x = (int)(camera.x + rect.x * scale);
 		rec.y = (int)(camera.y + rect.y * scale);
-		
+
 	}
 	else
 	{
@@ -271,8 +283,3 @@ bool Render::SaveState(pugi::xml_node& data) const
 
 	return true;
 }
-
-
-
-
-
