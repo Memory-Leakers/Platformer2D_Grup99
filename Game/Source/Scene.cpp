@@ -65,9 +65,10 @@ bool Scene::Start()
 
 		// Load music
 		app->audio->PlayMusic("Assets/audio/music/papaya.ogg");
-		bgSelector();
 		break;
 	}
+
+	bgSelector();
 
 	return true;
 }
@@ -116,6 +117,7 @@ bool Scene::Update(float dt)
 	switch (cScene)
 	{
 	case CScene::MENUSCENE:
+		drawBackground();
 		menuScene->Update(app->gameTime.getDeltaTime());
 		break;
 	case CScene::GAMESCENE:
@@ -236,8 +238,9 @@ bool Scene::SaveState(pugi::xml_node& data) const
 	data.child("player").attribute("posY") = gameScene->em.getPlayer()->position.y;
 	data.child("player").attribute("score") = gameScene->em.getPlayer()->playerScore;
 	data.child("player").attribute("health") = gameScene->em.getPlayer()->health;
-
 	data.child("player").attribute("high_score") = highScoreI;
+
+	data.child("raw").attribute("value") = false;
 
 	//TIMER
 	data.child("playtime").attribute("value") = gameScene->timeSave;

@@ -71,6 +71,8 @@ public:
 	void LoadGameRequest();
 	void SaveGameRequest() const;
 
+	void GenerateSaveFile();
+
 	pugi::xml_node LoadPlayer(pugi::xml_document&) const;
 
 	pugi::xml_node LoadWalkingEnemy(pugi::xml_document&) const;

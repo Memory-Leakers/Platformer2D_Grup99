@@ -5,14 +5,50 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1808" posY="358" score="4900" health="3" />
-		<playtime value="21" />
-		<startScene value="Level1" doorKey="false" />
-		<background value="Assets/Background/Gray.png" />
+		<raw value="false" />
+		<player posX="945" posY="166" score="1500" high_score="9900" health="3" />
+		<playtime value="9" />
+		<startScene value="" doorKey="false" />
+		<background value="Assets/Background/Yellow.png" />
 		<pickables>
 			<p posX="1520" posY="1056" id="3" />
+			<p posX="664" posY="56" id="1" />
+			<p posX="664" posY="72" id="1" />
+			<p posX="664" posY="88" id="1" />
+			<p posX="680" posY="56" id="1" />
+			<p posX="688" posY="80" id="2" />
+			<p posX="680" posY="88" id="1" />
+			<p posX="696" posY="56" id="1" />
+			<p posX="696" posY="72" id="1" />
+			<p posX="696" posY="88" id="1" />
+			<p posX="888" posY="104" id="1" />
+			<p posX="1224" posY="8" id="1" />
+			<p posX="1224" posY="24" id="1" />
+			<p posX="1224" posY="40" id="1" />
+			<p posX="1224" posY="344" id="1" />
+			<p posX="1224" posY="360" id="1" />
+			<p posX="1224" posY="376" id="1" />
+			<p posX="1240" posY="8" id="1" />
+			<p posX="1248" posY="32" id="2" />
+			<p posX="1240" posY="40" id="1" />
+			<p posX="1240" posY="344" id="1" />
+			<p posX="1240" posY="360" id="1" />
+			<p posX="1240" posY="376" id="1" />
+			<p posX="1256" posY="8" id="1" />
+			<p posX="1256" posY="24" id="1" />
+			<p posX="1256" posY="40" id="1" />
+			<p posX="1256" posY="136" id="1" />
+			<p posX="1256" posY="344" id="1" />
+			<p posX="1256" posY="360" id="1" />
+			<p posX="1256" posY="376" id="1" />
+			<p posX="1288" posY="152" id="1" />
+			<p posX="1320" posY="200" id="1" />
+			<p posX="1336" posY="200" id="1" />
 			<p posX="1352" posY="56" id="1" />
+			<p posX="1352" posY="200" id="1" />
 			<p posX="1368" posY="120" id="1" />
+			<p posX="1368" posY="200" id="1" />
+			<p posX="1384" posY="360" id="1" />
 			<p posX="1384" posY="744" id="1" />
 			<p posX="1384" posY="760" id="1" />
 			<p posX="1432" posY="88" id="1" />
@@ -103,8 +139,8 @@
 		</pickables>
 		<interactables>
 			<i posX="2640" posY="752" id="2" />
-			<i posX="944" posY="144" id="1" state="2" />
-			<i posX="1712" posY="352" id="1" state="2" />
+			<i posX="944" posY="144" id="1" state="1" />
+			<i posX="1712" posY="352" id="1" state="0" />
 			<i posX="16" posY="400" id="5" />
 			<i posX="112" posY="400" id="5" />
 			<i posX="352" posY="384" id="5" />
@@ -174,11 +210,11 @@
 			<i posX="2176" posY="784" id="5" />
 		</interactables>
 		<enemies>
-			<e posX="268" posY="354" id="1" />
-			<e posX="786" posY="82" id="1" />
-			<e posX="1006" posY="125" id="2" />
-			<e posX="1271" posY="34" id="1" />
-			<e posX="1416" posY="262" id="2" />
+			<e posX="292" posY="354" id="1" />
+			<e posX="790" posY="82" id="1" />
+			<e posX="1008" posY="224" id="2" />
+			<e posX="1296" posY="34" id="1" />
+			<e posX="1424" posY="208" id="2" />
 			<e posX="1520" posY="962" id="1" />
 			<e posX="1520" posY="1120" id="2" />
 			<e posX="2224" posY="754" id="1" />

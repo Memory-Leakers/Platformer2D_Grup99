@@ -6,7 +6,6 @@
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int font) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
-	//this->bounds.x = bounds.x - app->win->GetWidth();
 	this->bounds.w = 100;
 	this->bounds.h = 24;
 	this->text = text;
@@ -21,7 +20,7 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int font) : G
 	anim.PushBack({ 0,0,100,24 });
 	anim.PushBack({ 0,24,100,24 });
 	anim.PushBack({ 0,48,100,24 });
-	anim.PushBack({ 0,62,100,24 });
+	anim.PushBack({ 0,72,100,24 });
 	anim.loop = false;
 }
 
@@ -32,9 +31,13 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(float dt)
 {
-	if (id == 1 && app->scene->menuScene->savefiled == false)
+	if (disable)
 	{
 		state = GuiControlState::DISABLED;
+	}
+	else
+	{
+		state = GuiControlState::NORMAL;
 	}
 	if (state != GuiControlState::DISABLED)
 	{

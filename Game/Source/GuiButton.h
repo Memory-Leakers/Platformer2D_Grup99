@@ -21,6 +21,7 @@ public:
 
 	bool canClick = true;
 	bool drawBasic = false;
+	bool disable = false;
 };
 
 #endif // __GUIBUTTON_H__

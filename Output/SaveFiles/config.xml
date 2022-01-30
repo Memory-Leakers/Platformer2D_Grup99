@@ -13,11 +13,11 @@
 		<fullscreen value="false" />
 		<borderless value="false" />
 		<resizable value="false" />
-		<fullscreen_window value="false" />
+		<fullscreen_window value="true" />
 	</window>
 	<scene>
 		<startScene value="Level1.tmx" />
-		<highscore value="7400" />
+		<highscore value="9900" />
 	</scene>
 	<map>
 		<folder>Assets/maps/</folder>

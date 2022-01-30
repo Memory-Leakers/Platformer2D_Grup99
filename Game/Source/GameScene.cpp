@@ -199,7 +199,7 @@ bool GameScene::PostUpdate()
 
 		if (settingopen)
 		{
-			app->render->DrawRectangle(rec, 0, 0, 110, 255, true, false);
+			app->render->DrawRectangle(rec, 60, 56, 89, 255, true, false);
 			gmsetting.Draw();
 		}
 		
