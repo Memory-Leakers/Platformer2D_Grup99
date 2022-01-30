@@ -5,18 +5,26 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1808" posY="358" score="4900" health="3" />
-		<playtime value="21" />
+		<player posX="1697" posY="374" score="4100" health="3" />
+		<playtime value="41" />
 		<startScene value="Level1" doorKey="false" />
-		<background value="Assets/Background/Gray.png" />
+		<background value="Assets/Background/Pink.png" />
 		<pickables>
 			<p posX="1520" posY="1056" id="3" />
+			<p posX="1224" posY="8" id="1" />
+			<p posX="1224" posY="24" id="1" />
+			<p posX="1224" posY="40" id="1" />
+			<p posX="1224" posY="344" id="1" />
+			<p posX="1240" posY="8" id="1" />
+			<p posX="1248" posY="32" id="2" />
+			<p posX="1240" posY="40" id="1" />
+			<p posX="1256" posY="8" id="1" />
+			<p posX="1256" posY="24" id="1" />
+			<p posX="1256" posY="40" id="1" />
 			<p posX="1352" posY="56" id="1" />
-			<p posX="1368" posY="120" id="1" />
 			<p posX="1384" posY="744" id="1" />
 			<p posX="1384" posY="760" id="1" />
 			<p posX="1432" posY="88" id="1" />
-			<p posX="1432" posY="328" id="1" />
 			<p posX="1448" posY="760" id="1" />
 			<p posX="1448" posY="776" id="1" />
 			<p posX="1464" posY="760" id="1" />
@@ -104,7 +112,7 @@
 		<interactables>
 			<i posX="2640" posY="752" id="2" />
 			<i posX="944" posY="144" id="1" state="2" />
-			<i posX="1712" posY="352" id="1" state="2" />
+			<i posX="1712" posY="352" id="1" state="1" />
 			<i posX="16" posY="400" id="5" />
 			<i posX="112" posY="400" id="5" />
 			<i posX="352" posY="384" id="5" />
@@ -174,11 +182,10 @@
 			<i posX="2176" posY="784" id="5" />
 		</interactables>
 		<enemies>
-			<e posX="268" posY="354" id="1" />
-			<e posX="786" posY="82" id="1" />
-			<e posX="1006" posY="125" id="2" />
-			<e posX="1271" posY="34" id="1" />
-			<e posX="1416" posY="262" id="2" />
+			<e posX="246" posY="354" id="1" />
+			<e posX="1029" posY="100" id="2" />
+			<e posX="1334" posY="66" id="1" />
+			<e posX="1419" posY="261" id="2" />
 			<e posX="1520" posY="962" id="1" />
 			<e posX="1520" posY="1120" id="2" />
 			<e posX="2224" posY="754" id="1" />

@@ -66,6 +66,9 @@ bool MenuScene::Start()
 	 rect = { 150,10,250,250 };
 	 rect2 = { 200,67,150,150 };
 
+	 cbx1->active = app->win->fullscreen_window;
+	 cbx2->active = app->render->VSync;
+
 	 Mix_VolumeMusic(0);
 
 	 Mix_Volume(-1, 0);

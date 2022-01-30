@@ -69,6 +69,8 @@ bool GameScene::Start()
 
 	sld6 = (GuiSlider*)gmsetting.CreateGuiControl(GuiControlType::SLIDER, 6, "fx", titlefont, { 200, 140, 20, 20 }, this);
 
+	cbx3->active = app->win->fullscreen_window;
+	cbx4->active = app->render->VSync;
 
 	rec = { 150,10,250,250 };
 
@@ -118,6 +120,16 @@ bool GameScene::PreUpdate()
 	{
 		timeSave += 1;
 		playTime.Reset();
+	}
+
+	if (app->win->fullscreen_window)
+	{
+		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_GetWindowSize(app->win->window, &app->render->camera.w, &app->render->camera.h);
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(app->win->window, 0);
 	}
 
 	return ret;
@@ -211,7 +223,7 @@ bool GameScene::PostUpdate()
 
 bool GameScene::CleanUp()
 {
-	LOG("Freeinga Game Scene");
+	LOG("Freeing Game Scene");
 
 	//Menu
 	gm.CleanUp();

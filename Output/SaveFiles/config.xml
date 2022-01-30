@@ -17,7 +17,7 @@
 	</window>
 	<scene>
 		<startScene value="Level1.tmx" />
-		<highscore value="7400" />
+		<highscore value="13600" />
 	</scene>
 	<map>
 		<folder>Assets/maps/</folder>
