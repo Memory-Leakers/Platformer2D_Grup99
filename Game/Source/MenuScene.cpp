@@ -140,7 +140,7 @@ bool MenuScene::PostUpdate()
 
 	if (creditsopened)
 	{
-		app->render->DrawRectangle(rect2, 0, 0, 110, 255);
+		app->render->DrawRectangle(rect2, 60, 56, 89, 255, true, false);
 
 		app->font->BlitText(228, 76, titlefont2, "authors");
 		app->font->BlitText(218, 96, titlefont2, "pol rius");
@@ -153,7 +153,7 @@ bool MenuScene::PostUpdate()
 
 	if (settingsopened)
 	{
-		app->render->DrawRectangle(rect, 0,0, 110, 255);
+		app->render->DrawRectangle(rect, 60, 56, 89, 255, true, false);
 		gmsettings.Draw();
 	}
 	return true;
@@ -239,8 +239,6 @@ bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 				app->render->VSync = true;
 				SDL_GL_SetSwapInterval(1);
 				LOG("Using vsync");
-
-
 			}
 			else
 			{
@@ -256,15 +254,11 @@ bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 5)
 		{
 			std::cout << "Click on button 5" << std::endl;
-
-
 		}
 
 		if (control->id == 6)
 		{
 			std::cout << "Click on button 6" << std::endl;
-
-
 		}
 	}
 

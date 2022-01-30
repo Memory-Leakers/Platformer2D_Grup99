@@ -44,7 +44,6 @@ bool GameScene::Start()
 	healthBar->setFrameFollow(&em.getPlayer()->health);
 	healthBar->Start();
 
-
 	//SOUNDS
 	pickupSFX = app->audio->LoadFx("Assets/audio/fx/item_pickup.wav");
 	keypickupSFX = app->audio->LoadFx("Assets/audio/fx/key_pickup.wav");
@@ -76,6 +75,7 @@ bool GameScene::PreUpdate()
 	if (pause)
 	{
 		gm.PreUpdate();
+		playTime.Reset();
 		return true;
 	}
 	em.PreUpdate();
@@ -87,6 +87,14 @@ bool GameScene::PreUpdate()
 		
 		app->render->camera.x = (em.getPlayer()->position.x *  -scale) + app->render->camera.w / 2 - em.getPlayer()->bounds.w;
 		app->render->camera.y = (em.getPlayer()->position.y * -scale) + app->render->camera.h / 2 - em.getPlayer()->bounds.h;
+	}
+
+	//Timer
+	playTime.Update();
+	if (playTime.getDeltaTime() >= 1)
+	{
+		timeSave += 1;
+		playTime.Reset();
 	}
 
 	return ret;
@@ -123,9 +131,8 @@ bool GameScene::PostUpdate()
 	}
 	healthBar->PostUpdate();
 
-
 	std::string s = std::to_string(em.getPlayer()->playerScore);
-	std::string ss = "score ";
+	std::string ss = "score; ";
 	for (int i = 5; i != s.size(); i--){
 		ss += "0";
 	}
@@ -133,7 +140,7 @@ bool GameScene::PostUpdate()
 	char const* score = ss.c_str();
 
 	std::string hs = std::to_string(app->scene->highScoreI);
-	std::string hss = "high score: ";
+	std::string hss = "high score; ";
 	for (int y = 5; y != hs.size(); y--) {
 		hss += "0";
 	}
@@ -145,14 +152,26 @@ bool GameScene::PostUpdate()
 	app->font->BlitText(110, 20, titlefont, score);
 
 	//Draw High Score
-	app->font->BlitText(110, 0, titlefont, highScore);
+	app->font->BlitText(110, 10, titlefont, highScore);
+
+	//Timer
+	int t = (int) timeSave;
+	int hou = floor(t / 3600);
+	int min = floor(t / 60);
+	int sec = t - min * 60;
+
+	std::string ts = std::to_string(hou);
+	ts += ";";
+	ts += std::to_string(min);
+	ts += ";";
+	ts += std::to_string(sec);
+
+	app->font->BlitText(300, 10, titlefont, ts.c_str());
 
 	if (pause)
 	{
 		app->render->DrawRectangle({ -200, 0, app->win->screenSurface->w,  app->win->screenSurface->h }, 0, 0, 0, 100, true, false);
 		gm.Draw();
-
-
 	}
 
 
@@ -190,6 +209,7 @@ bool GameScene::CleanUp()
 
 bool GameScene::ReloadLevel()
 {
+	playTime.Reset();
 	//Cleaning
 	em.CleanUp();
 	key = false;
@@ -198,6 +218,7 @@ bool GameScene::ReloadLevel()
 	//Re-Setting
 	em.setPlayer(new Player());
 	em.addEntity(new Trophy(2640, 752));
+	em.addEntity(new Checkpoint(944, 144));
 	em.addEntity(new Checkpoint(1712, 352));
 	em.addEntity(new DoorKey(1520, 1056));
 	app->map->LoadMapEntities();

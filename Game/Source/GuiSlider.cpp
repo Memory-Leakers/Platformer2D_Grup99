@@ -104,10 +104,10 @@ bool GuiSlider::Draw(Render* render)
 	}
 
 	//Draw Bar
-	app->render->DrawTexture(tex, bounds.x+2, bounds.y, bar_rect, 1.0f, SDL_FLIP_HORIZONTAL);
+	app->render->DrawTexture(tex, bounds.x+2, bounds.y, bar_rect, 1.0f, SDL_FLIP_HORIZONTAL, (0.0), 2147483647, 214783647, 1.0F, false);
 
 	//DrawSliderButton
-	app->render->DrawTexture(tex2, sliderPos, bounds.y-5, rect, 1.0f, SDL_FLIP_HORIZONTAL);
+	app->render->DrawTexture(tex2, sliderPos, bounds.y-5, rect, 1.0f, SDL_FLIP_HORIZONTAL, (0.0), 2147483647, 214783647, 1.0F, false);
 
 
 	std::string s = std::to_string(sliderPos-10);

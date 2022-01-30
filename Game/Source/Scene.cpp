@@ -52,7 +52,6 @@ bool Scene::Start()
 			//Generates map
 			if (app->map->Load(levelList[0]->file.GetString()) == true)
 			{
-
 				int w, h;
 				uchar* data = NULL;
 
@@ -89,6 +88,7 @@ bool Scene::PreUpdate()
 			if (!gameScene->sceneStarted)
 			{
 				Start();
+				gameScene->ReloadLevel();
 
 			}
 			gameScene->PreUpdate();
@@ -226,6 +226,9 @@ bool Scene::LoadState(pugi::xml_node& data)
 	gameScene->em.getPlayer()->health = data.child("player").attribute("health").as_int();
 	gameScene->healthBar->setFrameFollow(&gameScene->em.getPlayer()->health);
 
+	//TIMER
+	gameScene->timeSave = data.child("playtime").attribute("value").as_float();
+
 	//Level/Map related
 	bgTex = app->tex->Load(data.child("background").attribute("value").as_string());
 	gameScene->key = data.child("startScene").attribute("doorKey").as_bool(); //
@@ -241,6 +244,9 @@ bool Scene::SaveState(pugi::xml_node& data) const
 	data.child("player").attribute("health") = gameScene->em.getPlayer()->health;
 
 	data.child("player").attribute("high_score") = highScoreI;
+
+	//TIMER
+	data.child("playtime").attribute("value") = gameScene->timeSave;
 
 	//Level/Map related
 	data.child("background").attribute("value") = bg.GetString();
@@ -402,7 +408,6 @@ void Scene::changeScene(CScene scene)
 		case CScene::GAMESCENELOAD:
 			gameScene->CleanUp();
 			break;
-
 		}
 
 		cScene = nextScene;

@@ -6,12 +6,22 @@
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int font) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
+	this->bounds.w = 100;
+	this->bounds.h = 24;
 	this->text = text;
 	this->font = font;
 	this->id = id;
 
 	canClick = true;
 	drawBasic = false;
+
+	tex = app->tex->Load("Assets/Menu/GUI/Button.png");
+
+	anim.PushBack({ 0,0,100,24 });
+	anim.PushBack({ 0,24,100,24 });
+	anim.PushBack({ 0,48,100,24 });
+	anim.PushBack({ 0,62,100,24 });
+	anim.loop = false;
 }
 
 GuiButton::~GuiButton()
@@ -65,6 +75,30 @@ bool GuiButton::Update(float dt)
 bool GuiButton::Draw(Render* render)
 {
 	
+	
+
+	switch (state)
+	{
+		case GuiControlState::DISABLED:
+			rect = &anim.getFrame(3);
+			break;
+		case GuiControlState::NORMAL:
+			rect = &anim.getFrame(0);
+			break;
+		case GuiControlState::FOCUSED:
+			rect = &anim.getFrame(1);
+			break;
+		case GuiControlState::PRESSED:
+			rect = &anim.getFrame(2);
+			break;
+		case GuiControlState::SELECTED:
+			//render->DrawRectangle(bounds, 0, 255, 0, 255, true, false);
+			break;
+	}
+	
+	app->render->DrawTexture(tex, bounds.x, bounds.y, rect, 1.0f, SDL_FLIP_HORIZONTAL, (0.0), 2147483647, 214783647, 1.0F, false);
+
+
 	// Draw DEBUG
 	if (app->scene->debugTiles)
 	{
@@ -87,7 +121,6 @@ bool GuiButton::Draw(Render* render)
 			break;
 		}
 	}
-	
 
 	//TEXT
 	app->font->BlitText(bounds.x + (bounds.w/4), bounds.y + (bounds.h/4), font, text.GetString());

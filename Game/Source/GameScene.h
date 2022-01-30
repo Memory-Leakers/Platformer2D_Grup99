@@ -66,7 +66,6 @@ private:
 
 	GuiManager gm;
 
-
 public:
 	EntityManager em;
 
@@ -93,6 +92,9 @@ public:
 	uint keypickupSFX;
 	uint playerjumpSFX;
 	uint playerwalkSFX;
+
+	Timer playTime;
+	float timeSave;
 
 	int titlefont = -1;
 
