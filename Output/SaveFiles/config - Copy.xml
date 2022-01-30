@@ -1,0 +1,26 @@
+<!-- Config file for the game -->
+<!-- L01: DONE 1: Create configuration file-->
+<config>
+    <app>
+        <title>Ninja Froggy's Super adventure</title>
+        <organization>MemoryLeakers-Grup99</organization>
+        <version>0.2</version>
+    </app>
+    <renderer>
+        <vsync value="false"/>
+    </renderer>
+    <window>
+        <resolution width="1620" height="810" scale="3"/>
+        <fullscreen value="false"/>
+        <borderless value="false"/>
+        <resizable value="false"/>
+        <fullscreen_window value="false"/>
+    </window>
+    <scene>
+		<startScene value="Level1.tmx"/>
+		<highscore value="2000"/>
+    </scene>
+    <map>
+        <folder>Assets/maps/</folder>
+    </map>
+</config>

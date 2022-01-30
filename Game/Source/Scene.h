@@ -55,7 +55,7 @@ public:
 	virtual ~Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start() ;
@@ -70,7 +70,9 @@ public:
 	bool PostUpdate() ;
 
 	// Called before quitting
-	bool CleanUp() ;
+	bool CleanUp();
+
+	bool SaveSettings(pugi::xml_node& config);
 
 	void OnCollision(Collider* c1, Collider* c2) override;
 
@@ -100,6 +102,8 @@ public:
 	bool exitPetition = false;
 
 	bool debugTiles = false;
+
+	int highScoreI = 0;
 
 private:
 	SDL_Texture* img;

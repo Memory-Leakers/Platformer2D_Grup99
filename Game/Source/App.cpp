@@ -101,10 +101,6 @@ bool App::Awake()
 
 		while ((item != NULL) && (ret == true))
 		{
-			// L01: DONE 5: Add a new argument to the Awake method to receive a pointer to an xml node.
-			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
-			// that can be used to read all variables for that module.
-			// Send nullptr if the node does not exist in config.xml
 			ret = item->data->Awake(config.child(item->data->name.GetString()));
 			item = item->next;
 		}
@@ -356,11 +352,18 @@ bool App::PostUpdate()
 bool App::CleanUp()
 {
 	bool ret = true;
+
+	pugi::xml_document* configFile = new pugi::xml_document();
+	configFile->load_file(CONFIG_FILENAME);
+
+	pugi::xml_parse_result result = configFile->load_file(CONFIG_FILENAME);
+
 	ListItem<Module*>* item;
 	item = modules.end;
 
 	while(item != NULL && ret == true)
 	{
+		ret = item->data->SaveSettings(configFile->child("config").child(item->data->name.GetString()));
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
@@ -368,7 +371,12 @@ bool App::CleanUp()
 	{
 		RELEASE_ARRAY(mapo);
 	}
-	
+	configFile->save_file(CONFIG_FILENAME);
+
+	delete item;
+	item = nullptr;
+	delete configFile;
+	configFile = nullptr;
 
 	return ret;
 }

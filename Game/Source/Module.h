@@ -42,6 +42,8 @@ public:
 
 	// Called before quitting
 	virtual bool CleanUp();
+
+	virtual bool SaveSettings(pugi::xml_node& config);
 	
 
     // L02: DONE 2: Create new virtual methods to Load / Save state

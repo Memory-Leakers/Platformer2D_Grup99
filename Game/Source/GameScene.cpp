@@ -125,15 +125,27 @@ bool GameScene::PostUpdate()
 
 
 	std::string s = std::to_string(em.getPlayer()->playerScore);
-	std::string ss;
+	std::string ss = "score ";
 	for (int i = 5; i != s.size(); i--){
 		ss += "0";
 	}
 	ss += s;
-	char const* value = ss.c_str();
+	char const* score = ss.c_str();
 
-	app->font->BlitText(110, 20, titlefont, value);
+	std::string hs = std::to_string(app->scene->highScoreI);
+	std::string hss = "high score: ";
+	for (int y = 5; y != hs.size(); y--) {
+		hss += "0";
+	}
+	hss += hs;
 
+	char const* highScore = hss.c_str();
+
+	//Draw Score
+	app->font->BlitText(110, 20, titlefont, score);
+
+	//Draw High Score
+	app->font->BlitText(110, 0, titlefont, highScore);
 
 	if (pause)
 	{

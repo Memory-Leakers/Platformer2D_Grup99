@@ -5,9 +5,9 @@
 	<textures />
 	<audio />
 	<scene>
-		<player posX="1702" posY="372" score="900" health="3" />
+		<player posX="1697" posY="362" score="1300" health="3" />
 		<startScene value="Level1" doorKey="false" />
-		<background value="Assets/Background/Gray.png" />
+		<background value="Assets/Background/Brown.png" />
 		<pickables>
 			<p posX="72" posY="232" id="1" />
 			<p posX="72" posY="248" id="1" />
@@ -26,8 +26,8 @@
 			<p posX="696" posY="56" id="1" />
 			<p posX="696" posY="72" id="1" />
 			<p posX="696" posY="88" id="1" />
-			<p posX="776" posY="168" id="1" />
 			<p posX="888" posY="104" id="1" />
+			<p posX="936" posY="136" id="1" />
 			<p posX="1224" posY="8" id="1" />
 			<p posX="1224" posY="24" id="1" />
 			<p posX="1224" posY="40" id="1" />
@@ -46,16 +46,12 @@
 			<p posX="1256" posY="344" id="1" />
 			<p posX="1256" posY="360" id="1" />
 			<p posX="1256" posY="376" id="1" />
-			<p posX="1320" posY="200" id="1" />
-			<p posX="1336" posY="200" id="1" />
 			<p posX="1352" posY="56" id="1" />
-			<p posX="1352" posY="200" id="1" />
-			<p posX="1368" posY="200" id="1" />
+			<p posX="1368" posY="120" id="1" />
 			<p posX="1384" posY="360" id="1" />
 			<p posX="1384" posY="744" id="1" />
 			<p posX="1384" posY="760" id="1" />
 			<p posX="1432" posY="88" id="1" />
-			<p posX="1432" posY="328" id="1" />
 			<p posX="1448" posY="760" id="1" />
 			<p posX="1448" posY="776" id="1" />
 			<p posX="1464" posY="760" id="1" />
@@ -139,10 +135,9 @@
 			<p posX="2040" posY="616" id="1" />
 			<p posX="2040" posY="632" id="1" />
 			<p posX="2040" posY="648" id="1" />
+			<p posX="1520" posY="1056" id="3" />
 		</pickables>
 		<interactables>
-			<i posX="2640" posY="752" id="2" />
-			<i posX="1712" posY="352" id="1" state="0" />
 			<i posX="16" posY="400" id="5" />
 			<i posX="112" posY="400" id="5" />
 			<i posX="352" posY="384" id="5" />
@@ -215,11 +210,11 @@
 			<i posX="1712" posY="352" id="1" state="1" />
 		</interactables>
 		<enemies>
-			<e posX="286" posY="354" id="1" />
-			<e posX="758" posY="82" id="1" />
-			<e posX="1002" posY="173" id="2" />
-			<e posX="1328" posY="66" id="1" />
-			<e posX="1449" posY="206" id="2" />
+			<e posX="318" posY="354" id="1" />
+			<e posX="778" posY="82" id="1" />
+			<e posX="1010" posY="185" id="2" />
+			<e posX="1300" posY="34" id="1" />
+			<e posX="1426" posY="251" id="2" />
 			<e posX="1520" posY="962" id="1" />
 			<e posX="1520" posY="1120" id="2" />
 			<e posX="2224" posY="754" id="1" />

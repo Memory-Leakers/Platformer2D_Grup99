@@ -15,9 +15,12 @@ Scene::~Scene()
 {}
 
 // Called before render is available
-bool Scene::Awake()
+bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
+
+	highScoreI = config.child("highscore").attribute("value").as_int();
+
 	bool ret = true;
 	return ret;
 }
@@ -125,10 +128,17 @@ bool Scene::Update(float dt)
 		// LOAD AND SAVE
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		{
+
 			app->LoadGameRequest();
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		{
+
+			if (gameScene->em.getPlayer()->playerScore > highScoreI)
+			{
+				highScoreI = gameScene->em.getPlayer()->playerScore;
+			}
+
 			app->SaveGameRequest();
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || gameScene->pendingtoReload)
@@ -230,6 +240,8 @@ bool Scene::SaveState(pugi::xml_node& data) const
 	data.child("player").attribute("score") = gameScene->em.getPlayer()->playerScore;
 	data.child("player").attribute("health") = gameScene->em.getPlayer()->health;
 
+	data.child("player").attribute("high_score") = highScoreI;
+
 	//Level/Map related
 	data.child("background").attribute("value") = bg.GetString();
 	data.child("startScene").attribute("doorKey") = gameScene->key; //
@@ -238,7 +250,6 @@ bool Scene::SaveState(pugi::xml_node& data) const
 
 	return true;
 }
-
 
 
 // Called before quitting
@@ -267,6 +278,13 @@ bool Scene::CleanUp()
 	menuScene = nullptr;
 
 	bg.~SString();
+
+	return true;
+}
+
+bool Scene::SaveSettings(pugi::xml_node& config)
+{
+	config.child("highscore").attribute("value") = highScoreI;
 
 	return true;
 }

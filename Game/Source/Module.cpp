@@ -34,3 +34,8 @@ bool Module::CleanUp()
 {
 	return true;
 }
+
+bool Module::SaveSettings(pugi::xml_node& config)
+{
+	return true;
+}
