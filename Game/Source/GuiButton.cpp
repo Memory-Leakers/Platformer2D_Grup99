@@ -6,6 +6,7 @@
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int font) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
+	//this->bounds.x = bounds.x - app->win->GetWidth();
 	this->bounds.w = 100;
 	this->bounds.h = 24;
 	this->text = text;

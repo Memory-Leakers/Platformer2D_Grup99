@@ -61,11 +61,6 @@ bool Checkpoint::Update(float dt)
 			animActivation.Update();
 			if (savePetition == SAVEPETITION_SAVE)
 			{
-				if (app->scene->gameScene->em.getPlayer()->playerScore > app->scene->highScoreI)
-				{
-					app->scene->highScoreI = app->scene->gameScene->em.getPlayer()->playerScore;
-				}
-
 				app->SaveGameRequest();
 				app->scene->gameScene->checkPoint = true;
 

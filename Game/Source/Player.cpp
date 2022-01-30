@@ -583,6 +583,10 @@ void Player::WillCollision()
 					case 248: //WIN
 						if (py + bounds.h >= by && py <= by && px + bounds.w > bx && px < bx + 16)
 						{
+							if (app->scene->gameScene->em.getPlayer()->playerScore > app->scene->highScoreI)
+							{
+								app->scene->highScoreI = app->scene->gameScene->em.getPlayer()->playerScore;
+							}
 							app->scene->gameScene->pendingtoReload = true;
 						}
 						break;

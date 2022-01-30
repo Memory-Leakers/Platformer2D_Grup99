@@ -133,12 +133,6 @@ bool Scene::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		{
-
-			if (gameScene->em.getPlayer()->playerScore > highScoreI)
-			{
-				highScoreI = gameScene->em.getPlayer()->playerScore;
-			}
-
 			app->SaveGameRequest();
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || gameScene->pendingtoReload)
