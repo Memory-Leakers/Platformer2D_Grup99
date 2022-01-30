@@ -26,13 +26,14 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
-	GuiManager gm;
 
+	GuiManager gm;
 	GuiManager gmsettings;
 	GuiButton* btn1;
 	GuiButton* btn2;
 	GuiButton* btn3;
 	GuiButton* btn4;
+	GuiButton* btn5;
 	GuiCheckbox* cbx1;
 	GuiCheckbox* cbx2;
 	GuiSlider* sld1;
@@ -54,4 +55,9 @@ public:
 	bool sceneStarted = false;
 
 	int msFont = -1;
+
+	int test;
+
+	int lastposX = 0;
+	int lastposX2 = 0;
 };

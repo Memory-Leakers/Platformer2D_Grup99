@@ -1,5 +1,6 @@
 #include "MenuScene.h"
 #include "App.h"
+#include "External/SDL_mixer/include/SDL_mixer.h"
 
 
 MenuScene::MenuScene()
@@ -34,6 +35,8 @@ bool MenuScene::Start()
 
 	btn4 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 7, "", msFont, { 230,190, 80, 20 }, this);
 
+	btn5 = (GuiButton*)gm.CreateGuiControl(GuiControlType::BUTTON, 8, "exit", msFont, { 230, 220, 80, 20 }, this);
+
 	cbx1 = (GuiCheckbox*)gmsettings.CreateGuiControl(GuiControlType::CHECKBOX, 3, "fullscreen", msFont, { 210, 160, 20, 20 }, this);
 
 	cbx2 = (GuiCheckbox*)gmsettings.CreateGuiControl(GuiControlType::CHECKBOX, 4, "vsync", msFont, { 210, 180, 20, 20 }, this);
@@ -62,6 +65,10 @@ bool MenuScene::Start()
 
 	 rect = { 150,10,250,250 };
 	 rect2 = { 200,67,150,150 };
+
+	 Mix_VolumeMusic(0);
+
+	 Mix_Volume(-1, 0);
 
 	return true;
 }
@@ -110,6 +117,16 @@ bool MenuScene::PreUpdate()
 		}
 
 	}
+	if (app->win->fullscreen_window)
+	{
+		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_GetWindowSize(app->win->window, &app->render->camera.w, &app->render->camera.h);
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(app->win->window, 0);
+	}
+
 
 	return true;
 }
@@ -156,6 +173,9 @@ bool MenuScene::PostUpdate()
 		app->render->DrawRectangle(rect, 60, 56, 89, 255, true, false);
 		gmsettings.Draw();
 	}
+
+
+
 	return true;
 }
 
@@ -209,6 +229,13 @@ bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 
 				creditsopened = true;
 			}
+
+			if (control->id == 8)
+			{
+				std::cout << "Click on exit button" << std::endl;
+
+				app->scene->exitPetition = true;
+			}
 		}
 
 	}
@@ -220,13 +247,14 @@ bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 			std::cout << "Click on button 3" << std::endl;
 			if (!cbx1->active)
 			{
-				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-				SDL_GetWindowSize(app->win->window, &app->render->camera.w, &app->render->camera.h);
+				app->win->fullscreen_window = true;
 
 			}
 			else
 			{
-				SDL_SetWindowFullscreen(app->win->window, 0);
+				app->win->fullscreen_window = false;
+
+
 			}
 
 		}
@@ -237,13 +265,13 @@ bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 			if (!cbx2->active)
 			{
 				app->render->VSync = true;
-				SDL_GL_SetSwapInterval(1);
+
 				LOG("Using vsync");
 			}
 			else
 			{
 				app->render->VSync = false;
-				SDL_GL_SetSwapInterval(0);
+
 				LOG("Not using vsync");
 			}
 
@@ -254,11 +282,33 @@ bool MenuScene::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 5)
 		{
 			std::cout << "Click on button 5" << std::endl;
+
+			if (lastposX != sld1->sliderPos)
+			{
+
+				test = Mix_VolumeMusic(sld1->sliderPos - sld1->aux);
+
+				std::cout << test << " previous volume"<<std::endl;
+
+				lastposX = sld1->sliderPos;
+			}
+
 		}
 
 		if (control->id == 6)
 		{
 			std::cout << "Click on button 6" << std::endl;
+
+			if (lastposX2 != sld2->sliderPos)
+			{
+
+				test = Mix_Volume(-1,sld2->sliderPos - sld2->aux);
+
+				std::cout << test << " previous fx" << std::endl;
+
+				lastposX2 = sld1->sliderPos;
+			}
+
 		}
 	}
 

@@ -6,7 +6,7 @@
 		<version>0.2</version>
 	</app>
 	<renderer>
-		<vsync value="false" />
+		<vsync value="true" />
 	</renderer>
 	<window>
 		<resolution width="1620" height="810" scale="3" />

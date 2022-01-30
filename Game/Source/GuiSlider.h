@@ -20,6 +20,8 @@ public:
 
 	bool canClick = true;
 	bool drawBasic = false;
+	int sliderPos = 0;
+	int aux;
 
 private:
 	SDL_Rect* bar_rect = nullptr;
@@ -27,7 +29,10 @@ private:
 	SDL_Texture* tex2 = nullptr;
 	Animation anim2;
 
-	int sliderPos = 0;
+	
 
+	
+
+	
 };
 

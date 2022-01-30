@@ -32,7 +32,7 @@ bool Scene::Start()
 	switch (cScene)
 	{
 	case CScene::MENUSCENE:
-		app->audio->StopMusic();
+		//app->audio->StopMusic();
 		delete menuScene;
 		menuScene = nullptr;
 		menuScene = new MenuScene();

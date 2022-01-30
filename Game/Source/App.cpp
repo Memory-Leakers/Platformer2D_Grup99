@@ -131,7 +131,7 @@ bool App::Update()
 	bool ret = true;
 	globalTime.Update();
 
-	if (globalTime.getDeltaTime() >= 1.0f / FPS)
+	if (globalTime.getDeltaTime() >= 1.0f / FPS && app->render->VSync)
 	{
 		PrepareUpdate();
 		gameTime.Update();
@@ -151,10 +151,30 @@ bool App::Update()
 		FinishUpdate();
 		globalTime.Reset();
 	}
+	else if (app->render->VSync == false)
+	{
+		PrepareUpdate();
+		gameTime.Update();
+
+		if (input->GetWindowEvent(WE_QUIT) == true)
+			ret = false;
+
+		if (ret == true)
+			ret = PreUpdate();
+
+		if (ret == true)
+			ret = DoUpdate();
+
+		if (ret == true)
+			ret = PostUpdate();
+
+		FinishUpdate();
+	}
 	else
 	{
 		gameTime.Update();
 	}
+	
 	
 	return ret;
 }
@@ -360,10 +380,14 @@ bool App::CleanUp()
 
 	ListItem<Module*>* item;
 	item = modules.end;
-
-	while(item != NULL && ret == true)
+	while (item != NULL && ret == true)
 	{
 		ret = item->data->SaveSettings(configFile->child("config").child(item->data->name.GetString()));
+		item = item->prev;
+	}
+	item = modules.end;
+	while(item != NULL && ret == true)
+	{
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
