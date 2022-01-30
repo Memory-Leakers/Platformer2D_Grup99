@@ -202,6 +202,7 @@ bool GameScene::PostUpdate()
 			app->render->DrawRectangle(rec, 0, 0, 110, 255, true, false);
 			gmsetting.Draw();
 		}
+		
 	}
 
 
@@ -210,7 +211,7 @@ bool GameScene::PostUpdate()
 
 bool GameScene::CleanUp()
 {
-	LOG("Freeing Game Scene");
+	LOG("Freeinga Game Scene");
 
 	//Menu
 	gm.CleanUp();
